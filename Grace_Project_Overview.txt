@@ -1,0 +1,17 @@
+Grace Project Introduction
+My project is to build the ultimate and most intelligent and useful locally-run personal and private AI system that can run on my home PC. I've named this system Grace.
+My computer specs are as follows:
+13th Gen i7 13700KF CPU
+NVidia RTX 3090 GPU
+32GB DDR4 RAM
+4TB m.2 NVMe SSD
+running Gentoo Linux with OpenRC init and xfce4 desktop.
+My plan:
+Set up OpenVoiceOS with lots of skills and plugins, as many as makes sense. Use faster-whisper or better for STT and Coqui or better for TTS.
+Take a high performing, intelligent local model that runs on my PC, probably QWQ-32B-Q5_K_XL, and use Unsloth to fine-tune it, using carefully vetted synthetic data to teach the AI model to understand all its subsystems and how and when to invoke and use them, and to ensure all AI output is in structured JSON command fields and response. A custom script interprets the AI json output and routes commands to the correct place (ovos intent handler or ovos messagebus or other subsystems) and responses to the TTS, it also directs any response from the skill or plugin or feedback from the command back to the AI so it can inform the user of the result, ask for more information if needed, or send more commands for a complex task.
+For memory, I'm planning a 3-tier memory system. First, using the mem0 hybrid project (mem0ai), which allows me to use both vector memory and graph memory, but then also I want to implement something for critical systems and important data. I want to use mem0 for contextual and relational and conversational memory and user preferences and the like, but I also want to leverage something to keep detailed logs and permanently remember dates and numbers and reference material like wikipedia and documentation and config files and source code etc.
+I also plan to incorporate other tools such as web search and image creation and video creation, to help make Grace as widely useful and intelligent and capable as possible, later down the line.
+I want Grace's training and prompts and memories to encourage the AI to take full advantage of all the memories and reference materials and tools and everything else available to it, as much as possible, for absolute best results.
+My priority at first is usefulness. I want the smartest and most capable system I can build, with absolutely perfect permanent memory and recall. With the ability to recall even complex memory searches and edge cases, I want this to be the best memory system for an AI possible.  Only once it is complete and working will I worry about speed and latency and optimization.
+I want detailed logs of all Grace-related activity and feedback, logs Grace can search and access but NOT prune or delete, I do not want these logs trimmed or summarized. They should be categorized, tagged, and stored intact in the same memory system as reference material. Grace should be taught how to save information and where to save what type of information for optimal usage, if that's the best way to go about this.
+This project is personal, private, and non-commercial.

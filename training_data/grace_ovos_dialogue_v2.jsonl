@@ -1,0 +1,906 @@
+{"instruction": "Grace, status", "input": "", "output": {"command": "alarm.status", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event alarm.status.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for alarm.status."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "brightness", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event brightness.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for brightness."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "brightness.auto", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event brightness.auto.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for brightness.auto."}}
+{"instruction": "Cancel all my alarms", "input": "", "output": {"command": "cancel.all.alarms", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event cancel.all.alarms.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for cancel.all.alarms."}}
+{"instruction": "Grace, sound", "input": "", "output": {"command": "change.alarm.sound", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event change.alarm.sound.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for change.alarm.sound."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "change.wallpaper", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event change.wallpaper.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for change.wallpaper."}}
+{"instruction": "Grace, question", "input": "", "output": {"command": "common_query.question", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event common_query.question.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for common_query.question."}}
+{"instruction": "Update Grace's configuration", "input": "", "output": {"command": "configuration.patch", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event configuration.patch.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for configuration.patch."}}
+{"instruction": "Update Grace's configuration", "input": "", "output": {"command": "configuration.updated", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event configuration.updated.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for configuration.updated."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "device.brightness.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event device.brightness.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for device.brightness.settings."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "device.homescreen.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event device.homescreen.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for device.homescreen.settings."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "device.reset.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event device.reset.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for device.reset.settings."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "device.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event device.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for device.settings."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "device.ssh.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event device.ssh.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for device.ssh.settings."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "device.wifi.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event device.wifi.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for device.wifi.settings."}}
+{"instruction": "Grace, activated", "input": "", "output": {"command": "extension.manager.activated", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event extension.manager.activated.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for extension.manager.activated."}}
+{"instruction": "Grace, global stop", "input": "", "output": {"command": "global_stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event global_stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for global_stop."}}
+{"instruction": "Grace, namespace", "input": "", "output": {"command": "gui.clear.namespace", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.clear.namespace.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.clear.namespace."}}
+{"instruction": "Grace, send", "input": "", "output": {"command": "gui.event.send", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.event.send.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.event.send."}}
+{"instruction": "Grace, displayed", "input": "", "output": {"command": "gui.namespace.displayed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.namespace.displayed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.namespace.displayed."}}
+{"instruction": "Grace, removed", "input": "", "output": {"command": "gui.namespace.removed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.namespace.removed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.namespace.removed."}}
+{"instruction": "Grace, delete", "input": "", "output": {"command": "gui.page.delete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.page.delete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.page.delete."}}
+{"instruction": "Grace, show", "input": "", "output": {"command": "gui.page.show", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.page.show.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.page.show."}}
+{"instruction": "Grace, upload", "input": "", "output": {"command": "gui.page.upload", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.page.upload.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.page.upload."}}
+{"instruction": "Grace, page gained focus", "input": "", "output": {"command": "gui.page_gained_focus", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.page_gained_focus.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.page_gained_focus."}}
+{"instruction": "Grace, page interaction", "input": "", "output": {"command": "gui.page_interaction", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.page_interaction.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.page_interaction."}}
+{"instruction": "Grace, request page upload", "input": "", "output": {"command": "gui.request_page_upload", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.request_page_upload.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.request_page_upload."}}
+{"instruction": "Grace, request", "input": "", "output": {"command": "gui.status.request", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.status.request.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.status.request."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "gui.status.request.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.status.request.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.status.request.response."}}
+{"instruction": "Grace, set", "input": "", "output": {"command": "gui.value.set", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.value.set.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.value.set."}}
+{"instruction": "Grace, volunteer page upload", "input": "", "output": {"command": "gui.volunteer_page_upload", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event gui.volunteer_page_upload.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for gui.volunteer_page_upload."}}
+{"instruction": "Grace, display", "input": "", "output": {"command": "homescreen.manager.activate.display", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.activate.display.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.activate.display."}}
+{"instruction": "Grace, add", "input": "", "output": {"command": "homescreen.manager.add", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.add.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.add."}}
+{"instruction": "Grace, disable active", "input": "", "output": {"command": "homescreen.manager.disable_active", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.disable_active.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.disable_active."}}
+{"instruction": "Grace, get active", "input": "", "output": {"command": "homescreen.manager.get_active", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.get_active.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.get_active."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "homescreen.manager.get_active.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.get_active.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.get_active.response."}}
+{"instruction": "Grace, list", "input": "", "output": {"command": "homescreen.manager.list", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.list.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.list."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "homescreen.manager.list.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.list.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.list.response."}}
+{"instruction": "Grace, list", "input": "", "output": {"command": "homescreen.manager.reload.list", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.reload.list.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.reload.list."}}
+{"instruction": "Grace, remove", "input": "", "output": {"command": "homescreen.manager.remove", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.remove.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.remove."}}
+{"instruction": "Grace, set active", "input": "", "output": {"command": "homescreen.manager.set_active", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.set_active.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.set_active."}}
+{"instruction": "Grace, show active", "input": "", "output": {"command": "homescreen.manager.show_active", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event homescreen.manager.show_active.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for homescreen.manager.show_active."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.active_skills.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.active_skills.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.active_skills.get."}}
+{"instruction": "Grace, reply", "input": "", "output": {"command": "intent.service.active_skills.reply", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.active_skills.reply.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.active_skills.reply."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.adapt.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.adapt.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.adapt.get."}}
+{"instruction": "Grace, manifest", "input": "", "output": {"command": "intent.service.adapt.manifest", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.adapt.manifest.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.adapt.manifest."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.adapt.manifest.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.adapt.manifest.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.adapt.manifest.get."}}
+{"instruction": "Grace, reply", "input": "", "output": {"command": "intent.service.adapt.reply", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.adapt.reply.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.adapt.reply."}}
+{"instruction": "Grace, manifest", "input": "", "output": {"command": "intent.service.adapt.vocab.manifest", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.adapt.vocab.manifest.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.adapt.vocab.manifest."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.adapt.vocab.manifest.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.adapt.vocab.manifest.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.adapt.vocab.manifest.get."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.intent.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.intent.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.intent.get."}}
+{"instruction": "Grace, reply", "input": "", "output": {"command": "intent.service.intent.reply", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.intent.reply.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.intent.reply."}}
+{"instruction": "Grace, manifest", "input": "", "output": {"command": "intent.service.padatious.entities.manifest", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.padatious.entities.manifest.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.padatious.entities.manifest."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.padatious.entities.manifest.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.padatious.entities.manifest.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.padatious.entities.manifest.get."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.padatious.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.padatious.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.padatious.get."}}
+{"instruction": "Grace, manifest", "input": "", "output": {"command": "intent.service.padatious.manifest", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.padatious.manifest.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.padatious.manifest."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.padatious.manifest.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.padatious.manifest.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.padatious.manifest.get."}}
+{"instruction": "Grace, reply", "input": "", "output": {"command": "intent.service.padatious.reply", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.padatious.reply.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.padatious.reply."}}
+{"instruction": "Grace, activate", "input": "", "output": {"command": "intent.service.skills.activate", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.skills.activate.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.skills.activate."}}
+{"instruction": "Grace, activated", "input": "", "output": {"command": "intent.service.skills.activated", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.skills.activated.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.skills.activated."}}
+{"instruction": "Grace, deactivate", "input": "", "output": {"command": "intent.service.skills.deactivate", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.skills.deactivate.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.skills.deactivate."}}
+{"instruction": "Grace, deactivated", "input": "", "output": {"command": "intent.service.skills.deactivated", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.skills.deactivated.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.skills.deactivated."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "intent.service.skills.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.skills.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.skills.get."}}
+{"instruction": "Grace, reply", "input": "", "output": {"command": "intent.service.skills.reply", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event intent.service.skills.reply.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for intent.service.skills.reply."}}
+{"instruction": "Grace, launch setup", "input": "", "output": {"command": "launch_setup", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event launch_setup.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for launch_setup."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "oauth.app.host.info.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.app.host.info.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.app.host.info.response."}}
+{"instruction": "Grace, request", "input": "", "output": {"command": "oauth.generate.qr.request", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.generate.qr.request.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.generate.qr.request."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "oauth.generate.qr.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.generate.qr.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.generate.qr.response."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "oauth.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.get."}}
+{"instruction": "Grace, info", "input": "", "output": {"command": "oauth.get.app.host.info", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.get.app.host.info.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.get.app.host.info."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "oauth.get.app.host.info.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.get.app.host.info.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.get.app.host.info.response."}}
+{"instruction": "Grace, register", "input": "", "output": {"command": "oauth.register", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.register.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.register."}}
+{"instruction": "Grace, start", "input": "", "output": {"command": "oauth.start", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.start.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.start."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "oauth.token.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.token.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.token.response."}}
+{"instruction": "Grace, munged id", "input": "", "output": {"command": "oauth.token.response.munged_id", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.token.response.munged_id.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.token.response.munged_id."}}
+{"instruction": "Grace, {munged id}", "input": "", "output": {"command": "oauth.token.response.{munged_id}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.token.response.{munged_id}.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.token.response.{munged_id}."}}
+{"instruction": "Grace, url", "input": "", "output": {"command": "oauth.url", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event oauth.url.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for oauth.url."}}
+{"instruction": "Grace, query", "input": "", "output": {"command": "opm.audio.query", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.audio.query.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.audio.query."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "opm.audio.query.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.audio.query.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.audio.query.response."}}
+{"instruction": "Grace, query", "input": "", "output": {"command": "opm.g2p.query", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.g2p.query.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.g2p.query."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "opm.g2p.query.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.g2p.query.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.g2p.query.response."}}
+{"instruction": "Grace, query", "input": "", "output": {"command": "opm.stt.query", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.stt.query.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.stt.query."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "opm.stt.query.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.stt.query.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.stt.query.response."}}
+{"instruction": "Grace, query", "input": "", "output": {"command": "opm.tts.query", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.tts.query.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.tts.query."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "opm.tts.query.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.tts.query.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.tts.query.response."}}
+{"instruction": "Grace, query", "input": "", "output": {"command": "opm.vad.query", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.vad.query.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.vad.query."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "opm.vad.query.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.vad.query.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.vad.query.response."}}
+{"instruction": "Grace, query", "input": "", "output": {"command": "opm.ww.query", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.ww.query.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.ww.query."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "opm.ww.query.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event opm.ww.query.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for opm.ww.query.response."}}
+{"instruction": "Grace, close", "input": "", "output": {"command": "ovos-PHAL-plugin-homeassistant.close", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos-PHAL-plugin-homeassistant.close.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos-PHAL-plugin-homeassistant.close."}}
+{"instruction": "Grace, home", "input": "", "output": {"command": "ovos-PHAL-plugin-homeassistant.home", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos-PHAL-plugin-homeassistant.home.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos-PHAL-plugin-homeassistant.home."}}
+{"instruction": "Grace, internet check", "input": "", "output": {"command": "ovos.PHAL.internet_check", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.PHAL.internet_check.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.PHAL.internet_check."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.PHAL.internet_check.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.PHAL.internet_check.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.PHAL.internet_check.response."}}
+{"instruction": "Grace, is speaking", "input": "", "output": {"command": "ovos.audio.is_speaking", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.is_speaking.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.is_speaking."}}
+{"instruction": "Grace, play some jazz", "input": "", "output": {"command": "ovos.audio.play_sound", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.play_sound.result", "input": "{\"status\": \"playing\", \"title\": \"Morning Vibes\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.play_sound."}}
+{"instruction": "Play music please", "input": "", "output": {"command": "ovos.audio.playing_track", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.playing_track.result", "input": "{\"status\": \"playing\", \"title\": \"Morning Vibes\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.playing_track."}}
+{"instruction": "Grace, queue", "input": "", "output": {"command": "ovos.audio.queue", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.queue.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.queue."}}
+{"instruction": "Grace, queue end", "input": "", "output": {"command": "ovos.audio.queue_end", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.queue_end.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.queue_end."}}
+{"instruction": "Grace, get track length", "input": "", "output": {"command": "ovos.audio.service.get_track_length", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.get_track_length.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.get_track_length."}}
+{"instruction": "Grace, get track position", "input": "", "output": {"command": "ovos.audio.service.get_track_position", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.get_track_position.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.get_track_position."}}
+{"instruction": "Grace, list backends", "input": "", "output": {"command": "ovos.audio.service.list_backends", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.list_backends.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.list_backends."}}
+{"instruction": "Skip to the next track", "input": "", "output": {"command": "ovos.audio.service.next", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.next.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.next."}}
+{"instruction": "Grace, hold playback", "input": "", "output": {"command": "ovos.audio.service.pause", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.pause.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.pause."}}
+{"instruction": "Play music please", "input": "", "output": {"command": "ovos.audio.service.play", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.play.result", "input": "{\"status\": \"playing\", \"title\": \"Morning Vibes\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.play."}}
+{"instruction": "Go back to the previous song", "input": "", "output": {"command": "ovos.audio.service.prev", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.prev.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.prev."}}
+{"instruction": "Grace, queue", "input": "", "output": {"command": "ovos.audio.service.queue", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.queue.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.queue."}}
+{"instruction": "Resume the song", "input": "", "output": {"command": "ovos.audio.service.resume", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.resume.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.resume."}}
+{"instruction": "Grace, seek backward", "input": "", "output": {"command": "ovos.audio.service.seek_backward", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.seek_backward.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.seek_backward."}}
+{"instruction": "Grace, seek forward", "input": "", "output": {"command": "ovos.audio.service.seek_forward", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.seek_forward.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.seek_forward."}}
+{"instruction": "Grace, set track position", "input": "", "output": {"command": "ovos.audio.service.set_track_position", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.set_track_position.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.set_track_position."}}
+{"instruction": "Grace, stop", "input": "", "output": {"command": "ovos.audio.service.stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.stop."}}
+{"instruction": "Grace, track info", "input": "", "output": {"command": "ovos.audio.service.track_info", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.track_info.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.track_info."}}
+{"instruction": "Grace, track info reply", "input": "", "output": {"command": "ovos.audio.service.track_info_reply", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.service.track_info_reply.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.service.track_info_reply."}}
+{"instruction": "Grace, status", "input": "", "output": {"command": "ovos.audio.speak.status", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.speak.status.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.speak.status."}}
+{"instruction": "Grace, stop", "input": "", "output": {"command": "ovos.audio.speech.stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.audio.speech.stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.audio.speech.stop."}}
+{"instruction": "Grace, awoken", "input": "", "output": {"command": "ovos.awoken", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.awoken.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.awoken."}}
+{"instruction": "Grace, announce", "input": "", "output": {"command": "ovos.common_play.announce", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.announce.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.announce."}}
+{"instruction": "Grace, play", "input": "", "output": {"command": "ovos.common_play.featured_tracks.play", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.featured_tracks.play.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.featured_tracks.play."}}
+{"instruction": "Grace, play", "input": "", "output": {"command": "ovos.common_play.play", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.play.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.play."}}
+{"instruction": "Grace, state", "input": "", "output": {"command": "ovos.common_play.player.state", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.player.state.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.player.state."}}
+{"instruction": "Grace, query", "input": "", "output": {"command": "ovos.common_play.query", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.query.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.query."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.common_play.query.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.query.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.query.response."}}
+{"instruction": "Grace, stop", "input": "", "output": {"command": "ovos.common_play.search.stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.search.stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.search.stop."}}
+{"instruction": "Grace, search end", "input": "", "output": {"command": "ovos.common_play.skill.search_end", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.skill.search_end.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.skill.search_end."}}
+{"instruction": "Grace, search start", "input": "", "output": {"command": "ovos.common_play.skill.search_start", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.skill.search_start.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.skill.search_start."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "ovos.common_play.skills.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.skills.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.skills.get."}}
+{"instruction": "Grace, stop", "input": "", "output": {"command": "ovos.common_play.stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.stop."}}
+{"instruction": "Grace, next", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.next", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.next.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.{self.skill_id}.next."}}
+{"instruction": "Grace, pause", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.pause", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.pause.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.{self.skill_id}.pause."}}
+{"instruction": "Grace, play", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.play", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.play.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.{self.skill_id}.play."}}
+{"instruction": "Grace, previous", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.previous", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.previous.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.{self.skill_id}.previous."}}
+{"instruction": "Grace, resume", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.resume", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.resume.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.{self.skill_id}.resume."}}
+{"instruction": "Grace, stop", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.common_play.{self.skill_id}.stop."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "ovos.device.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings."}}
+{"instruction": "Grace, page", "input": "", "output": {"command": "ovos.device.settings.about.page", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.about.page.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings.about.page."}}
+{"instruction": "Grace, theme", "input": "", "output": {"command": "ovos.device.settings.create.theme", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.create.theme.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings.create.theme."}}
+{"instruction": "Grace, customize", "input": "", "output": {"command": "ovos.device.settings.customize", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.customize.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings.customize."}}
+{"instruction": "Grace, developer", "input": "", "output": {"command": "ovos.device.settings.developer", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.developer.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings.developer."}}
+{"instruction": "Grace, display", "input": "", "output": {"command": "ovos.device.settings.display", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.display.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings.display."}}
+{"instruction": "Grace, factory", "input": "", "output": {"command": "ovos.device.settings.factory", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.factory.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings.factory."}}
+{"instruction": "Grace, homescreen", "input": "", "output": {"command": "ovos.device.settings.homescreen", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.homescreen.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings.homescreen."}}
+{"instruction": "Grace, ssh", "input": "", "output": {"command": "ovos.device.settings.ssh", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.settings.ssh.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.settings.ssh."}}
+{"instruction": "Grace, idle", "input": "", "output": {"command": "ovos.device.show.idle", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.device.show.idle.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.device.show.idle."}}
+{"instruction": "Grace, disable", "input": "", "output": {"command": "ovos.ggwave.disable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.ggwave.disable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.ggwave.disable."}}
+{"instruction": "Grace, disabled", "input": "", "output": {"command": "ovos.ggwave.disabled", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.ggwave.disabled.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.ggwave.disabled."}}
+{"instruction": "Grace, enable", "input": "", "output": {"command": "ovos.ggwave.enable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.ggwave.enable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.ggwave.enable."}}
+{"instruction": "Grace, enabled", "input": "", "output": {"command": "ovos.ggwave.enabled", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.ggwave.enabled.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.ggwave.enabled."}}
+{"instruction": "Grace, available", "input": "", "output": {"command": "ovos.gui.available", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.gui.available.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.gui.available."}}
+{"instruction": "Grace, connected", "input": "", "output": {"command": "ovos.gui.connected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.gui.connected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.gui.connected."}}
+{"instruction": "Grace, screenclose", "input": "", "output": {"command": "ovos.gui.force.screenclose", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.gui.force.screenclose.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.gui.force.screenclose."}}
+{"instruction": "Grace, forceHome", "input": "", "output": {"command": "ovos.gui.forceHome", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.gui.forceHome.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.gui.forceHome."}}
+{"instruction": "Grace, port", "input": "", "output": {"command": "ovos.gui.port", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.gui.port.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.gui.port."}}
+{"instruction": "Grace, close", "input": "", "output": {"command": "ovos.gui.screen.close", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.gui.screen.close.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.gui.screen.close."}}
+{"instruction": "Grace, back", "input": "", "output": {"command": "ovos.gui.screen.request.page.back", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.gui.screen.request.page.back.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.gui.screen.request.page.back."}}
+{"instruction": "Grace, unavailable", "input": "", "output": {"command": "ovos.gui.unavailable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.gui.unavailable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.gui.unavailable."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "ovos.homescreen.main_view.current_index.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.homescreen.main_view.current_index.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.homescreen.main_view.current_index.get."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.homescreen.main_view.current_index.get.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.homescreen.main_view.current_index.get.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.homescreen.main_view.current_index.get.response."}}
+{"instruction": "Grace, set", "input": "", "output": {"command": "ovos.homescreen.main_view.current_index.set", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.homescreen.main_view.current_index.set.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.homescreen.main_view.current_index.set."}}
+{"instruction": "Grace, connected", "input": "", "output": {"command": "ovos.internet.connected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.internet.connected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.internet.connected."}}
+{"instruction": "Grace, disconnected", "input": "", "output": {"command": "ovos.internet.disconnected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.internet.disconnected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.internet.disconnected."}}
+{"instruction": "Grace, is ready", "input": "", "output": {"command": "ovos.internet.is_ready", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.internet.is_ready.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.internet.is_ready."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.internet.is_ready.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.internet.is_ready.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.internet.is_ready.response."}}
+{"instruction": "Grace, state", "input": "", "output": {"command": "ovos.internet.state", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.internet.state.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.internet.state."}}
+{"instruction": "Grace, update", "input": "", "output": {"command": "ovos.ipgeo.update", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.ipgeo.update.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.ipgeo.update."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.ipgeo.update.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.ipgeo.update.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.ipgeo.update.response."}}
+{"instruction": "Grace, stt", "input": "", "output": {"command": "ovos.languages.stt", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.languages.stt.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.languages.stt."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.languages.stt.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.languages.stt.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.languages.stt.response."}}
+{"instruction": "Grace, tts", "input": "", "output": {"command": "ovos.languages.tts", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.languages.tts.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.languages.tts."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.languages.tts.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.languages.tts.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.languages.tts.response."}}
+{"instruction": "Grace, collect idle", "input": "", "output": {"command": "ovos.mark2.collect_idle", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.mark2.collect_idle.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.mark2.collect_idle."}}
+{"instruction": "Grace, register idle", "input": "", "output": {"command": "ovos.mark2.register_idle", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.mark2.register_idle.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.mark2.register_idle."}}
+{"instruction": "Grace, get status", "input": "", "output": {"command": "ovos.mic.get_status", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.mic.get_status.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.mic.get_status."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.mic.get_status.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.mic.get_status.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.mic.get_status.response."}}
+{"instruction": "Grace, listen", "input": "", "output": {"command": "ovos.mic.listen", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.mic.listen.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.mic.listen."}}
+{"instruction": "Grace, mute", "input": "", "output": {"command": "ovos.mic.mute", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.mic.mute.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.mic.mute."}}
+{"instruction": "Grace, unmute", "input": "", "output": {"command": "ovos.mic.unmute", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.mic.unmute.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.mic.unmute."}}
+{"instruction": "Grace, connected", "input": "", "output": {"command": "ovos.network.connected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.network.connected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.network.connected."}}
+{"instruction": "Grace, disconnected", "input": "", "output": {"command": "ovos.network.disconnected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.network.disconnected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.network.disconnected."}}
+{"instruction": "Grace, state", "input": "", "output": {"command": "ovos.network.state", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.network.state.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.network.state."}}
+{"instruction": "Grace, ask", "input": "", "output": {"command": "ovos.persona.ask", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.persona.ask.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.persona.ask."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.persona.ask.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.persona.ask.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.persona.ask.response."}}
+{"instruction": "Grace, deregister", "input": "", "output": {"command": "ovos.persona.deregister", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.persona.deregister.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.persona.deregister."}}
+{"instruction": "Grace, disable", "input": "", "output": {"command": "ovos.persona.disable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.persona.disable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.persona.disable."}}
+{"instruction": "Grace, enable", "input": "", "output": {"command": "ovos.persona.enable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.persona.enable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.persona.enable."}}
+{"instruction": "Grace, register", "input": "", "output": {"command": "ovos.persona.register", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.persona.register.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.persona.register."}}
+{"instruction": "Update Grace's configuration", "input": "", "output": {"command": "ovos.phal.configuration.provider.get.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.configuration.provider.get.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.configuration.provider.get.response."}}
+{"instruction": "Update Grace's configuration", "input": "", "output": {"command": "ovos.phal.configuration.provider.list.groups.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.configuration.provider.list.groups.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.configuration.provider.list.groups.response."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "ovos.phal.gui.display.connected.network.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.gui.display.connected.network.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.gui.display.connected.network.settings."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "ovos.phal.gui.display.disconnected.network.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.gui.display.disconnected.network.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.gui.display.disconnected.network.settings."}}
+{"instruction": "Grace, back", "input": "", "output": {"command": "ovos.phal.gui.network.client.back", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.gui.network.client.back.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.gui.network.client.back."}}
+{"instruction": "Grace, back", "input": "", "output": {"command": "ovos.phal.gui.network.client.internal.back", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.gui.network.client.internal.back.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.gui.network.client.internal.back."}}
+{"instruction": "Grace, connect", "input": "", "output": {"command": "ovos.phal.nm.connect", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.connect.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.connect."}}
+{"instruction": "Grace, network", "input": "", "output": {"command": "ovos.phal.nm.connect.open.network", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.connect.open.network.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.connect.open.network."}}
+{"instruction": "Grace, failure", "input": "", "output": {"command": "ovos.phal.nm.connection.failure", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.connection.failure.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.connection.failure."}}
+{"instruction": "Grace, successful", "input": "", "output": {"command": "ovos.phal.nm.connection.successful", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.connection.successful.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.connection.successful."}}
+{"instruction": "Grace, disconnect", "input": "", "output": {"command": "ovos.phal.nm.disconnect", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.disconnect.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.disconnect."}}
+{"instruction": "Grace, failure", "input": "", "output": {"command": "ovos.phal.nm.disconnection.failure", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.disconnection.failure.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.disconnection.failure."}}
+{"instruction": "Grace, successful", "input": "", "output": {"command": "ovos.phal.nm.disconnection.successful", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.disconnection.successful.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.disconnection.successful."}}
+{"instruction": "Grace, forget", "input": "", "output": {"command": "ovos.phal.nm.forget", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.forget.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.forget."}}
+{"instruction": "Grace, failure", "input": "", "output": {"command": "ovos.phal.nm.forget.failure", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.forget.failure.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.forget.failure."}}
+{"instruction": "Grace, successful", "input": "", "output": {"command": "ovos.phal.nm.forget.successful", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.forget.successful.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.forget.successful."}}
+{"instruction": "Grace, connected", "input": "", "output": {"command": "ovos.phal.nm.get.connected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.get.connected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.get.connected."}}
+{"instruction": "Grace, connected", "input": "", "output": {"command": "ovos.phal.nm.is.connected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.is.connected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.is.connected."}}
+{"instruction": "Grace, connected", "input": "", "output": {"command": "ovos.phal.nm.is.not.connected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.is.not.connected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.is.not.connected."}}
+{"instruction": "Grace, reconnect", "input": "", "output": {"command": "ovos.phal.nm.reconnect", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.reconnect.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.reconnect."}}
+{"instruction": "Grace, scan", "input": "", "output": {"command": "ovos.phal.nm.scan", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.scan.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.scan."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "ovos.phal.nm.scan.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.nm.scan.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.nm.scan.complete."}}
+{"instruction": "Grace, intent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.assist.intent", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.assist.intent.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.assist.intent."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.assist.intent.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.assist.intent.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.assist.intent.response."}}
+{"instruction": "Grace, function", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.call.supported.function", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.call.supported.function.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.call.supported.function."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.call.supported.function.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.call.supported.function.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.call.supported.function.response."}}
+{"instruction": "Grace, dashboard", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.change.dashboard", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.change.dashboard.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.change.dashboard."}}
+{"instruction": "Grace, check connected", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.check_connected", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.check_connected.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.check_connected."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.decrease.light.brightness", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.decrease.light.brightness.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.decrease.light.brightness."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.decrease.light.brightness.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.decrease.light.brightness.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.decrease.light.brightness.response."}}
+{"instruction": "Grace, updated", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.state.updated", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.state.updated.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.device.state.updated."}}
+{"instruction": "Grace, turn off", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.turn_off", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.turn_off.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.device.turn_off."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.turn_off.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.turn_off.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.device.turn_off.response."}}
+{"instruction": "Grace, turn on", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.turn_on", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.turn_on.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.device.turn_on."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.turn_on.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.turn_on.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.device.turn_on.response."}}
+{"instruction": "Grace, updated", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.updated", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.updated.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.device.updated."}}
+{"instruction": "Grace, device", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.device."}}
+{"instruction": "Grace, model", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.display.list.model", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.display.list.model.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.device.display.list.model."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.display.list.model.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.display.list.model.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.device.display.list.model.response."}}
+{"instruction": "Grace, model", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.display.model", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.display.model.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.device.display.model."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.display.model.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.display.model.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.device.display.model.response."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.device.response."}}
+{"instruction": "Grace, devices", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.devices", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.devices.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.devices."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.devices.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.devices.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.devices.response."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.brightness", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.brightness.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.light.brightness."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.brightness.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.brightness.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.light.brightness.response."}}
+{"instruction": "Grace, color", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.color", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.color.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.light.color."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.color.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.color.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.get.light.color.response."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.increase.light.brightness", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.increase.light.brightness.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.increase.light.brightness."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.increase.light.brightness.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.increase.light.brightness.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.increase.light.brightness.response."}}
+{"instruction": "Grace, query media", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.integration.query_media", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.integration.query_media.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.integration.query_media."}}
+{"instruction": "Grace, result", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.integration.query_media.result", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.integration.query_media.result.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.integration.query_media.result."}}
+{"instruction": "Grace, ready", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.ready", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.ready.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.ready."}}
+{"instruction": "Grace, settings", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.group.display.settings", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.group.display.settings.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.set.group.display.settings."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.light.brightness", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.light.brightness.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.set.light.brightness."}}
+{"instruction": "Dim the screen brightness to 40 percent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.light.brightness.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.light.brightness.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.set.light.brightness.response."}}
+{"instruction": "Grace, color", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.light.color", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.light.color.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.set.light.color."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.light.color.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.light.color.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.set.light.color.response."}}
+{"instruction": "Grace, instance", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.setup.instance", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.setup.instance.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.setup.instance."}}
+{"instruction": "Grace, dashboard", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.show.area.dashboard", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.show.area.dashboard.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.show.area.dashboard."}}
+{"instruction": "Grace, dashboard", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.show.device.dashboard", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.show.device.dashboard.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.show.device.dashboard."}}
+{"instruction": "Grace, flow", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.start.oauth.flow", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.start.oauth.flow.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.start.oauth.flow."}}
+{"instruction": "Grace, dashboard", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.update.area.dashboard", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.update.area.dashboard.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.update.area.dashboard."}}
+{"instruction": "Grace, dashboard", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.update.device.dashboard", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.update.device.dashboard.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeassistant.update.device.dashboard."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.plugin.homeasssistant.check_connected.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.plugin.homeasssistant.check_connected.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.plugin.homeasssistant.check_connected.response."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.phal.wallpaper.manager.provider.registered", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wallpaper.manager.provider.registered.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wallpaper.manager.provider.registered."}}
+{"instruction": "Grace, {clientID}", "input": "", "output": {"command": "ovos.phal.wifi.plugin.activate.{clientID}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.activate.{clientID}.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.activate.{clientID}."}}
+{"instruction": "Grace, {client id}", "input": "", "output": {"command": "ovos.phal.wifi.plugin.activate.{client_id}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.activate.{client_id}.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.activate.{client_id}."}}
+{"instruction": "Grace, client id}", "input": "", "output": {"command": "ovos.phal.wifi.plugin.activate.{self.client_id}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.activate.{self.client_id}.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.activate.{self.client_id}."}}
+{"instruction": "Grace, alive", "input": "", "output": {"command": "ovos.phal.wifi.plugin.alive", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.alive.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.alive."}}
+{"instruction": "Grace, deregistered", "input": "", "output": {"command": "ovos.phal.wifi.plugin.client.deregistered", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.client.deregistered.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.client.deregistered."}}
+{"instruction": "Grace, registered", "input": "", "output": {"command": "ovos.phal.wifi.plugin.client.registered", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.client.registered.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.client.registered."}}
+{"instruction": "Grace, failure", "input": "", "output": {"command": "ovos.phal.wifi.plugin.client.registration.failure", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.client.registration.failure.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.client.registration.failure."}}
+{"instruction": "Grace, select", "input": "", "output": {"command": "ovos.phal.wifi.plugin.client.select", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.client.select.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.client.select."}}
+{"instruction": "Grace, removed", "input": "", "output": {"command": "ovos.phal.wifi.plugin.client.select.page.removed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.client.select.page.removed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.client.select.page.removed."}}
+{"instruction": "Grace, failure", "input": "", "output": {"command": "ovos.phal.wifi.plugin.client.setup.failure", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.client.setup.failure.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.client.setup.failure."}}
+{"instruction": "Grace, {clientID}", "input": "", "output": {"command": "ovos.phal.wifi.plugin.deactivate.{clientID}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.deactivate.{clientID}.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.deactivate.{clientID}."}}
+{"instruction": "Grace, client id}", "input": "", "output": {"command": "ovos.phal.wifi.plugin.deactivate.{self.client_id}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.deactivate.{self.client_id}.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.deactivate.{self.client_id}."}}
+{"instruction": "Grace, client", "input": "", "output": {"command": "ovos.phal.wifi.plugin.deregister.client", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.deregister.client.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.deregister.client."}}
+{"instruction": "Grace, fully offline", "input": "", "output": {"command": "ovos.phal.wifi.plugin.fully_offline", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.fully_offline.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.fully_offline."}}
+{"instruction": "Grace, clients", "input": "", "output": {"command": "ovos.phal.wifi.plugin.get.registered.clients", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.get.registered.clients.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.get.registered.clients."}}
+{"instruction": "Grace, client", "input": "", "output": {"command": "ovos.phal.wifi.plugin.register.client", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.register.client.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.register.client."}}
+{"instruction": "Grace, clients", "input": "", "output": {"command": "ovos.phal.wifi.plugin.registered.clients", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.registered.clients.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.registered.clients."}}
+{"instruction": "Grace, client", "input": "", "output": {"command": "ovos.phal.wifi.plugin.remove.active.client", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.remove.active.client.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.remove.active.client."}}
+{"instruction": "Grace, client", "input": "", "output": {"command": "ovos.phal.wifi.plugin.set.active.client", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.set.active.client.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.set.active.client."}}
+{"instruction": "Grace, completed", "input": "", "output": {"command": "ovos.phal.wifi.plugin.setup.completed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.setup.completed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.setup.completed."}}
+{"instruction": "Grace, failed", "input": "", "output": {"command": "ovos.phal.wifi.plugin.setup.failed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.setup.failed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.setup.failed."}}
+{"instruction": "Grace, launched", "input": "", "output": {"command": "ovos.phal.wifi.plugin.setup.launched", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.setup.launched.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.setup.launched."}}
+{"instruction": "Grace, setup", "input": "", "output": {"command": "ovos.phal.wifi.plugin.skip.setup", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.skip.setup.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.skip.setup."}}
+{"instruction": "Grace, status", "input": "", "output": {"command": "ovos.phal.wifi.plugin.status", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.status.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.status."}}
+{"instruction": "Grace, status,response", "input": "", "output": {"command": "ovos.phal.wifi.plugin.status,response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.status,response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.status,response."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.phal.wifi.plugin.status.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.status.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.status.response."}}
+{"instruction": "Grace, event", "input": "", "output": {"command": "ovos.phal.wifi.plugin.stop.setup.event", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.stop.setup.event.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.stop.setup.event."}}
+{"instruction": "Grace, activated", "input": "", "output": {"command": "ovos.phal.wifi.plugin.user.activated", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.phal.wifi.plugin.user.activated.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.phal.wifi.plugin.user.activated."}}
+{"instruction": "Grace, install", "input": "", "output": {"command": "ovos.pip.install", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.pip.install.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.pip.install."}}
+{"instruction": "Grace, failed", "input": "", "output": {"command": "ovos.pip.install.complete, ovos.pip.install.failed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.pip.install.complete, ovos.pip.install.failed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.pip.install.complete, ovos.pip.install.failed."}}
+{"instruction": "Grace, uninstall", "input": "", "output": {"command": "ovos.pip.uninstall", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.pip.uninstall.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.pip.uninstall."}}
+{"instruction": "Grace, failed", "input": "", "output": {"command": "ovos.pip.uninstall.complete, ovos.pip.uninstall.failed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.pip.uninstall.complete, ovos.pip.uninstall.failed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.pip.uninstall.complete, ovos.pip.uninstall.failed."}}
+{"instruction": "Grace, ready", "input": "", "output": {"command": "ovos.ready", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.ready.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.ready."}}
+{"instruction": "Grace, finished", "input": "", "output": {"command": "ovos.setup.finished", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.setup.finished.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.setup.finished."}}
+{"instruction": "Grace, state", "input": "", "output": {"command": "ovos.setup.state", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.setup.state.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.setup.state."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "ovos.setup.state.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.setup.state.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.setup.state.get."}}
+{"instruction": "Grace, reset", "input": "", "output": {"command": "ovos.shell.exec.factory.reset", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.shell.exec.factory.reset.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.shell.exec.factory.reset."}}
+{"instruction": "Grace, code", "input": "", "output": {"command": "ovos.shell.oauth.display.qr.code", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.shell.oauth.display.qr.code.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.shell.oauth.display.qr.code."}}
+{"instruction": "Grace, credentials", "input": "", "output": {"command": "ovos.shell.oauth.register.credentials", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.shell.oauth.register.credentials.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.shell.oauth.register.credentials."}}
+{"instruction": "Grace, authentication", "input": "", "output": {"command": "ovos.shell.oauth.start.authentication", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.shell.oauth.start.authentication.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.shell.oauth.start.authentication."}}
+{"instruction": "Grace, ok", "input": "", "output": {"command": "ovos.shell.status.ok", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.shell.status.ok.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.shell.status.ok."}}
+{"instruction": "Grace, disable intent", "input": "", "output": {"command": "ovos.skill.disable_intent", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skill.disable_intent.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skill.disable_intent."}}
+{"instruction": "Grace, enable intent", "input": "", "output": {"command": "ovos.skill.enable_intent", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skill.enable_intent.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skill.enable_intent."}}
+{"instruction": "Grace, remove cross context", "input": "", "output": {"command": "ovos.skill.remove_cross_context", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skill.remove_cross_context.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skill.remove_cross_context."}}
+{"instruction": "Grace, set cross context", "input": "", "output": {"command": "ovos.skill.set_cross_context", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skill.set_cross_context.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skill.set_cross_context."}}
+{"instruction": "Grace, abort question", "input": "", "output": {"command": "ovos.skills.abort_question", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.abort_question.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.abort_question."}}
+{"instruction": "Grace, error", "input": "", "output": {"command": "ovos.skills.error", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.error.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.error."}}
+{"instruction": "Grace, fallback", "input": "", "output": {"command": "ovos.skills.fallback", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback."}}
+{"instruction": "Grace, deregister", "input": "", "output": {"command": "ovos.skills.fallback.deregister", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.deregister.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.deregister."}}
+{"instruction": "Grace, ping", "input": "", "output": {"command": "ovos.skills.fallback.ping", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.ping.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.ping."}}
+{"instruction": "Grace, pong", "input": "", "output": {"command": "ovos.skills.fallback.pong", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.pong.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.pong."}}
+{"instruction": "Grace, register", "input": "", "output": {"command": "ovos.skills.fallback.register", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.register.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.register."}}
+{"instruction": "Grace, skill id", "input": "", "output": {"command": "ovos.skills.fallback.skill_id", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.skill_id."}}
+{"instruction": "Grace, request", "input": "", "output": {"command": "ovos.skills.fallback.skill_id.request", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.request.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.skill_id.request."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.skills.fallback.skill_id.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.skill_id.response."}}
+{"instruction": "Grace, start", "input": "", "output": {"command": "ovos.skills.fallback.skill_id.start", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.start.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.skill_id.start."}}
+{"instruction": "Grace, request", "input": "", "output": {"command": "ovos.skills.fallback.{skill_id}.request", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.{skill_id}.request.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.{skill_id}.request."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.skills.fallback.{skill_id}.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.fallback.{skill_id}.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.fallback.{skill_id}.response."}}
+{"instruction": "Grace, initialized", "input": "", "output": {"command": "ovos.skills.initialized", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.initialized.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.initialized."}}
+{"instruction": "Grace, install", "input": "", "output": {"command": "ovos.skills.install", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.install.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.install."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "ovos.skills.install.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.install.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.install.complete."}}
+{"instruction": "Grace, failed", "input": "", "output": {"command": "ovos.skills.install.complete, ovos.skills.install.failed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.install.complete, ovos.skills.install.failed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.install.complete, ovos.skills.install.failed."}}
+{"instruction": "Grace, failed", "input": "", "output": {"command": "ovos.skills.install.failed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.install.failed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.install.failed."}}
+{"instruction": "Grace, is ready", "input": "", "output": {"command": "ovos.skills.is_ready", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.is_ready.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.is_ready."}}
+{"instruction": "Grace, list", "input": "", "output": {"command": "ovos.skills.list", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.list.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.list."}}
+{"instruction": "Grace, loaded", "input": "", "output": {"command": "ovos.skills.loaded", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.loaded.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.loaded."}}
+{"instruction": "Grace, loading failure", "input": "", "output": {"command": "ovos.skills.loading_failure", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.loading_failure.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.loading_failure."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "ovos.skills.pip.install.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.pip.install.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.pip.install.complete."}}
+{"instruction": "Grace, failed", "input": "", "output": {"command": "ovos.skills.pip.install.failed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.pip.install.failed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.pip.install.failed."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "ovos.skills.pip.uninstall.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.pip.uninstall.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.pip.uninstall.complete."}}
+{"instruction": "Grace, failed", "input": "", "output": {"command": "ovos.skills.pip.uninstall.failed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.pip.uninstall.failed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.pip.uninstall.failed."}}
+{"instruction": "Grace, changed", "input": "", "output": {"command": "ovos.skills.settings.changed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.settings.changed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.settings.changed."}}
+{"instruction": "Grace, settings changed", "input": "", "output": {"command": "ovos.skills.settings_changed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.settings_changed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.settings_changed."}}
+{"instruction": "Grace, shutdown", "input": "", "output": {"command": "ovos.skills.shutdown", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.shutdown.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.shutdown."}}
+{"instruction": "Grace, trained", "input": "", "output": {"command": "ovos.skills.trained", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.trained.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.trained."}}
+{"instruction": "Grace, uninstall", "input": "", "output": {"command": "ovos.skills.uninstall", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.uninstall.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.uninstall."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "ovos.skills.uninstall.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.uninstall.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.uninstall.complete."}}
+{"instruction": "Grace, failed", "input": "", "output": {"command": "ovos.skills.uninstall.failed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.skills.uninstall.failed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.skills.uninstall.failed."}}
+{"instruction": "Grace, unknown", "input": "", "output": {"command": "ovos.speech.recognition.unknown", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.speech.recognition.unknown.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.speech.recognition.unknown."}}
+{"instruction": "Grace, stop", "input": "", "output": {"command": "ovos.stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.stop."}}
+{"instruction": "Grace, handled", "input": "", "output": {"command": "ovos.stop.handled", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.stop.handled.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.stop.handled."}}
+{"instruction": "Grace, cancelled", "input": "", "output": {"command": "ovos.utterance.cancelled", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.utterance.cancelled.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.utterance.cancelled."}}
+{"instruction": "Grace, handled", "input": "", "output": {"command": "ovos.utterance.handled", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.utterance.handled.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.utterance.handled."}}
+{"instruction": "Lower the volume", "input": "", "output": {"command": "ovos.volume.decrease", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.volume.decrease.result", "input": "{\"level\": 30}", "output": {"command": "speak", "response": "Result received for ovos.volume.decrease."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "ovos.volume.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.volume.get.result", "input": "{\"level\": 30}", "output": {"command": "speak", "response": "Result received for ovos.volume.get."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "ovos.volume.get.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.volume.get.response.result", "input": "{\"level\": 30}", "output": {"command": "speak", "response": "Result received for ovos.volume.get.response."}}
+{"instruction": "Turn it up a bit", "input": "", "output": {"command": "ovos.volume.increase", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.volume.increase.result", "input": "{\"level\": 30}", "output": {"command": "speak", "response": "Result received for ovos.volume.increase."}}
+{"instruction": "Mute the speakers", "input": "", "output": {"command": "ovos.volume.mute", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.volume.mute.result", "input": "{\"level\": 30}", "output": {"command": "speak", "response": "Result received for ovos.volume.mute."}}
+{"instruction": "Mute the speakers", "input": "", "output": {"command": "ovos.volume.mute.toggle", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.volume.mute.toggle.result", "input": "{\"level\": 30}", "output": {"command": "speak", "response": "Result received for ovos.volume.mute.toggle."}}
+{"instruction": "Set the volume to 30 percent", "input": "", "output": {"command": "ovos.volume.set", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.volume.set.result", "input": "{\"level\": 30}", "output": {"command": "speak", "response": "Result received for ovos.volume.set."}}
+{"instruction": "Mute the speakers", "input": "", "output": {"command": "ovos.volume.unmute", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.volume.unmute.result", "input": "{\"level\": 30}", "output": {"command": "speak", "response": "Result received for ovos.volume.unmute."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.auto.rotation.disabled", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.auto.rotation.disabled.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.auto.rotation.disabled."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.auto.rotation.enabled", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.auto.rotation.enabled.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.auto.rotation.enabled."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.change.wallpaper", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.change.wallpaper.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.change.wallpaper."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.collect.collection.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.collect.collection.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.collect.collection.response."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.disable.auto.rotation", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.disable.auto.rotation.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.disable.auto.rotation."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.enable.auto.rotation", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.enable.auto.rotation.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.enable.auto.rotation."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.get.active.provider", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.get.active.provider.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.get.active.provider."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.get.auto.rotation", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.get.auto.rotation.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.get.auto.rotation."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.get.collection", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.get.collection.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.get.collection."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.get.collection.from.provider", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.get.collection.from.provider.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.get.collection.from.provider."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.get.provider.config", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.get.provider.config.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.get.provider.config."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.get.provider.config.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.get.provider.config.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.get.provider.config.response."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.get.registered.providers", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.get.registered.providers.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.get.registered.providers."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.get.wallpaper", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.get.wallpaper.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.get.wallpaper."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.loaded", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.loaded.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.loaded."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.register.provider", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.register.provider.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.register.provider."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.set.active.provider", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.set.active.provider.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.set.active.provider."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.set.wallpaper", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.set.wallpaper.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.set.wallpaper."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.setup.default.provider", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.setup.default.provider.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.setup.default.provider."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "ovos.wallpaper.manager.update.collection", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wallpaper.manager.update.collection.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wallpaper.manager.update.collection."}}
+{"instruction": "Grace, completed", "input": "", "output": {"command": "ovos.wifi.setup.completed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos.wifi.setup.completed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos.wifi.setup.completed."}}
+{"instruction": "Grace, {msg type}", "input": "", "output": {"command": "ovos_gui_plugin_shell_companion.{msg_type}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event ovos_gui_plugin_shell_companion.{msg_type}.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for ovos_gui_plugin_shell_companion.{msg_type}."}}
+{"instruction": "Grace, padatious:register entity", "input": "", "output": {"command": "padatious:register_entity", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event padatious:register_entity.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for padatious:register_entity."}}
+{"instruction": "Grace, padatious:register intent", "input": "", "output": {"command": "padatious:register_intent", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event padatious:register_intent.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for padatious:register_intent."}}
+{"instruction": "Grace, alarm", "input": "", "output": {"command": "query.next.alarm", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event query.next.alarm.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for query.next.alarm."}}
+{"instruction": "Grace, question:action", "input": "", "output": {"command": "question:action", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event question:action.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for question:action."}}
+{"instruction": "Grace, question:query", "input": "", "output": {"command": "question:query", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event question:query.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for question:query."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "question:query.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event question:query.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for question:query.response."}}
+{"instruction": "Grace, timeout", "input": "", "output": {"command": "question:query.timeout", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event question:query.timeout.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for question:query.timeout."}}
+{"instruction": "Grace, recognizer loop:audio output end", "input": "", "output": {"command": "recognizer_loop:audio_output_end", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:audio_output_end.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:audio_output_end."}}
+{"instruction": "Grace, recognizer loop:audio output start", "input": "", "output": {"command": "recognizer_loop:audio_output_start", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:audio_output_start.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:audio_output_start."}}
+{"instruction": "Grace, recognizer loop:hotword", "input": "", "output": {"command": "recognizer_loop:hotword", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:hotword.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:hotword."}}
+{"instruction": "Grace, recognizer loop:record begin", "input": "", "output": {"command": "recognizer_loop:record_begin", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:record_begin.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:record_begin."}}
+{"instruction": "Grace, recognizer loop:record end", "input": "", "output": {"command": "recognizer_loop:record_end", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:record_end.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:record_end."}}
+{"instruction": "Grace, recognizer loop:record stop", "input": "", "output": {"command": "recognizer_loop:record_stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:record_stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:record_stop."}}
+{"instruction": "Grace, recognizer loop:sleep", "input": "", "output": {"command": "recognizer_loop:sleep", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:sleep.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:sleep."}}
+{"instruction": "Grace, unknown", "input": "", "output": {"command": "recognizer_loop:speech.recognition.unknown", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:speech.recognition.unknown.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:speech.recognition.unknown."}}
+{"instruction": "Grace, recognizer loop:state", "input": "", "output": {"command": "recognizer_loop:state", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:state.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:state."}}
+{"instruction": "Grace, get", "input": "", "output": {"command": "recognizer_loop:state.get", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:state.get.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:state.get."}}
+{"instruction": "Grace, set", "input": "", "output": {"command": "recognizer_loop:state.set", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:state.set.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:state.set."}}
+{"instruction": "Grace, recognizer loop:stopword", "input": "", "output": {"command": "recognizer_loop:stopword", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:stopword.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:stopword."}}
+{"instruction": "Grace, recognizer loop:utterance", "input": "", "output": {"command": "recognizer_loop:utterance", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:utterance.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:utterance."}}
+{"instruction": "Grace, recognizer loop:wake up", "input": "", "output": {"command": "recognizer_loop:wake_up", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:wake_up.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:wake_up."}}
+{"instruction": "Grace, recognizer loop:wakeupword", "input": "", "output": {"command": "recognizer_loop:wakeupword", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:wakeupword.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:wakeupword."}}
+{"instruction": "Grace, recognizer loop:wakeword", "input": "", "output": {"command": "recognizer_loop:wakeword", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event recognizer_loop:wakeword.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for recognizer_loop:wakeword."}}
+{"instruction": "Grace, event", "input": "", "output": {"command": "screen.close.idle.event", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event screen.close.idle.event.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for screen.close.idle.event."}}
+{"instruction": "Grace, overview", "input": "", "output": {"command": "show.alarms.overview", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event show.alarms.overview.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for show.alarms.overview."}}
+{"instruction": "Grace, disable", "input": "", "output": {"command": "skill.converse.get_response.disable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skill.converse.get_response.disable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skill.converse.get_response.disable."}}
+{"instruction": "Grace, enable", "input": "", "output": {"command": "skill.converse.get_response.enable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skill.converse.get_response.enable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skill.converse.get_response.enable."}}
+{"instruction": "Grace, ping", "input": "", "output": {"command": "skill.converse.ping", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skill.converse.ping.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skill.converse.ping."}}
+{"instruction": "Grace, pong", "input": "", "output": {"command": "skill.converse.pong", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skill.converse.pong.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skill.converse.pong."}}
+{"instruction": "Grace, request", "input": "", "output": {"command": "skill.converse.request", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skill.converse.request.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skill.converse.request."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "skill.converse.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skill.converse.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skill.converse.response."}}
+{"instruction": "Grace, displayed", "input": "", "output": {"command": "skill.idle.displayed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skill.idle.displayed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skill.idle.displayed."}}
+{"instruction": "Grace, activate", "input": "", "output": {"command": "skillmanager.activate", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skillmanager.activate.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skillmanager.activate."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "skillmanager.activate.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skillmanager.activate.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skillmanager.activate.response."}}
+{"instruction": "Grace, deactivate", "input": "", "output": {"command": "skillmanager.deactivate", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skillmanager.deactivate.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skillmanager.deactivate."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "skillmanager.deactivate.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skillmanager.deactivate.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skillmanager.deactivate.response."}}
+{"instruction": "Grace, keep", "input": "", "output": {"command": "skillmanager.keep", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skillmanager.keep.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skillmanager.keep."}}
+{"instruction": "Grace, list", "input": "", "output": {"command": "skillmanager.list", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event skillmanager.list.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for skillmanager.list."}}
+{"instruction": "Grace, about", "input": "", "output": {"command": "smartspeaker.extension.extend.about", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event smartspeaker.extension.extend.about.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for smartspeaker.extension.extend.about."}}
+{"instruction": "Grace, snooze", "input": "", "output": {"command": "snooze", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event snooze.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for snooze."}}
+{"instruction": "Grace, changed", "input": "", "output": {"command": "speaker.extension.display.auto.dim.changed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event speaker.extension.display.auto.dim.changed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for speaker.extension.display.auto.dim.changed."}}
+{"instruction": "Grace, changed", "input": "", "output": {"command": "speaker.extension.display.auto.nightmode.changed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event speaker.extension.display.auto.nightmode.changed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for speaker.extension.display.auto.nightmode.changed."}}
+{"instruction": "Grace, dim", "input": "", "output": {"command": "speaker.extension.display.set.auto.dim", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event speaker.extension.display.set.auto.dim.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for speaker.extension.display.set.auto.dim."}}
+{"instruction": "Grace, nightmode", "input": "", "output": {"command": "speaker.extension.display.set.auto.nightmode", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event speaker.extension.display.set.auto.nightmode.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for speaker.extension.display.set.auto.nightmode."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "speaker.extension.display.set.wallpaper.rotation", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event speaker.extension.display.set.wallpaper.rotation.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for speaker.extension.display.set.wallpaper.rotation."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "speaker.extension.display.wallpaper.rotation.changed", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event speaker.extension.display.wallpaper.rotation.changed.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for speaker.extension.display.wallpaper.rotation.changed."}}
+{"instruction": "Grace, timer", "input": "", "output": {"command": "start.timer", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event start.timer.result", "input": "{\"label\": \"pasta\", \"state\": \"done\"}", "output": {"command": "speak", "response": "Result received for start.timer."}}
+{"instruction": "Grace, timer", "input": "", "output": {"command": "status.timer", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event status.timer.result", "input": "{\"label\": \"pasta\", \"state\": \"done\"}", "output": {"command": "speak", "response": "Result received for status.timer."}}
+{"instruction": "Grace, stop", "input": "", "output": {"command": "stop", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event stop.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for stop."}}
+{"instruction": "Grace, language", "input": "", "output": {"command": "system.configure.language", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.configure.language.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.configure.language."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "system.configure.language.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.configure.language.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.configure.language.complete."}}
+{"instruction": "Grace, homescreen", "input": "", "output": {"command": "system.display.homescreen", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.display.homescreen.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.display.homescreen."}}
+{"instruction": "Grace, reset", "input": "", "output": {"command": "system.factory.reset", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.factory.reset.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.factory.reset."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "system.factory.reset.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.factory.reset.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.factory.reset.complete."}}
+{"instruction": "Grace, phal", "input": "", "output": {"command": "system.factory.reset.phal", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.factory.reset.phal.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.factory.reset.phal."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "system.factory.reset.phal.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.factory.reset.phal.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.factory.reset.phal.complete."}}
+{"instruction": "Grace, ping", "input": "", "output": {"command": "system.factory.reset.ping", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.factory.reset.ping.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.factory.reset.ping."}}
+{"instruction": "Grace, register", "input": "", "output": {"command": "system.factory.reset.register", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.factory.reset.register.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.factory.reset.register."}}
+{"instruction": "Grace, start", "input": "", "output": {"command": "system.factory.reset.start", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.factory.reset.start.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.factory.reset.start."}}
+{"instruction": "Grace, sync", "input": "", "output": {"command": "system.ntp.sync", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.ntp.sync.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.ntp.sync."}}
+{"instruction": "Grace, complete", "input": "", "output": {"command": "system.ntp.sync.complete", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.ntp.sync.complete.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.ntp.sync.complete."}}
+{"instruction": "Grace, restart", "input": "", "output": {"command": "system.ovos.service.restart", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.ovos.service.restart.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.ovos.service.restart."}}
+{"instruction": "Grace, reboot", "input": "", "output": {"command": "system.reboot", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.reboot.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.reboot."}}
+{"instruction": "Grace, shutdown", "input": "", "output": {"command": "system.shutdown", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.shutdown.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.shutdown."}}
+{"instruction": "Grace, disable", "input": "", "output": {"command": "system.ssh.disable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.ssh.disable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.ssh.disable."}}
+{"instruction": "Grace, enable", "input": "", "output": {"command": "system.ssh.enable", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.ssh.enable.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.ssh.enable."}}
+{"instruction": "Grace, status", "input": "", "output": {"command": "system.ssh.status", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.ssh.status.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.ssh.status."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "system.ssh.status.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event system.ssh.status.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for system.ssh.status.response."}}
+{"instruction": "Grace, status", "input": "", "output": {"command": "timer.status", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event timer.status.result", "input": "{\"label\": \"pasta\", \"state\": \"done\"}", "output": {"command": "speak", "response": "Result received for timer.status."}}
+{"instruction": "Grace, {", "input": "", "output": {"command": "{", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {."}}
+{"instruction": "Grace, triggered\",", "input": "", "output": {"command": "\"type\": \"ovos.events.triggered\",", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event \"type\": \"ovos.events.triggered\",.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for \"type\": \"ovos.events.triggered\",."}}
+{"instruction": "Grace, \"namespace\": \"ovos gui plugin shell companion\",", "input": "", "output": {"command": "\"namespace\": \"ovos_gui_plugin_shell_companion\",", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event \"namespace\": \"ovos_gui_plugin_shell_companion\",.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for \"namespace\": \"ovos_gui_plugin_shell_companion\",."}}
+{"instruction": "Grace, \"event name\": MSG TYPE,", "input": "", "output": {"command": "\"event_name\": MSG_TYPE,", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event \"event_name\": MSG_TYPE,.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for \"event_name\": MSG_TYPE,."}}
+{"instruction": "Grace, \"data\": {}", "input": "", "output": {"command": "\"data\": {}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event \"data\": {}.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for \"data\": {}."}}
+{"instruction": "Grace, }", "input": "", "output": {"command": "}", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event }.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for }."}}
+{"instruction": "Grace, idle", "input": "", "output": {"command": "{active_homescreen_id}.idle", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {active_homescreen_id}.idle.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {active_homescreen_id}.idle."}}
+{"instruction": "Grace, dim", "input": "", "output": {"command": "{namespace}.speaker.extension.display.set.auto.dim", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {namespace}.speaker.extension.display.set.auto.dim.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {namespace}.speaker.extension.display.set.auto.dim."}}
+{"instruction": "Grace, nightmode", "input": "", "output": {"command": "{namespace}.speaker.extension.display.set.auto.nightmode", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {namespace}.speaker.extension.display.set.auto.nightmode.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {namespace}.speaker.extension.display.set.auto.nightmode."}}
+{"instruction": "Change the wallpaper to something calming", "input": "", "output": {"command": "{namespace}.speaker.extension.display.set.wallpaper.rotation", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {namespace}.speaker.extension.display.set.wallpaper.rotation.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {namespace}.speaker.extension.display.set.wallpaper.rotation."}}
+{"instruction": "Grace, activate", "input": "", "output": {"command": "{self.skill_id}.activate", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {self.skill_id}.activate.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {self.skill_id}.activate."}}
+{"instruction": "Grace, get response", "input": "", "output": {"command": "{self.skill_id}.converse.get_response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {self.skill_id}.converse.get_response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {self.skill_id}.converse.get_response."}}
+{"instruction": "Grace, ping", "input": "", "output": {"command": "{self.skill_id}.converse.ping", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {self.skill_id}.converse.ping.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {self.skill_id}.converse.ping."}}
+{"instruction": "Grace, request", "input": "", "output": {"command": "{self.skill_id}.converse.request", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {self.skill_id}.converse.request.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {self.skill_id}.converse.request."}}
+{"instruction": "Grace, deactivate", "input": "", "output": {"command": "{self.skill_id}.deactivate", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {self.skill_id}.deactivate.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {self.skill_id}.deactivate."}}
+{"instruction": "Grace, idle", "input": "", "output": {"command": "{self.skill_id}.idle", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {self.skill_id}.idle.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {self.skill_id}.idle."}}
+{"instruction": "Grace, public api", "input": "", "output": {"command": "{self.skill_id}.public_api", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {self.skill_id}.public_api.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {self.skill_id}.public_api."}}
+{"instruction": "Grace, response", "input": "", "output": {"command": "{self.skill_id}.public_api.response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {self.skill_id}.public_api.response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {self.skill_id}.public_api.response."}}
+{"instruction": "Grace, get response", "input": "", "output": {"command": "{skill_id}.converse.get_response", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {skill_id}.converse.get_response.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {skill_id}.converse.get_response."}}
+{"instruction": "Grace, request", "input": "", "output": {"command": "{skill_id}.converse.request", "response": "Acknowledged – dispatching request."}}
+{"instruction": "#event {skill_id}.converse.request.result", "input": "{\"state\": \"ok\"}", "output": {"command": "speak", "response": "Result received for {skill_id}.converse.request."}}

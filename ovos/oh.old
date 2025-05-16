@@ -1,0 +1,253 @@
+"""
+Grace AI System - OVOS Handlers Module
+
+This module implements handlers for OpenVoiceOS messagebus messages.
+"""
+
+import logging
+from typing import Dict, Any, Optional, Callable, List
+
+# Import OVOS client for type hints
+from .ovos_client import OVOSClient, Message
+
+
+class OVOSHandlers:
+    """
+    Handlers for OpenVoiceOS messagebus messages.
+    
+    This class manages handlers for different message types received
+    from the OpenVoiceOS messagebus.
+    """
+    
+    def __init__(self, ovos_client: OVOSClient):
+        """
+        Initialize OVOS handlers with the provided client.
+        
+        Args:
+            ovos_client: OVOS client
+        """
+        self.logger = logging.getLogger('grace.ovos.handlers')
+        self.client = ovos_client
+        self.handlers = {}
+        self.callback_registry = {}
+        self.skill_registry = {}
+        
+        # Track latest message data for debugging
+        self.last_messages = {}
+        
+    def register_default_handlers(self):
+        """Register default message handlers."""
+        if not self.client or not self.client.is_connected():
+            return
+            
+        try:
+            # Register for skill status messages
+            self.register_handler('mycroft.skills.initialized', self._handle_skills_initialized)
+            
+            # Register for intent failure messages
+            self.register_handler('mycroft.skills.fallback', self._handle_intent_failure)
+            
+            # Register for system status messages
+            self.register_handler('system.heartbeat', self._handle_heartbeat)
+            
+            # Register for question response
+            self.register_handler('question.response', self._handle_question_response)
+            
+            # Register for error messages
+            self.register_handler('recognizer_loop.error', self._handle_recognizer_error)
+            
+            # Register for volume change feedback
+            self.register_handler('ovos.volume.get.response', self._handle_volume_response)
+            
+            # Register for device settings
+            self.register_handler('ovos.device.settings', self._handle_device_settings)
+            
+            self.logger.info("Registered default message handlers")
+        except Exception as e:
+            self.logger.error(f"Failed to register default handlers: {e}")
+    
+    def _handle_skills_initialized(self, message):
+        """Handle skills initialized message."""
+        self.logger.info("OVOS skills initialized")
+        
+        # Get available skills
+        self.client.send_message('skillmanager.list')
+        
+        # Track message data
+        self.last_messages['skills_initialized'] = {
+            'timestamp': message.context.get('timestamp'),
+            'data': message.data
+        }
+    
+    def _handle_intent_failure(self, message):
+        """Handle intent failure message."""
+        utterance = message.data.get('utterance', '')
+        self.logger.debug(f"Intent failure for: {utterance}")
+        
+        # Track message data
+        self.last_messages['intent_failure'] = {
+            'timestamp': message.context.get('timestamp'),
+            'utterance': utterance
+        }
+        
+        # Trigger callback if registered
+        if 'intent_failure' in self.callback_registry:
+            try:
+                self.callback_registry['intent_failure'](message)
+            except Exception as e:
+                self.logger.error(f"Error in callback for intent_failure: {e}")
+    
+    def _handle_heartbeat(self, message):
+        """Handle system heartbeat message."""
+        # This confirms the system is still connected and responsive
+        pass
+        
+    def _handle_question_response(self, message):
+        """Handle responses to questions."""
+        self.logger.debug(f"Received question response")
+        
+        # Track message data
+        self.last_messages['question_response'] = {
+            'timestamp': message.context.get('timestamp'),
+            'data': message.data
+        }
+        
+        # Trigger callback if registered
+        if 'question_response' in self.callback_registry:
+            try:
+                self.callback_registry['question_response'](message)
+            except Exception as e:
+                self.logger.error(f"Error in callback for question_response: {e}")
+    
+    def _handle_recognizer_error(self, message):
+        """Handle recognizer errors."""
+        error = message.data.get('error', '')
+        self.logger.warning(f"Recognizer error: {error}")
+        
+        # Track message data
+        self.last_messages['recognizer_error'] = {
+            'timestamp': message.context.get('timestamp'),
+            'error': error
+        }
+    
+    def _handle_volume_response(self, message):
+        """Handle volume response message."""
+        # Store volume level
+        volume = message.data.get('volume', 0)
+        self.logger.debug(f"Current volume is {volume}")
+        
+        # Track message data
+        self.last_messages['volume'] = {
+            'timestamp': message.context.get('timestamp'),
+            'volume': volume
+        }
+        
+        # Trigger callback if registered
+        if 'volume_response' in self.callback_registry:
+            try:
+                self.callback_registry['volume_response'](message)
+            except Exception as e:
+                self.logger.error(f"Error in callback for volume_response: {e}")
+                
+    def _handle_device_settings(self, message):
+        """Handle device settings message."""
+        settings = message.data.get('settings', {})
+        self.logger.debug("Received device settings")
+        
+        # Track message data
+        self.last_messages['device_settings'] = {
+            'timestamp': message.context.get('timestamp'),
+            'settings': settings
+        }
+        
+        # Trigger callback if registered
+        if 'device_settings' in self.callback_registry:
+            try:
+                self.callback_registry['device_settings'](message)
+            except Exception as e:
+                self.logger.error(f"Error in callback for device_settings: {e}")
+    
+    def register_callback(self, event_name: str, callback: Callable):
+        """
+        Register a callback for a specific event.
+        
+        Args:
+            event_name: Name of the event
+            callback: Callback function
+            
+        Returns:
+            Success status
+        """
+        try:
+            self.callback_registry[event_name] = callback
+            return True
+        except Exception as e:
+            self.logger.error(f"Failed to register callback for {event_name}: {e}")
+            return False
+    
+    def register_handler(self, message_type: str, handler: Callable):
+        """
+        Register a handler for a specific message type.
+        
+        Args:
+            message_type: Type of message to handle
+            handler: Handler function
+            
+        Returns:
+            Success status
+        """
+        if not self.client or not self.client.is_connected():
+            self.logger.debug(f"Not connected to OVOS - handler not registered: {message_type}")
+            return False
+            
+        try:
+            success = self.client.register_handler(message_type, handler)
+            if success:
+                self.handlers[message_type] = handler
+            return success
+        except Exception as e:
+            self.logger.error(f"Failed to register handler for {message_type}: {e}")
+            return False
+    
+    def get_skill_list(self) -> List[Dict]:
+        """
+        Get list of available skills.
+        
+        Returns:
+            List of skill information dictionaries
+        """
+        if not self.client or not self.client.is_connected():
+            return []
+            
+        try:
+            success, data = self.client.send_and_wait(
+                'skillmanager.list', 
+                response_type='skillmanager.list.response', 
+                timeout=5
+            )
+            
+            if success and data and 'skills' in data:
+                self.skill_registry = {skill['name']: skill for skill in data['skills']}
+                return data['skills']
+            return []
+        except Exception as e:
+            self.logger.error(f"Failed to get skill list: {e}")
+            return []
+    
+    def execute_skill_command(self, skill_id: str, command: str, data: Dict = None) -> bool:
+        """
+        Execute a specific skill command.
+        
+        Args:
+            skill_id: Skill identifier
+            command: Command to execute
+            data: Command data
+            
+        Returns:
+            Success status
+        """
+        if not self.client or not self.client.is_connected():
+            return False
+            
+        message_type = f"{skill_id}.{command}"
+        return self.client.send_message(message_type, data or {})

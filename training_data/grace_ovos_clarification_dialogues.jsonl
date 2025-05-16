@@ -1,0 +1,90 @@
+{"instruction": "Set a timer.", "input": "", "output": {"command": "speak", "response": "For how long would you like the timer?"}}
+{"instruction": "Ten minutes, please.", "input": "", "output": {"command": "alerts.set.timer", "response": "Starting a ten-minute timer."}}
+{"instruction": "#event alerts.set.timer.result", "input": "", "output": {"command": "speak", "response": "Timer set for ten minutes."}}
+{"instruction": "How’s the weather?", "input": "", "output": {"command": "speak", "response": "Do you want the current conditions or the forecast?"}}
+{"instruction": "Current conditions.", "input": "", "output": {"command": "weather.intent", "response": "Fetching current weather."}}
+{"instruction": "#event weather.intent.result", "input": "{\"temp\": \"18 \\u00b0C\", \"condition\": \"clear\"}", "output": {"command": "speak", "response": "It’s 18 °C and clear right now."}}
+{"instruction": "Turn on the lights.", "input": "", "output": {"command": "speak", "response": "Which room should I light up?"}}
+{"instruction": "The kitchen.", "input": "", "output": {"command": "lights.intent", "response": "Turning on the kitchen lights."}}
+{"instruction": "#event lights.intent.result", "input": "{\"state\": \"on\"}", "output": {"command": "speak", "response": "Kitchen lights are now on."}}
+{"instruction": "Play some music.", "input": "", "output": {"command": "speak", "response": "Any particular playlist or genre?"}}
+{"instruction": "Play lofi beats.", "input": "", "output": {"command": "ovos.audio.service.play", "response": "Playing your lofi playlist."}}
+{"instruction": "#event ovos.audio.service.track_info", "input": "{\"title\": \"study beats\"}", "output": {"command": "speak", "response": "Enjoy your lofi beats."}}
+{"instruction": "Change the volume.", "input": "", "output": {"command": "speak", "response": "Would you like it louder or quieter?"}}
+{"instruction": "A bit louder.", "input": "", "output": {"command": "ovos.volume.increase", "response": "Increasing volume by ten percent."}}
+{"instruction": "#event ovos.volume.get.result", "input": "{\"level\": 55}", "output": {"command": "speak", "response": "Volume is now at 55 %."}}
+{"instruction": "Remind me about my meeting.", "input": "", "output": {"command": "speak", "response": "When should I remind you?"}}
+{"instruction": "Tomorrow at 9 a.m.", "input": "", "output": {"command": "alerts.set.reminder", "response": "Reminder set for tomorrow at 9 a.m."}}
+{"instruction": "#event alerts.set.reminder.result", "input": "", "output": {"command": "speak", "response": "Got it—I'll remind you tomorrow at 9 a.m."}}
+{"instruction": "Remember this code.", "input": "", "output": {"command": "speak", "response": "What label should I save the code under?"}}
+{"instruction": "Gym locker.", "input": "", "output": {"command": "mem0.add", "response": "Storing code under 'gym locker'."}}
+{"instruction": "#event mem0.add.confirm", "input": "", "output": {"command": "speak", "response": "Code saved under gym locker."}}
+{"instruction": "What's my code?", "input": "", "output": {"command": "speak", "response": "Which code do you mean?"}}
+{"instruction": "My gym locker code.", "input": "", "output": {"command": "mem0.search", "response": "Looking up gym locker code."}}
+{"instruction": "#event mem0.search.reply", "input": "{\"result\": \"42-18-12\"}", "output": {"command": "speak", "response": "Your gym locker code is 42-18-12."}}
+{"instruction": "Show something on the display.", "input": "", "output": {"command": "speak", "response": "Would you like the clock, weather, or something else?"}}
+{"instruction": "Show the weather details.", "input": "", "output": {"command": "ovos.gui.show.weather", "response": "Displaying the weather card."}}
+{"instruction": "#event ovos.gui.show.weather.success", "input": "", "output": {"command": "speak", "response": "Weather card is now on screen."}}
+{"instruction": "Cancel my alarm.", "input": "", "output": {"command": "speak", "response": "Do you want to cancel the next alarm or all alarms?"}}
+{"instruction": "Just the next one.", "input": "", "output": {"command": "cancel.alarm", "response": "Next alarm cancelled."}}
+{"instruction": "#event cancel.alarm.result", "input": "", "output": {"command": "speak", "response": "Your next alarm has been cancelled."}}
+{"instruction": "Shuffle music.", "input": "", "output": {"command": "speak", "response": "Turn shuffle on or off?"}}
+{"instruction": "Turn it on.", "input": "", "output": {"command": "ovos.audio.service.shuffle_on", "response": "Enabling shuffle mode."}}
+{"instruction": "#event ovos.audio.service.shuffle_on.result", "input": "", "output": {"command": "speak", "response": "Shuffle is on."}}
+{"instruction": "What's the air quality?", "input": "", "output": {"command": "speak", "response": "Do you mean here or another city?"}}
+{"instruction": "Here at home.", "input": "", "output": {"command": "weather.aqi.intent", "response": "Fetching local air quality index."}}
+{"instruction": "#event weather.aqi.intent.result", "input": "{\"aqi\": \"45\"}", "output": {"command": "speak", "response": "The local AQI is 45—good."}}
+{"instruction": "UV index, please.", "input": "", "output": {"command": "speak", "response": "For today or tomorrow?"}}
+{"instruction": "Today.", "input": "", "output": {"command": "weather.uv.intent", "response": "Getting today's UV index."}}
+{"instruction": "#event weather.uv.intent.result", "input": "{\"uv\": \"6\"}", "output": {"command": "speak", "response": "Today's UV index is 6—high."}}
+{"instruction": "Silence the speakers.", "input": "", "output": {"command": "speak", "response": "Would you like to mute or lower the volume?"}}
+{"instruction": "Mute them.", "input": "", "output": {"command": "ovos.volume.mute", "response": "Muting audio output."}}
+{"instruction": "#event ovos.volume.mute.result", "input": "", "output": {"command": "speak", "response": "Audio has been muted."}}
+{"instruction": "Repeat this.", "input": "", "output": {"command": "speak", "response": "Repeat the current track or the entire playlist?"}}
+{"instruction": "Repeat the track.", "input": "", "output": {"command": "ovos.audio.service.repeat_one", "response": "Repeating current track."}}
+{"instruction": "#event ovos.audio.service.repeat_one.result", "input": "", "output": {"command": "speak", "response": "Track repeat is on."}}
+{"instruction": "Skip a bit.", "input": "", "output": {"command": "speak", "response": "Skip forward or back?"}}
+{"instruction": "Skip forward 30 seconds.", "input": "", "output": {"command": "ovos.audio.service.seek_forward", "response": "Seeking forward 30 seconds."}}
+{"instruction": "#event ovos.audio.service.seek_forward.result", "input": "", "output": {"command": "speak", "response": "Skipped ahead thirty seconds."}}
+{"instruction": "Is my license expiry saved?", "input": "", "output": {"command": "speak", "response": "Which license should I verify?"}}
+{"instruction": "My driver's license.", "input": "", "output": {"command": "memories.verify", "response": "Verifying driver's license expiry."}}
+{"instruction": "#event memories.verification.result", "input": "{\"status\": \"matched\", \"value\": \"2029-08-12\"}", "output": {"command": "speak", "response": "Confirmed—driver's license expires on 12 Aug 2029."}}
+{"instruction": "Make a sound.", "input": "", "output": {"command": "speak", "response": "Do you want a short beep or a spoken announcement?"}}
+{"instruction": "Just a short beep.", "input": "", "output": {"command": "ovos.audio.play_sound", "response": "Playing notification beep."}}
+{"instruction": "#event ovos.audio.play_sound.result", "input": "", "output": {"command": "speak", "response": "Beep played."}}
+{"instruction": "Are you awake?", "input": "", "output": {"command": "speak", "response": "Would you like me to run a wake-word test?"}}
+{"instruction": "Yes, test it.", "input": "", "output": {"command": "ovos.wakeword", "response": "Running wake-word self-test."}}
+{"instruction": "#event ovos.wakeword.result", "input": "{\"detected\": true}", "output": {"command": "speak", "response": "Wake-word detected successfully."}}
+{"instruction": "Adjust the screen.", "input": "", "output": {"command": "speak", "response": "Brighter or dimmer?"}}
+{"instruction": "Dim it to thirty percent.", "input": "", "output": {"command": "brightness", "response": "Setting brightness to thirty percent."}}
+{"instruction": "#event brightness.result", "input": "", "output": {"command": "speak", "response": "Brightness set to thirty percent."}}
+{"instruction": "Change the wallpaper.", "input": "", "output": {"command": "speak", "response": "Do you have a specific theme in mind?"}}
+{"instruction": "Something calming.", "input": "", "output": {"command": "change.wallpaper", "response": "Applying calming wallpaper."}}
+{"instruction": "#event change.wallpaper.result", "input": "", "output": {"command": "speak", "response": "New calming wallpaper applied."}}
+{"instruction": "How loud is it?", "input": "", "output": {"command": "speak", "response": "Do you want the volume in percent or level name?"}}
+{"instruction": "Percent, please.", "input": "", "output": {"command": "ovos.volume.get", "response": "Checking current volume."}}
+{"instruction": "#event ovos.volume.get.result", "input": "{\"level\": 38}", "output": {"command": "speak", "response": "Volume is at 38 percent."}}
+{"instruction": "Air quality in Denver.", "input": "", "output": {"command": "speak", "response": "Would you like the current AQI for Denver?"}}
+{"instruction": "Yes, current AQI.", "input": "", "output": {"command": "weather.aqi.intent", "response": "Getting Denver AQI."}}
+{"instruction": "#event weather.aqi.intent.result", "input": "{\"aqi\": \"72\"}", "output": {"command": "speak", "response": "Denver AQI is 72—moderate."}}
+{"instruction": "Tomorrow's UV?", "input": "", "output": {"command": "speak", "response": "Tomorrow in your current location?"}}
+{"instruction": "Yes.", "input": "", "output": {"command": "weather.uv.intent", "response": "Fetching tomorrow's UV index."}}
+{"instruction": "#event weather.uv.intent.result", "input": "{\"uv\": \"4\"}", "output": {"command": "speak", "response": "Tomorrow's UV index will be 4—moderate."}}
+{"instruction": "Set a timer for 7 minutes.", "input": "", "output": {"command": "speak", "response": "Do you want to label this timer?"}}
+{"instruction": "Call it stretch break.", "input": "", "output": {"command": "alerts.set.timer", "response": "Stretch-break timer set for seven minutes."}}
+{"instruction": "#event alerts.set.timer.result", "input": "", "output": {"command": "speak", "response": "Stretch-break timer started."}}
+{"instruction": "Remind me later.", "input": "", "output": {"command": "speak", "response": "What should I remind you about and when?"}}
+{"instruction": "Dentist appointment next Friday at 3.", "input": "", "output": {"command": "alerts.set.reminder", "response": "Reminder set for next Friday at 3 p.m."}}
+{"instruction": "#event alerts.set.reminder.result", "input": "", "output": {"command": "speak", "response": "I'll remind you about your dentist appointment next Friday at 3 p.m."}}
+{"instruction": "Change the lights.", "input": "", "output": {"command": "speak", "response": "Which room and what color?"}}
+{"instruction": "Bedroom to warm white.", "input": "", "output": {"command": "lights.intent", "response": "Setting bedroom lights to warm white."}}
+{"instruction": "#event lights.intent.result", "input": "", "output": {"command": "speak", "response": "Bedroom lights are now warm white."}}
+{"instruction": "Show me the time.", "input": "", "output": {"command": "speak", "response": "Would you like it spoken or displayed?"}}
+{"instruction": "Display it.", "input": "", "output": {"command": "ovos.gui.show.clock", "response": "Putting the clock on screen."}}
+{"instruction": "#event ovos.gui.show.clock.success", "input": "", "output": {"command": "speak", "response": "Clock displayed."}}
+{"instruction": "Delete my saved code.", "input": "", "output": {"command": "speak", "response": "Which saved code should I remove?"}}
+{"instruction": "The gym locker code.", "input": "", "output": {"command": "mem0.delete", "response": "Gym-locker code deleted."}}
+{"instruction": "#event mem0.delete.result", "input": "", "output": {"command": "speak", "response": "I've deleted your gym locker code."}}
+{"instruction": "Give me an alert.", "input": "", "output": {"command": "speak", "response": "Would you like a spoken alert or a beep?"}}
+{"instruction": "A quick beep is fine.", "input": "", "output": {"command": "ovos.audio.play_sound", "response": "Playing alert beep now."}}
+{"instruction": "#event ovos.audio.play_sound.result", "input": "", "output": {"command": "speak", "response": "Alert beep played."}}

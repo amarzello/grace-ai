@@ -1,0 +1,11 @@
+project_name: generic_test_name
+sample_name: sample1
+schema_path: sample_output_schema.yaml
+database:
+  dialect: postgresql
+  driver: psycopg
+  name: pipestat-test
+  user: postgres
+  password: pipestat-password
+  host: 127.0.0.1
+  port: 5432

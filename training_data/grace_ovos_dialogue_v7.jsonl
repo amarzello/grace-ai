@@ -1,0 +1,782 @@
+{"instruction": "When is my next alarm?", "input": "", "output": {"command": "alarm.status", "response": "Acknowledged."}}
+{"instruction": "#event alarm.status.result", "input": "{\"next_alarm\": \"06:45 AM\"}", "output": {"command": "speak", "response": "Your next alarm is set for 06:45 AM."}}
+{"instruction": "Execute command brightness", "input": "", "output": {"command": "brightness", "response": "Acknowledged."}}
+{"instruction": "#event brightness.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Cancel every alarm I have set", "input": "", "output": {"command": "cancel.all.alarms", "response": "Please confirm: cancel all alarms?"}}
+{"instruction": "#event cancel.all.alarms.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command sound", "input": "", "output": {"command": "change.alarm.sound", "response": "Acknowledged."}}
+{"instruction": "#event change.alarm.sound.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command wallpaper", "input": "", "output": {"command": "change.wallpaper", "response": "Acknowledged."}}
+{"instruction": "#event change.wallpaper.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command question", "input": "", "output": {"command": "common_query.question", "response": "Acknowledged."}}
+{"instruction": "#event common_query.question.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command patch", "input": "", "output": {"command": "configuration.patch", "response": "Acknowledged."}}
+{"instruction": "#event configuration.patch.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command updated", "input": "", "output": {"command": "configuration.updated", "response": "Acknowledged."}}
+{"instruction": "#event configuration.updated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings", "input": "", "output": {"command": "device.brightness.settings", "response": "Acknowledged."}}
+{"instruction": "#event device.brightness.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings (1)", "input": "", "output": {"command": "device.reset.settings", "response": "Acknowledged."}}
+{"instruction": "#event device.reset.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings (2)", "input": "", "output": {"command": "device.settings", "response": "Acknowledged."}}
+{"instruction": "#event device.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command activated", "input": "", "output": {"command": "extension.manager.activated", "response": "Acknowledged."}}
+{"instruction": "#event extension.manager.activated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command namespace", "input": "", "output": {"command": "gui.clear.namespace", "response": "Acknowledged."}}
+{"instruction": "#event gui.clear.namespace.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command send", "input": "", "output": {"command": "gui.event.send", "response": "Acknowledged."}}
+{"instruction": "#event gui.event.send.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command displayed", "input": "", "output": {"command": "gui.namespace.displayed", "response": "Acknowledged."}}
+{"instruction": "#event gui.namespace.displayed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command removed", "input": "", "output": {"command": "gui.namespace.removed", "response": "Acknowledged."}}
+{"instruction": "#event gui.namespace.removed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command delete", "input": "", "output": {"command": "gui.page.delete", "response": "Acknowledged."}}
+{"instruction": "#event gui.page.delete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command show", "input": "", "output": {"command": "gui.page.show", "response": "Acknowledged."}}
+{"instruction": "#event gui.page.show.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command upload", "input": "", "output": {"command": "gui.page.upload", "response": "Acknowledged."}}
+{"instruction": "#event gui.page.upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command page gained focus", "input": "", "output": {"command": "gui.page_gained_focus", "response": "Acknowledged."}}
+{"instruction": "#event gui.page_gained_focus.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command page interaction", "input": "", "output": {"command": "gui.page_interaction", "response": "Acknowledged."}}
+{"instruction": "#event gui.page_interaction.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request page upload", "input": "", "output": {"command": "gui.request_page_upload", "response": "Acknowledged."}}
+{"instruction": "#event gui.request_page_upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request", "input": "", "output": {"command": "gui.status.request", "response": "Acknowledged."}}
+{"instruction": "#event gui.status.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response", "input": "", "output": {"command": "gui.status.request.response", "response": "Acknowledged."}}
+{"instruction": "#event gui.status.request.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command set", "input": "", "output": {"command": "gui.value.set", "response": "Acknowledged."}}
+{"instruction": "#event gui.value.set.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command volunteer page upload", "input": "", "output": {"command": "gui.volunteer_page_upload", "response": "Acknowledged."}}
+{"instruction": "#event gui.volunteer_page_upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get", "input": "", "output": {"command": "intent.service.active_skills.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.active_skills.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reply", "input": "", "output": {"command": "intent.service.active_skills.reply", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.active_skills.reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (1)", "input": "", "output": {"command": "intent.service.adapt.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.adapt.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command manifest", "input": "", "output": {"command": "intent.service.adapt.manifest", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.adapt.manifest.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (2)", "input": "", "output": {"command": "intent.service.adapt.manifest.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.adapt.manifest.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reply (1)", "input": "", "output": {"command": "intent.service.adapt.reply", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.adapt.reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command manifest (1)", "input": "", "output": {"command": "intent.service.adapt.vocab.manifest", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.adapt.vocab.manifest.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (3)", "input": "", "output": {"command": "intent.service.adapt.vocab.manifest.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.adapt.vocab.manifest.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (4)", "input": "", "output": {"command": "intent.service.intent.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.intent.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reply (2)", "input": "", "output": {"command": "intent.service.intent.reply", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.intent.reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command manifest (2)", "input": "", "output": {"command": "intent.service.padatious.entities.manifest", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.padatious.entities.manifest.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (5)", "input": "", "output": {"command": "intent.service.padatious.entities.manifest.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.padatious.entities.manifest.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (6)", "input": "", "output": {"command": "intent.service.padatious.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.padatious.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command manifest (3)", "input": "", "output": {"command": "intent.service.padatious.manifest", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.padatious.manifest.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (7)", "input": "", "output": {"command": "intent.service.padatious.manifest.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.padatious.manifest.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reply (3)", "input": "", "output": {"command": "intent.service.padatious.reply", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.padatious.reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command activate", "input": "", "output": {"command": "intent.service.skills.activate", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.skills.activate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command activated (1)", "input": "", "output": {"command": "intent.service.skills.activated", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.skills.activated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deactivate", "input": "", "output": {"command": "intent.service.skills.deactivate", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.skills.deactivate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deactivated", "input": "", "output": {"command": "intent.service.skills.deactivated", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.skills.deactivated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (8)", "input": "", "output": {"command": "intent.service.skills.get", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.skills.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reply (4)", "input": "", "output": {"command": "intent.service.skills.reply", "response": "Acknowledged."}}
+{"instruction": "#event intent.service.skills.reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (1)", "input": "", "output": {"command": "oauth.app.host.info.response", "response": "Acknowledged."}}
+{"instruction": "#event oauth.app.host.info.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request (1)", "input": "", "output": {"command": "oauth.generate.qr.request", "response": "Acknowledged."}}
+{"instruction": "#event oauth.generate.qr.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (2)", "input": "", "output": {"command": "oauth.generate.qr.response", "response": "Acknowledged."}}
+{"instruction": "#event oauth.generate.qr.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (9)", "input": "", "output": {"command": "oauth.get", "response": "Acknowledged."}}
+{"instruction": "#event oauth.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command info", "input": "", "output": {"command": "oauth.get.app.host.info", "response": "Acknowledged."}}
+{"instruction": "#event oauth.get.app.host.info.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (3)", "input": "", "output": {"command": "oauth.get.app.host.info.response", "response": "Acknowledged."}}
+{"instruction": "#event oauth.get.app.host.info.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command register", "input": "", "output": {"command": "oauth.register", "response": "Acknowledged."}}
+{"instruction": "#event oauth.register.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command start", "input": "", "output": {"command": "oauth.start", "response": "Acknowledged."}}
+{"instruction": "#event oauth.start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (4)", "input": "", "output": {"command": "oauth.token.response", "response": "Acknowledged."}}
+{"instruction": "#event oauth.token.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command munged id", "input": "", "output": {"command": "oauth.token.response.munged_id", "response": "Acknowledged."}}
+{"instruction": "#event oauth.token.response.munged_id.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command {munged id}", "input": "", "output": {"command": "oauth.token.response.{munged_id}", "response": "Acknowledged."}}
+{"instruction": "#event oauth.token.response.{munged_id}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command url", "input": "", "output": {"command": "oauth.url", "response": "Acknowledged."}}
+{"instruction": "#event oauth.url.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query", "input": "", "output": {"command": "opm.audio.query", "response": "Acknowledged."}}
+{"instruction": "#event opm.audio.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (5)", "input": "", "output": {"command": "opm.audio.query.response", "response": "Acknowledged."}}
+{"instruction": "#event opm.audio.query.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query (1)", "input": "", "output": {"command": "opm.g2p.query", "response": "Acknowledged."}}
+{"instruction": "#event opm.g2p.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (6)", "input": "", "output": {"command": "opm.g2p.query.response", "response": "Acknowledged."}}
+{"instruction": "#event opm.g2p.query.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query (2)", "input": "", "output": {"command": "opm.stt.query", "response": "Acknowledged."}}
+{"instruction": "#event opm.stt.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (7)", "input": "", "output": {"command": "opm.stt.query.response", "response": "Acknowledged."}}
+{"instruction": "#event opm.stt.query.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query (3)", "input": "", "output": {"command": "opm.tts.query", "response": "Acknowledged."}}
+{"instruction": "#event opm.tts.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (8)", "input": "", "output": {"command": "opm.tts.query.response", "response": "Acknowledged."}}
+{"instruction": "#event opm.tts.query.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query (4)", "input": "", "output": {"command": "opm.vad.query", "response": "Acknowledged."}}
+{"instruction": "#event opm.vad.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (9)", "input": "", "output": {"command": "opm.vad.query.response", "response": "Acknowledged."}}
+{"instruction": "#event opm.vad.query.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query (5)", "input": "", "output": {"command": "opm.ww.query", "response": "Acknowledged."}}
+{"instruction": "#event opm.ww.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (10)", "input": "", "output": {"command": "opm.ww.query.response", "response": "Acknowledged."}}
+{"instruction": "#event opm.ww.query.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command close", "input": "", "output": {"command": "ovos-PHAL-plugin-homeassistant.close", "response": "Acknowledged."}}
+{"instruction": "#event ovos-PHAL-plugin-homeassistant.close.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command home", "input": "", "output": {"command": "ovos-PHAL-plugin-homeassistant.home", "response": "Acknowledged."}}
+{"instruction": "#event ovos-PHAL-plugin-homeassistant.home.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command internet check", "input": "", "output": {"command": "ovos.PHAL.internet_check", "response": "Acknowledged."}}
+{"instruction": "#event ovos.PHAL.internet_check.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (11)", "input": "", "output": {"command": "ovos.PHAL.internet_check.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.PHAL.internet_check.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command is speaking", "input": "", "output": {"command": "ovos.audio.is_speaking", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.is_speaking.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Play a confirmation beep", "input": "", "output": {"command": "ovos.audio.play_sound", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.play_sound.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command playing track", "input": "", "output": {"command": "ovos.audio.playing_track", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.playing_track.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command queue", "input": "", "output": {"command": "ovos.audio.queue", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.queue.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command queue end", "input": "", "output": {"command": "ovos.audio.queue_end", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.queue_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get track length", "input": "", "output": {"command": "ovos.audio.service.get_track_length", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.get_track_length.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get track position", "input": "", "output": {"command": "ovos.audio.service.get_track_position", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.get_track_position.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command list backends", "input": "", "output": {"command": "ovos.audio.service.list_backends", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.list_backends.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Skip to the next track", "input": "", "output": {"command": "ovos.audio.service.next", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.next.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Pause the music playback", "input": "", "output": {"command": "ovos.audio.service.pause", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.pause.result", "input": "{\"status\": \"paused\"}", "output": {"command": "speak", "response": "Playback paused."}}
+{"instruction": "Play some lofi beats", "input": "", "output": {"command": "ovos.audio.service.play", "response": "Playing lofi beats."}}
+{"instruction": "#event ovos.audio.service.play.result", "input": "{\"status\": \"playing\", \"title\": \"lofi beats\"}", "output": {"command": "speak", "response": "Now playing lofi beats."}}
+{"instruction": "Go back to the previous track", "input": "", "output": {"command": "ovos.audio.service.prev", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.prev.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command queue (1)", "input": "", "output": {"command": "ovos.audio.service.queue", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.queue.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Resume the music", "input": "", "output": {"command": "ovos.audio.service.resume", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.resume.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command seek backward", "input": "", "output": {"command": "ovos.audio.service.seek_backward", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.seek_backward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command seek forward", "input": "", "output": {"command": "ovos.audio.service.seek_forward", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.seek_forward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command set track position", "input": "", "output": {"command": "ovos.audio.service.set_track_position", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.set_track_position.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Stop all audio output", "input": "", "output": {"command": "ovos.audio.service.stop", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command track info", "input": "", "output": {"command": "ovos.audio.service.track_info", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.track_info.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command track info reply", "input": "", "output": {"command": "ovos.audio.service.track_info_reply", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.service.track_info_reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command status", "input": "", "output": {"command": "ovos.audio.speak.status", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.speak.status.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command stop", "input": "", "output": {"command": "ovos.audio.speech.stop", "response": "Acknowledged."}}
+{"instruction": "#event ovos.audio.speech.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command awoken", "input": "", "output": {"command": "ovos.awoken", "response": "Acknowledged."}}
+{"instruction": "#event ovos.awoken.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command announce", "input": "", "output": {"command": "ovos.common_play.announce", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.announce.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command play", "input": "", "output": {"command": "ovos.common_play.featured_tracks.play", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.featured_tracks.play.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command play (1)", "input": "", "output": {"command": "ovos.common_play.play", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.play.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command state", "input": "", "output": {"command": "ovos.common_play.player.state", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.player.state.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query (6)", "input": "", "output": {"command": "ovos.common_play.query", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (12)", "input": "", "output": {"command": "ovos.common_play.query.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.query.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command stop (1)", "input": "", "output": {"command": "ovos.common_play.search.stop", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.search.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command search end", "input": "", "output": {"command": "ovos.common_play.skill.search_end", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.skill.search_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command search start", "input": "", "output": {"command": "ovos.common_play.skill.search_start", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.skill.search_start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (10)", "input": "", "output": {"command": "ovos.common_play.skills.get", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.skills.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command stop (2)", "input": "", "output": {"command": "ovos.common_play.stop", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command next", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.next", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.next.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command pause", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.pause", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.pause.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command play (2)", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.play", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.play.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command previous", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.previous", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.previous.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command resume", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.resume", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.resume.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command stop (3)", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.stop", "response": "Acknowledged."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings (3)", "input": "", "output": {"command": "ovos.device.settings", "response": "Acknowledged."}}
+{"instruction": "#event ovos.device.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command page", "input": "", "output": {"command": "ovos.device.settings.about.page", "response": "Acknowledged."}}
+{"instruction": "#event ovos.device.settings.about.page.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command theme", "input": "", "output": {"command": "ovos.device.settings.create.theme", "response": "Acknowledged."}}
+{"instruction": "#event ovos.device.settings.create.theme.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command customize", "input": "", "output": {"command": "ovos.device.settings.customize", "response": "Acknowledged."}}
+{"instruction": "#event ovos.device.settings.customize.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command developer", "input": "", "output": {"command": "ovos.device.settings.developer", "response": "Acknowledged."}}
+{"instruction": "#event ovos.device.settings.developer.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command display", "input": "", "output": {"command": "ovos.device.settings.display", "response": "Acknowledged."}}
+{"instruction": "#event ovos.device.settings.display.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command factory", "input": "", "output": {"command": "ovos.device.settings.factory", "response": "Acknowledged."}}
+{"instruction": "#event ovos.device.settings.factory.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command idle", "input": "", "output": {"command": "ovos.device.show.idle", "response": "Acknowledged."}}
+{"instruction": "#event ovos.device.show.idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disable", "input": "", "output": {"command": "ovos.ggwave.disable", "response": "Acknowledged."}}
+{"instruction": "#event ovos.ggwave.disable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disabled", "input": "", "output": {"command": "ovos.ggwave.disabled", "response": "Acknowledged."}}
+{"instruction": "#event ovos.ggwave.disabled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enable", "input": "", "output": {"command": "ovos.ggwave.enable", "response": "Acknowledged."}}
+{"instruction": "#event ovos.ggwave.enable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enabled", "input": "", "output": {"command": "ovos.ggwave.enabled", "response": "Acknowledged."}}
+{"instruction": "#event ovos.ggwave.enabled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command available", "input": "", "output": {"command": "ovos.gui.available", "response": "Acknowledged."}}
+{"instruction": "#event ovos.gui.available.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connected", "input": "", "output": {"command": "ovos.gui.connected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.gui.connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command screenclose", "input": "", "output": {"command": "ovos.gui.force.screenclose", "response": "Acknowledged."}}
+{"instruction": "#event ovos.gui.force.screenclose.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command forceHome", "input": "", "output": {"command": "ovos.gui.forceHome", "response": "Acknowledged."}}
+{"instruction": "#event ovos.gui.forceHome.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command port", "input": "", "output": {"command": "ovos.gui.port", "response": "Acknowledged."}}
+{"instruction": "#event ovos.gui.port.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command close (1)", "input": "", "output": {"command": "ovos.gui.screen.close", "response": "Acknowledged."}}
+{"instruction": "#event ovos.gui.screen.close.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command back", "input": "", "output": {"command": "ovos.gui.screen.request.page.back", "response": "Acknowledged."}}
+{"instruction": "#event ovos.gui.screen.request.page.back.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command unavailable", "input": "", "output": {"command": "ovos.gui.unavailable", "response": "Acknowledged."}}
+{"instruction": "#event ovos.gui.unavailable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connected (1)", "input": "", "output": {"command": "ovos.internet.connected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.internet.connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disconnected", "input": "", "output": {"command": "ovos.internet.disconnected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.internet.disconnected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command is ready", "input": "", "output": {"command": "ovos.internet.is_ready", "response": "Acknowledged."}}
+{"instruction": "#event ovos.internet.is_ready.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (13)", "input": "", "output": {"command": "ovos.internet.is_ready.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.internet.is_ready.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command state (1)", "input": "", "output": {"command": "ovos.internet.state", "response": "Acknowledged."}}
+{"instruction": "#event ovos.internet.state.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command update", "input": "", "output": {"command": "ovos.ipgeo.update", "response": "Acknowledged."}}
+{"instruction": "#event ovos.ipgeo.update.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (14)", "input": "", "output": {"command": "ovos.ipgeo.update.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.ipgeo.update.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command stt", "input": "", "output": {"command": "ovos.languages.stt", "response": "Acknowledged."}}
+{"instruction": "#event ovos.languages.stt.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (15)", "input": "", "output": {"command": "ovos.languages.stt.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.languages.stt.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command tts", "input": "", "output": {"command": "ovos.languages.tts", "response": "Acknowledged."}}
+{"instruction": "#event ovos.languages.tts.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (16)", "input": "", "output": {"command": "ovos.languages.tts.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.languages.tts.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command collect idle", "input": "", "output": {"command": "ovos.mark2.collect_idle", "response": "Acknowledged."}}
+{"instruction": "#event ovos.mark2.collect_idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command register idle", "input": "", "output": {"command": "ovos.mark2.register_idle", "response": "Acknowledged."}}
+{"instruction": "#event ovos.mark2.register_idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get status", "input": "", "output": {"command": "ovos.mic.get_status", "response": "Acknowledged."}}
+{"instruction": "#event ovos.mic.get_status.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (17)", "input": "", "output": {"command": "ovos.mic.get_status.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.mic.get_status.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command listen", "input": "", "output": {"command": "ovos.mic.listen", "response": "Acknowledged."}}
+{"instruction": "#event ovos.mic.listen.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command mute", "input": "", "output": {"command": "ovos.mic.mute", "response": "Acknowledged."}}
+{"instruction": "#event ovos.mic.mute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command unmute", "input": "", "output": {"command": "ovos.mic.unmute", "response": "Acknowledged."}}
+{"instruction": "#event ovos.mic.unmute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connected (2)", "input": "", "output": {"command": "ovos.network.connected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.network.connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disconnected (1)", "input": "", "output": {"command": "ovos.network.disconnected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.network.disconnected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command state (2)", "input": "", "output": {"command": "ovos.network.state", "response": "Acknowledged."}}
+{"instruction": "#event ovos.network.state.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ask", "input": "", "output": {"command": "ovos.persona.ask", "response": "Acknowledged."}}
+{"instruction": "#event ovos.persona.ask.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (18)", "input": "", "output": {"command": "ovos.persona.ask.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.persona.ask.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deregister", "input": "", "output": {"command": "ovos.persona.deregister", "response": "Acknowledged."}}
+{"instruction": "#event ovos.persona.deregister.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disable (1)", "input": "", "output": {"command": "ovos.persona.disable", "response": "Acknowledged."}}
+{"instruction": "#event ovos.persona.disable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enable (1)", "input": "", "output": {"command": "ovos.persona.enable", "response": "Acknowledged."}}
+{"instruction": "#event ovos.persona.enable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command register (1)", "input": "", "output": {"command": "ovos.persona.register", "response": "Acknowledged."}}
+{"instruction": "#event ovos.persona.register.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (19)", "input": "", "output": {"command": "ovos.phal.configuration.provider.get.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.configuration.provider.get.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (20)", "input": "", "output": {"command": "ovos.phal.configuration.provider.list.groups.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.configuration.provider.list.groups.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings (4)", "input": "", "output": {"command": "ovos.phal.gui.display.connected.network.settings", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.gui.display.connected.network.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings (5)", "input": "", "output": {"command": "ovos.phal.gui.display.disconnected.network.settings", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.gui.display.disconnected.network.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command back (1)", "input": "", "output": {"command": "ovos.phal.gui.network.client.back", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.gui.network.client.back.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command back (2)", "input": "", "output": {"command": "ovos.phal.gui.network.client.internal.back", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.gui.network.client.internal.back.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connect", "input": "", "output": {"command": "ovos.phal.nm.connect", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.connect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command network", "input": "", "output": {"command": "ovos.phal.nm.connect.open.network", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.connect.open.network.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failure", "input": "", "output": {"command": "ovos.phal.nm.connection.failure", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.connection.failure.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command successful", "input": "", "output": {"command": "ovos.phal.nm.connection.successful", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.connection.successful.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disconnect", "input": "", "output": {"command": "ovos.phal.nm.disconnect", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.disconnect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failure (1)", "input": "", "output": {"command": "ovos.phal.nm.disconnection.failure", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.disconnection.failure.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command successful (1)", "input": "", "output": {"command": "ovos.phal.nm.disconnection.successful", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.disconnection.successful.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command forget", "input": "", "output": {"command": "ovos.phal.nm.forget", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.forget.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failure (2)", "input": "", "output": {"command": "ovos.phal.nm.forget.failure", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.forget.failure.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command successful (2)", "input": "", "output": {"command": "ovos.phal.nm.forget.successful", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.forget.successful.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connected (3)", "input": "", "output": {"command": "ovos.phal.nm.get.connected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.get.connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connected (4)", "input": "", "output": {"command": "ovos.phal.nm.is.connected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.is.connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connected (5)", "input": "", "output": {"command": "ovos.phal.nm.is.not.connected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.is.not.connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reconnect", "input": "", "output": {"command": "ovos.phal.nm.reconnect", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.reconnect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command scan", "input": "", "output": {"command": "ovos.phal.nm.scan", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.scan.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete", "input": "", "output": {"command": "ovos.phal.nm.scan.complete", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.nm.scan.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command intent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.assist.intent", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.assist.intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (21)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.assist.intent.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.assist.intent.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command function", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.call.supported.function", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.call.supported.function.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (22)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.call.supported.function.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.call.supported.function.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dashboard", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.change.dashboard", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.change.dashboard.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command check connected", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.check_connected", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.check_connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command brightness (1)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.decrease.light.brightness", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.decrease.light.brightness.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (23)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.decrease.light.brightness.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.decrease.light.brightness.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command updated (1)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.state.updated", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.state.updated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command turn off", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.turn_off", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.turn_off.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (24)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.turn_off.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.turn_off.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command turn on", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.turn_on", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.turn_on.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (25)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.turn_on.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.turn_on.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command updated (2)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.device.updated", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.device.updated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command device", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command model", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.display.list.model", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.display.list.model.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (26)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.display.list.model.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.display.list.model.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command model (1)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.display.model", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.display.model.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (27)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.display.model.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.display.model.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (28)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command devices", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.devices", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.devices.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (29)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.devices.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.devices.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command brightness (2)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.brightness", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.brightness.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (30)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.brightness.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.brightness.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command color", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.color", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.color.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (31)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.color.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.color.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command brightness (3)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.increase.light.brightness", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.increase.light.brightness.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (32)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.increase.light.brightness.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.increase.light.brightness.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query media", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.integration.query_media", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.integration.query_media.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command result", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.integration.query_media.result", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.integration.query_media.result.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ready", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.ready", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.ready.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings (6)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.group.display.settings", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.group.display.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command brightness (4)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.light.brightness", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.light.brightness.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (33)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.light.brightness.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.light.brightness.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command color (1)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.light.color", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.light.color.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (34)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.set.light.color.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.set.light.color.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dashboard (1)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.show.area.dashboard", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.show.area.dashboard.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dashboard (2)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.show.device.dashboard", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.show.device.dashboard.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command flow", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.start.oauth.flow", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.start.oauth.flow.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dashboard (3)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.update.area.dashboard", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.update.area.dashboard.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dashboard (4)", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.update.device.dashboard", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.update.device.dashboard.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (35)", "input": "", "output": {"command": "ovos.phal.plugin.homeasssistant.check_connected.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.plugin.homeasssistant.check_connected.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command registered", "input": "", "output": {"command": "ovos.phal.wallpaper.manager.provider.registered", "response": "Acknowledged."}}
+{"instruction": "#event ovos.phal.wallpaper.manager.provider.registered.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command install", "input": "", "output": {"command": "ovos.pip.install", "response": "Acknowledged."}}
+{"instruction": "#event ovos.pip.install.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failed", "input": "", "output": {"command": "ovos.pip.install.complete, ovos.pip.install.failed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.pip.install.complete, ovos.pip.install.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command uninstall", "input": "", "output": {"command": "ovos.pip.uninstall", "response": "Acknowledged."}}
+{"instruction": "#event ovos.pip.uninstall.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failed (1)", "input": "", "output": {"command": "ovos.pip.uninstall.complete, ovos.pip.uninstall.failed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.pip.uninstall.complete, ovos.pip.uninstall.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ready (1)", "input": "", "output": {"command": "ovos.ready", "response": "Acknowledged."}}
+{"instruction": "#event ovos.ready.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reset", "input": "", "output": {"command": "ovos.shell.exec.factory.reset", "response": "Acknowledged."}}
+{"instruction": "#event ovos.shell.exec.factory.reset.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command code", "input": "", "output": {"command": "ovos.shell.oauth.display.qr.code", "response": "Acknowledged."}}
+{"instruction": "#event ovos.shell.oauth.display.qr.code.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command credentials", "input": "", "output": {"command": "ovos.shell.oauth.register.credentials", "response": "Acknowledged."}}
+{"instruction": "#event ovos.shell.oauth.register.credentials.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command authentication", "input": "", "output": {"command": "ovos.shell.oauth.start.authentication", "response": "Acknowledged."}}
+{"instruction": "#event ovos.shell.oauth.start.authentication.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ok", "input": "", "output": {"command": "ovos.shell.status.ok", "response": "Acknowledged."}}
+{"instruction": "#event ovos.shell.status.ok.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disable intent", "input": "", "output": {"command": "ovos.skill.disable_intent", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skill.disable_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enable intent", "input": "", "output": {"command": "ovos.skill.enable_intent", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skill.enable_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command remove cross context", "input": "", "output": {"command": "ovos.skill.remove_cross_context", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skill.remove_cross_context.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command set cross context", "input": "", "output": {"command": "ovos.skill.set_cross_context", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skill.set_cross_context.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command abort question", "input": "", "output": {"command": "ovos.skills.abort_question", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.abort_question.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command error", "input": "", "output": {"command": "ovos.skills.error", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.error.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command fallback", "input": "", "output": {"command": "ovos.skills.fallback", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deregister (1)", "input": "", "output": {"command": "ovos.skills.fallback.deregister", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.deregister.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ping", "input": "", "output": {"command": "ovos.skills.fallback.ping", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.ping.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command pong", "input": "", "output": {"command": "ovos.skills.fallback.pong", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.pong.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command register (2)", "input": "", "output": {"command": "ovos.skills.fallback.register", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.register.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command skill id", "input": "", "output": {"command": "ovos.skills.fallback.skill_id", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request (2)", "input": "", "output": {"command": "ovos.skills.fallback.skill_id.request", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (36)", "input": "", "output": {"command": "ovos.skills.fallback.skill_id.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command start (1)", "input": "", "output": {"command": "ovos.skills.fallback.skill_id.start", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request (3)", "input": "", "output": {"command": "ovos.skills.fallback.{skill_id}.request", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.{skill_id}.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (37)", "input": "", "output": {"command": "ovos.skills.fallback.{skill_id}.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.fallback.{skill_id}.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command initialized", "input": "", "output": {"command": "ovos.skills.initialized", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.initialized.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command install (1)", "input": "", "output": {"command": "ovos.skills.install", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.install.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete (1)", "input": "", "output": {"command": "ovos.skills.install.complete", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.install.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failed (2)", "input": "", "output": {"command": "ovos.skills.install.complete, ovos.skills.install.failed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.install.complete, ovos.skills.install.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failed (3)", "input": "", "output": {"command": "ovos.skills.install.failed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.install.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command is ready (1)", "input": "", "output": {"command": "ovos.skills.is_ready", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.is_ready.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command list", "input": "", "output": {"command": "ovos.skills.list", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.list.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command loaded", "input": "", "output": {"command": "ovos.skills.loaded", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.loaded.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command loading failure", "input": "", "output": {"command": "ovos.skills.loading_failure", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.loading_failure.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete (2)", "input": "", "output": {"command": "ovos.skills.pip.install.complete", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.pip.install.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failed (4)", "input": "", "output": {"command": "ovos.skills.pip.install.failed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.pip.install.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete (3)", "input": "", "output": {"command": "ovos.skills.pip.uninstall.complete", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.pip.uninstall.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failed (5)", "input": "", "output": {"command": "ovos.skills.pip.uninstall.failed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.pip.uninstall.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command changed", "input": "", "output": {"command": "ovos.skills.settings.changed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.settings.changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings changed", "input": "", "output": {"command": "ovos.skills.settings_changed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.settings_changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command shutdown", "input": "", "output": {"command": "ovos.skills.shutdown", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.shutdown.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command trained", "input": "", "output": {"command": "ovos.skills.trained", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.trained.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command uninstall (1)", "input": "", "output": {"command": "ovos.skills.uninstall", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.uninstall.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete (4)", "input": "", "output": {"command": "ovos.skills.uninstall.complete", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.uninstall.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failed (6)", "input": "", "output": {"command": "ovos.skills.uninstall.failed", "response": "Acknowledged."}}
+{"instruction": "#event ovos.skills.uninstall.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command unknown", "input": "", "output": {"command": "ovos.speech.recognition.unknown", "response": "Acknowledged."}}
+{"instruction": "#event ovos.speech.recognition.unknown.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command stop (4)", "input": "", "output": {"command": "ovos.stop", "response": "Acknowledged."}}
+{"instruction": "#event ovos.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command handled", "input": "", "output": {"command": "ovos.stop.handled", "response": "Acknowledged."}}
+{"instruction": "#event ovos.stop.handled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command cancelled", "input": "", "output": {"command": "ovos.utterance.cancelled", "response": "Acknowledged."}}
+{"instruction": "#event ovos.utterance.cancelled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command handled (1)", "input": "", "output": {"command": "ovos.utterance.handled", "response": "Acknowledged."}}
+{"instruction": "#event ovos.utterance.handled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Decrease volume slightly", "input": "", "output": {"command": "ovos.volume.decrease", "response": "Acknowledged."}}
+{"instruction": "#event ovos.volume.decrease.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "What's the current volume level?", "input": "", "output": {"command": "ovos.volume.get", "response": "Checking current volume."}}
+{"instruction": "#event ovos.volume.get.result", "input": "{\"level\": 45}", "output": {"command": "speak", "response": "The volume is 45 percent."}}
+{"instruction": "What's the current volume level? (1)", "input": "", "output": {"command": "ovos.volume.get.response", "response": "Checking current volume."}}
+{"instruction": "#event ovos.volume.get.response.result", "input": "{\"level\": 45}", "output": {"command": "speak", "response": "The volume is 45 percent."}}
+{"instruction": "Increase volume by ten percent", "input": "", "output": {"command": "ovos.volume.increase", "response": "Acknowledged."}}
+{"instruction": "#event ovos.volume.increase.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Mute all sounds", "input": "", "output": {"command": "ovos.volume.mute", "response": "Acknowledged."}}
+{"instruction": "#event ovos.volume.mute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Mute all sounds (1)", "input": "", "output": {"command": "ovos.volume.mute.toggle", "response": "Acknowledged."}}
+{"instruction": "#event ovos.volume.mute.toggle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Set system volume to 45 percent", "input": "", "output": {"command": "ovos.volume.set", "response": "Volume set to 45 percent."}}
+{"instruction": "#event ovos.volume.set.result", "input": "{\"level\": 45}", "output": {"command": "speak", "response": "Volume is now 45 percent."}}
+{"instruction": "Unmute the audio", "input": "", "output": {"command": "ovos.volume.unmute", "response": "Acknowledged."}}
+{"instruction": "#event ovos.volume.unmute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disabled (1)", "input": "", "output": {"command": "ovos.wallpaper.manager.auto.rotation.disabled", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.auto.rotation.disabled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enabled (1)", "input": "", "output": {"command": "ovos.wallpaper.manager.auto.rotation.enabled", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.auto.rotation.enabled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command wallpaper (1)", "input": "", "output": {"command": "ovos.wallpaper.manager.change.wallpaper", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.change.wallpaper.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (38)", "input": "", "output": {"command": "ovos.wallpaper.manager.collect.collection.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.collect.collection.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command rotation", "input": "", "output": {"command": "ovos.wallpaper.manager.disable.auto.rotation", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.disable.auto.rotation.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command rotation (1)", "input": "", "output": {"command": "ovos.wallpaper.manager.enable.auto.rotation", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.enable.auto.rotation.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command provider", "input": "", "output": {"command": "ovos.wallpaper.manager.get.active.provider", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.get.active.provider.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command rotation (2)", "input": "", "output": {"command": "ovos.wallpaper.manager.get.auto.rotation", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.get.auto.rotation.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command collection", "input": "", "output": {"command": "ovos.wallpaper.manager.get.collection", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.get.collection.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command provider (1)", "input": "", "output": {"command": "ovos.wallpaper.manager.get.collection.from.provider", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.get.collection.from.provider.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command config", "input": "", "output": {"command": "ovos.wallpaper.manager.get.provider.config", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.get.provider.config.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (39)", "input": "", "output": {"command": "ovos.wallpaper.manager.get.provider.config.response", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.get.provider.config.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command providers", "input": "", "output": {"command": "ovos.wallpaper.manager.get.registered.providers", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.get.registered.providers.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command wallpaper (2)", "input": "", "output": {"command": "ovos.wallpaper.manager.get.wallpaper", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.get.wallpaper.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command loaded (1)", "input": "", "output": {"command": "ovos.wallpaper.manager.loaded", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.loaded.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command provider (2)", "input": "", "output": {"command": "ovos.wallpaper.manager.register.provider", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.register.provider.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command provider (3)", "input": "", "output": {"command": "ovos.wallpaper.manager.set.active.provider", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.set.active.provider.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command wallpaper (3)", "input": "", "output": {"command": "ovos.wallpaper.manager.set.wallpaper", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.set.wallpaper.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command collection (1)", "input": "", "output": {"command": "ovos.wallpaper.manager.update.collection", "response": "Acknowledged."}}
+{"instruction": "#event ovos.wallpaper.manager.update.collection.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command {msg type}", "input": "", "output": {"command": "ovos_gui_plugin_shell_companion.{msg_type}", "response": "Acknowledged."}}
+{"instruction": "#event ovos_gui_plugin_shell_companion.{msg_type}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command padatious:register entity", "input": "", "output": {"command": "padatious:register_entity", "response": "Acknowledged."}}
+{"instruction": "#event padatious:register_entity.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command padatious:register intent", "input": "", "output": {"command": "padatious:register_intent", "response": "Acknowledged."}}
+{"instruction": "#event padatious:register_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command alarm", "input": "", "output": {"command": "query.next.alarm", "response": "Acknowledged."}}
+{"instruction": "#event query.next.alarm.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command question:action", "input": "", "output": {"command": "question:action", "response": "Acknowledged."}}
+{"instruction": "#event question:action.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command question:query", "input": "", "output": {"command": "question:query", "response": "Acknowledged."}}
+{"instruction": "#event question:query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (40)", "input": "", "output": {"command": "question:query.response", "response": "Acknowledged."}}
+{"instruction": "#event question:query.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command timeout", "input": "", "output": {"command": "question:query.timeout", "response": "Acknowledged."}}
+{"instruction": "#event question:query.timeout.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:audio output end", "input": "", "output": {"command": "recognizer_loop:audio_output_end", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:audio_output_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:audio output start", "input": "", "output": {"command": "recognizer_loop:audio_output_start", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:audio_output_start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:hotword", "input": "", "output": {"command": "recognizer_loop:hotword", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:hotword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:record begin", "input": "", "output": {"command": "recognizer_loop:record_begin", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:record_begin.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:record end", "input": "", "output": {"command": "recognizer_loop:record_end", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:record_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:record stop", "input": "", "output": {"command": "recognizer_loop:record_stop", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:record_stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:sleep", "input": "", "output": {"command": "recognizer_loop:sleep", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:sleep.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command unknown (1)", "input": "", "output": {"command": "recognizer_loop:speech.recognition.unknown", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:speech.recognition.unknown.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:state", "input": "", "output": {"command": "recognizer_loop:state", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:state.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get (11)", "input": "", "output": {"command": "recognizer_loop:state.get", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:state.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command set (1)", "input": "", "output": {"command": "recognizer_loop:state.set", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:state.set.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:stopword", "input": "", "output": {"command": "recognizer_loop:stopword", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:stopword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:utterance", "input": "", "output": {"command": "recognizer_loop:utterance", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:utterance.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:wake up", "input": "", "output": {"command": "recognizer_loop:wake_up", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:wake_up.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:wakeupword", "input": "", "output": {"command": "recognizer_loop:wakeupword", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:wakeupword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:wakeword", "input": "", "output": {"command": "recognizer_loop:wakeword", "response": "Acknowledged."}}
+{"instruction": "#event recognizer_loop:wakeword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command event", "input": "", "output": {"command": "screen.close.idle.event", "response": "Acknowledged."}}
+{"instruction": "#event screen.close.idle.event.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command overview", "input": "", "output": {"command": "show.alarms.overview", "response": "Acknowledged."}}
+{"instruction": "#event show.alarms.overview.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disable (2)", "input": "", "output": {"command": "skill.converse.get_response.disable", "response": "Acknowledged."}}
+{"instruction": "#event skill.converse.get_response.disable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enable (2)", "input": "", "output": {"command": "skill.converse.get_response.enable", "response": "Acknowledged."}}
+{"instruction": "#event skill.converse.get_response.enable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ping (1)", "input": "", "output": {"command": "skill.converse.ping", "response": "Acknowledged."}}
+{"instruction": "#event skill.converse.ping.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command pong (1)", "input": "", "output": {"command": "skill.converse.pong", "response": "Acknowledged."}}
+{"instruction": "#event skill.converse.pong.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request (4)", "input": "", "output": {"command": "skill.converse.request", "response": "Acknowledged."}}
+{"instruction": "#event skill.converse.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (41)", "input": "", "output": {"command": "skill.converse.response", "response": "Acknowledged."}}
+{"instruction": "#event skill.converse.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command displayed (1)", "input": "", "output": {"command": "skill.idle.displayed", "response": "Acknowledged."}}
+{"instruction": "#event skill.idle.displayed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command activate (1)", "input": "", "output": {"command": "skillmanager.activate", "response": "Acknowledged."}}
+{"instruction": "#event skillmanager.activate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (42)", "input": "", "output": {"command": "skillmanager.activate.response", "response": "Acknowledged."}}
+{"instruction": "#event skillmanager.activate.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deactivate (1)", "input": "", "output": {"command": "skillmanager.deactivate", "response": "Acknowledged."}}
+{"instruction": "#event skillmanager.deactivate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (43)", "input": "", "output": {"command": "skillmanager.deactivate.response", "response": "Acknowledged."}}
+{"instruction": "#event skillmanager.deactivate.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command keep", "input": "", "output": {"command": "skillmanager.keep", "response": "Acknowledged."}}
+{"instruction": "#event skillmanager.keep.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command list (1)", "input": "", "output": {"command": "skillmanager.list", "response": "Acknowledged."}}
+{"instruction": "#event skillmanager.list.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command about", "input": "", "output": {"command": "smartspeaker.extension.extend.about", "response": "Acknowledged."}}
+{"instruction": "#event smartspeaker.extension.extend.about.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command snooze", "input": "", "output": {"command": "snooze", "response": "Acknowledged."}}
+{"instruction": "#event snooze.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command changed (1)", "input": "", "output": {"command": "speaker.extension.display.auto.dim.changed", "response": "Acknowledged."}}
+{"instruction": "#event speaker.extension.display.auto.dim.changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command changed (2)", "input": "", "output": {"command": "speaker.extension.display.auto.nightmode.changed", "response": "Acknowledged."}}
+{"instruction": "#event speaker.extension.display.auto.nightmode.changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dim", "input": "", "output": {"command": "speaker.extension.display.set.auto.dim", "response": "Acknowledged."}}
+{"instruction": "#event speaker.extension.display.set.auto.dim.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command nightmode", "input": "", "output": {"command": "speaker.extension.display.set.auto.nightmode", "response": "Acknowledged."}}
+{"instruction": "#event speaker.extension.display.set.auto.nightmode.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command rotation (3)", "input": "", "output": {"command": "speaker.extension.display.set.wallpaper.rotation", "response": "Acknowledged."}}
+{"instruction": "#event speaker.extension.display.set.wallpaper.rotation.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command changed (3)", "input": "", "output": {"command": "speaker.extension.display.wallpaper.rotation.changed", "response": "Acknowledged."}}
+{"instruction": "#event speaker.extension.display.wallpaper.rotation.changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Set a 15‑minute coffee timer", "input": "", "output": {"command": "start.timer", "response": "Acknowledged."}}
+{"instruction": "#event start.timer.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "List all active timers", "input": "", "output": {"command": "status.timer", "response": "Acknowledged."}}
+{"instruction": "#event status.timer.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command stop (5)", "input": "", "output": {"command": "stop", "response": "Acknowledged."}}
+{"instruction": "#event stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command language", "input": "", "output": {"command": "system.configure.language", "response": "Acknowledged."}}
+{"instruction": "#event system.configure.language.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete (5)", "input": "", "output": {"command": "system.configure.language.complete", "response": "Acknowledged."}}
+{"instruction": "#event system.configure.language.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reset (1)", "input": "", "output": {"command": "system.factory.reset", "response": "Acknowledged."}}
+{"instruction": "#event system.factory.reset.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete (6)", "input": "", "output": {"command": "system.factory.reset.complete", "response": "Acknowledged."}}
+{"instruction": "#event system.factory.reset.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command phal", "input": "", "output": {"command": "system.factory.reset.phal", "response": "Acknowledged."}}
+{"instruction": "#event system.factory.reset.phal.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete (7)", "input": "", "output": {"command": "system.factory.reset.phal.complete", "response": "Acknowledged."}}
+{"instruction": "#event system.factory.reset.phal.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ping (2)", "input": "", "output": {"command": "system.factory.reset.ping", "response": "Acknowledged."}}
+{"instruction": "#event system.factory.reset.ping.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command register (3)", "input": "", "output": {"command": "system.factory.reset.register", "response": "Acknowledged."}}
+{"instruction": "#event system.factory.reset.register.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command start (2)", "input": "", "output": {"command": "system.factory.reset.start", "response": "Acknowledged."}}
+{"instruction": "#event system.factory.reset.start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command sync", "input": "", "output": {"command": "system.ntp.sync", "response": "Acknowledged."}}
+{"instruction": "#event system.ntp.sync.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete (8)", "input": "", "output": {"command": "system.ntp.sync.complete", "response": "Acknowledged."}}
+{"instruction": "#event system.ntp.sync.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command restart", "input": "", "output": {"command": "system.ovos.service.restart", "response": "Acknowledged."}}
+{"instruction": "#event system.ovos.service.restart.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reboot", "input": "", "output": {"command": "system.reboot", "response": "Acknowledged."}}
+{"instruction": "#event system.reboot.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command shutdown (1)", "input": "", "output": {"command": "system.shutdown", "response": "Acknowledged."}}
+{"instruction": "#event system.shutdown.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command status (1)", "input": "", "output": {"command": "timer.status", "response": "Acknowledged."}}
+{"instruction": "#event timer.status.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command {", "input": "", "output": {"command": "{", "response": "Acknowledged."}}
+{"instruction": "#event {.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command triggered\",", "input": "", "output": {"command": "\"type\": \"ovos.events.triggered\",", "response": "Acknowledged."}}
+{"instruction": "#event \"type\": \"ovos.events.triggered\",.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command \"namespace\": \"ovos gui plugin shell companion\",", "input": "", "output": {"command": "\"namespace\": \"ovos_gui_plugin_shell_companion\",", "response": "Acknowledged."}}
+{"instruction": "#event \"namespace\": \"ovos_gui_plugin_shell_companion\",.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command \"event name\": MSG TYPE,", "input": "", "output": {"command": "\"event_name\": MSG_TYPE,", "response": "Acknowledged."}}
+{"instruction": "#event \"event_name\": MSG_TYPE,.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command \"data\": {}", "input": "", "output": {"command": "\"data\": {}", "response": "Acknowledged."}}
+{"instruction": "#event \"data\": {}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command }", "input": "", "output": {"command": "}", "response": "Acknowledged."}}
+{"instruction": "#event }.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dim (1)", "input": "", "output": {"command": "{namespace}.speaker.extension.display.set.auto.dim", "response": "Acknowledged."}}
+{"instruction": "#event {namespace}.speaker.extension.display.set.auto.dim.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command nightmode (1)", "input": "", "output": {"command": "{namespace}.speaker.extension.display.set.auto.nightmode", "response": "Acknowledged."}}
+{"instruction": "#event {namespace}.speaker.extension.display.set.auto.nightmode.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command rotation (4)", "input": "", "output": {"command": "{namespace}.speaker.extension.display.set.wallpaper.rotation", "response": "Acknowledged."}}
+{"instruction": "#event {namespace}.speaker.extension.display.set.wallpaper.rotation.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command activate (2)", "input": "", "output": {"command": "{self.skill_id}.activate", "response": "Acknowledged."}}
+{"instruction": "#event {self.skill_id}.activate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get response", "input": "", "output": {"command": "{self.skill_id}.converse.get_response", "response": "Acknowledged."}}
+{"instruction": "#event {self.skill_id}.converse.get_response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ping (3)", "input": "", "output": {"command": "{self.skill_id}.converse.ping", "response": "Acknowledged."}}
+{"instruction": "#event {self.skill_id}.converse.ping.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request (5)", "input": "", "output": {"command": "{self.skill_id}.converse.request", "response": "Acknowledged."}}
+{"instruction": "#event {self.skill_id}.converse.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deactivate (2)", "input": "", "output": {"command": "{self.skill_id}.deactivate", "response": "Acknowledged."}}
+{"instruction": "#event {self.skill_id}.deactivate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command idle (1)", "input": "", "output": {"command": "{self.skill_id}.idle", "response": "Acknowledged."}}
+{"instruction": "#event {self.skill_id}.idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command public api", "input": "", "output": {"command": "{self.skill_id}.public_api", "response": "Acknowledged."}}
+{"instruction": "#event {self.skill_id}.public_api.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response (44)", "input": "", "output": {"command": "{self.skill_id}.public_api.response", "response": "Acknowledged."}}
+{"instruction": "#event {self.skill_id}.public_api.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get response (1)", "input": "", "output": {"command": "{skill_id}.converse.get_response", "response": "Acknowledged."}}
+{"instruction": "#event {skill_id}.converse.get_response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request (6)", "input": "", "output": {"command": "{skill_id}.converse.request", "response": "Acknowledged."}}
+{"instruction": "#event {skill_id}.converse.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}

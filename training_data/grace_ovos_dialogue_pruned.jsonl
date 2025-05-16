@@ -1,0 +1,50 @@
+{"instruction": "When is my next alarm?", "input": "", "output": {"command": "alarm.status", "response": "Executing status."}}
+{"instruction": "#event alarm.status.result", "input": "{\"next_alarm\": \"06:45 AM\"}", "output": {"command": "speak", "response": "Your next alarm is set for 06:45 AM."}}
+{"instruction": "Play a confirmation beep", "input": "", "output": {"command": "ovos.audio.play_sound", "response": "Executing play sound."}}
+{"instruction": "#event ovos.audio.play_sound.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get track length", "input": "", "output": {"command": "ovos.audio.service.get_track_length", "response": "Executing get track length."}}
+{"instruction": "#event ovos.audio.service.get_track_length.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get track position", "input": "", "output": {"command": "ovos.audio.service.get_track_position", "response": "Executing get track position."}}
+{"instruction": "#event ovos.audio.service.get_track_position.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command list backends", "input": "", "output": {"command": "ovos.audio.service.list_backends", "response": "Executing list backends."}}
+{"instruction": "#event ovos.audio.service.list_backends.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Skip to the next track", "input": "", "output": {"command": "ovos.audio.service.next", "response": "Executing next."}}
+{"instruction": "#event ovos.audio.service.next.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Pause the music playback", "input": "", "output": {"command": "ovos.audio.service.pause", "response": "Executing pause."}}
+{"instruction": "#event ovos.audio.service.pause.result", "input": "{\"status\": \"paused\"}", "output": {"command": "speak", "response": "Playback paused."}}
+{"instruction": "Play some lofi beats", "input": "", "output": {"command": "ovos.audio.service.play", "response": "Executing play."}}
+{"instruction": "#event ovos.audio.service.play.result", "input": "{\"status\": \"playing\", \"title\": \"lofi beats\"}", "output": {"command": "speak", "response": "Now playing lofi beats."}}
+{"instruction": "Go back to the previous track", "input": "", "output": {"command": "ovos.audio.service.prev", "response": "Executing prev."}}
+{"instruction": "#event ovos.audio.service.prev.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command queue (1)", "input": "", "output": {"command": "ovos.audio.service.queue", "response": "Executing queue."}}
+{"instruction": "#event ovos.audio.service.queue.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Resume the music", "input": "", "output": {"command": "ovos.audio.service.resume", "response": "Executing resume."}}
+{"instruction": "#event ovos.audio.service.resume.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command seek backward", "input": "", "output": {"command": "ovos.audio.service.seek_backward", "response": "Executing seek backward."}}
+{"instruction": "#event ovos.audio.service.seek_backward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command seek forward", "input": "", "output": {"command": "ovos.audio.service.seek_forward", "response": "Executing seek forward."}}
+{"instruction": "#event ovos.audio.service.seek_forward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command set track position", "input": "", "output": {"command": "ovos.audio.service.set_track_position", "response": "Executing set track position."}}
+{"instruction": "#event ovos.audio.service.set_track_position.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Stop all audio output", "input": "", "output": {"command": "ovos.audio.service.stop", "response": "Executing stop."}}
+{"instruction": "#event ovos.audio.service.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command track info", "input": "", "output": {"command": "ovos.audio.service.track_info", "response": "Executing track info."}}
+{"instruction": "#event ovos.audio.service.track_info.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command track info reply", "input": "", "output": {"command": "ovos.audio.service.track_info_reply", "response": "Executing track info reply."}}
+{"instruction": "#event ovos.audio.service.track_info_reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Decrease volume slightly", "input": "", "output": {"command": "ovos.volume.decrease", "response": "Executing decrease."}}
+{"instruction": "#event ovos.volume.decrease.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "What's the current volume level?", "input": "", "output": {"command": "ovos.volume.get", "response": "Executing get."}}
+{"instruction": "#event ovos.volume.get.result", "input": "{\"level\": 45}", "output": {"command": "speak", "response": "The volume is 45 percent."}}
+{"instruction": "What's the current volume level? (1)", "input": "", "output": {"command": "ovos.volume.get.response", "response": "Executing response."}}
+{"instruction": "#event ovos.volume.get.response.result", "input": "{\"level\": 45}", "output": {"command": "speak", "response": "The volume is 45 percent."}}
+{"instruction": "Increase volume by ten percent", "input": "", "output": {"command": "ovos.volume.increase", "response": "Executing increase."}}
+{"instruction": "#event ovos.volume.increase.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Mute all sounds", "input": "", "output": {"command": "ovos.volume.mute", "response": "Executing mute."}}
+{"instruction": "#event ovos.volume.mute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Mute all sounds (1)", "input": "", "output": {"command": "ovos.volume.mute.toggle", "response": "Executing toggle."}}
+{"instruction": "#event ovos.volume.mute.toggle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Set system volume to 45 percent", "input": "", "output": {"command": "ovos.volume.set", "response": "Executing set."}}
+{"instruction": "#event ovos.volume.set.result", "input": "{\"level\": 45}", "output": {"command": "speak", "response": "Volume is now 45 percent."}}
+{"instruction": "Unmute the audio", "input": "", "output": {"command": "ovos.volume.unmute", "response": "Executing unmute."}}
+{"instruction": "#event ovos.volume.unmute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}

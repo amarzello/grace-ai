@@ -1,0 +1,2747 @@
+#!/usr/bin/env python3
+"""
+Grace AI System - Enhanced Memory System
+This module implements a sophisticated 3-tier memory system for the Grace AI assistant,
+combining vector database storage, hot/warm/cold memory tiers, and long-term persistence.
+"""
+import os
+import json
+import sqlite3
+import pickle
+import logging
+import asyncio
+import time
+import shutil
+import traceback
+import re
+import tempfile  # Added missing import
+from pathlib import Path
+from datetime import datetime, timedelta
+from typing import Dict, List, Any, Optional, Tuple, Union, Set
+from concurrent.futures import ThreadPoolExecutor
+
+# Import shared utilities
+from utils import (
+    MEMORY_DB_PATH, REFERENCE_PATH,
+    ConversationEntry, MemoryType, calculate_relevance,
+    print_debug_separator, timed_operation
+)
+
+# Check for required dependencies - fail fast with clear error messages
+try:
+    from mem0 import Memory
+    MEM0_AVAILABLE = True
+except ImportError:
+    error_message = """
+    CRITICAL: 'mem0' library is required but not installed.
+    Please install it with: pip install mem0
+    """
+    print(f"\n{'!'*80}\n{error_message}\n{'!'*80}\n")
+    raise ImportError("Required dependency 'mem0' is missing")
+
+try:
+    from qdrant_client import QdrantClient
+    from qdrant_client.models import Distance, VectorParams, PointStruct
+    QDRANT_AVAILABLE = True
+except ImportError:
+    error_message = """
+    CRITICAL: 'qdrant_client' library is required but not installed.
+    Please install it with: pip install qdrant-client
+    """
+    print(f"\n{'!'*80}\n{error_message}\n{'!'*80}\n")
+    raise ImportError("Required dependency 'qdrant_client' is missing")
+
+# Check for memories-dev - this is mandatory
+try:
+    from memories import Config
+    MEMORIES_DEV_AVAILABLE = True
+    # Import all required memories-dev components
+    from memories.core import HotMemory
+    from memories.core import WarmMemory
+    from memories.core import ColdMemory
+    from memories.models.load_model import LoadModel
+    from memories.models.multi_model import MultiModelInference
+    from memories.core.verification import VerificationEngine  # Updated import path
+    from memories.core.graph import KnowledgeGraph  # Updated import path
+except ImportError:
+    error_message = """
+    CRITICAL: 'memories' library is required but not installed.
+    Please install it with: pip install memories-dev
+    """
+    print(f"\n{'!'*80}\n{error_message}\n{'!'*80}\n")
+    raise ImportError("Required dependency 'memories-dev' is missing")
+
+
+class EnhancedMemorySystem:
+    """
+    Enhanced 3-tier memory system with full integration of mem0 and memories-dev.
+    
+    Features:
+    - Vector-based contextual memory via mem0
+    - Hot/warm/cold memory tiers for different types of information
+    - Long-term persistent storage with SQLite
+    - Memory verification capabilities
+    - Comprehensive conversation logging
+    - Support for reference materials
+    - Privacy-respecting amnesia mode
+    - Memory optimization and maintenance
+    """
+    # Current database schema version
+    SCHEMA_VERSION = 3
+
+    def __init__(self, config: Dict):
+        """
+        Initialize the memory system with the provided configuration.
+        
+        Args:
+            config: Memory system configuration
+        """
+        self.logger = logging.getLogger('grace.memory')
+        self.config = config.get('memory', {})
+        self.amnesia_mode = config.get('amnesia_mode', False)
+        self.debug_mode = config.get('debug', False)
+        
+        # Set up database paths and ensure directories exist
+        MEMORY_DB_PATH.mkdir(parents=True, exist_ok=True)
+        self.long_term_db = MEMORY_DB_PATH / 'long_term.db'
+        self.conversation_db = MEMORY_DB_PATH / 'conversations.db'
+        self.critical_memory_file = MEMORY_DB_PATH / 'critical_memory.pkl'
+        
+        # Lock for critical memory operations
+        self.critical_memory_lock = asyncio.Lock()
+        
+        # Thread pool for async operations
+        self.executor = ThreadPoolExecutor(max_workers=4)
+        
+        # Memory statistics and caching
+        self.memory_stats = {
+            "total_memories": 0,
+            "last_maintenance": datetime.now(),
+            "insertion_count": 0,
+            "search_count": 0,
+            "last_error": None,
+            "last_error_time": None
+        }
+        
+        # Caching with size limits
+        self.query_cache = {}
+        self.memory_cache = {}
+        self.memory_cache_size = self.config.get('memory_cache_size', 1000)
+        
+        # Add an attribute to store last prompt for debugging
+        self._last_prompt = ""
+        
+        # Initialization flags to track subsystem status
+        self.long_term_storage_initialized = False
+        self.conversation_db_initialized = False
+        self.critical_memory_initialized = False
+        self.memory_stores_initialized = False
+        self.knowledge_graph_initialized = False
+        self.verification_engine_initialized = False
+        
+        # Initialize components in order of dependency
+        try:
+            self._init_long_term_storage()
+            self._init_critical_memory()
+            self._init_memory_stores()
+            self._init_knowledge_graph()
+            self._init_verification_engine()
+            self._init_conversation_db()
+            
+            # Set up periodic maintenance
+            self._schedule_maintenance()
+            
+            if self.amnesia_mode:
+                self.logger.warning("Amnesia mode active - no new memories will be stored")
+            else:
+                # Load memory statistics
+                self._load_memory_stats()
+        except Exception as e:
+            error_message = f"CRITICAL ERROR initializing memory system: {str(e)}\n{traceback.format_exc()}"
+            self.logger.critical(error_message)
+            print(f"\n{'!'*80}\n{error_message}\n{'!'*80}\n")
+            raise
+
+    def _check_db_version(self, conn):
+        """Check database version and perform migrations if needed."""
+        cursor = conn.cursor()
+        
+        # Create version table if it doesn't exist
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS db_version (
+                id INTEGER PRIMARY KEY CHECK (id = 1),
+                version INTEGER NOT NULL
+            )
+        """)
+        
+        # Check current version
+        cursor.execute("SELECT version FROM db_version WHERE id = 1")
+        row = cursor.fetchone()
+        current_version = 0
+        
+        if row:
+            current_version = row[0]
+        else:
+            # First time setup - insert version
+            cursor.execute("INSERT INTO db_version (id, version) VALUES (1, 0)")
+            conn.commit()
+        
+        # Perform migrations if needed
+        if current_version < self.SCHEMA_VERSION:
+            self._migrate_database(conn, current_version)
+            
+            # Update version
+            cursor.execute("UPDATE db_version SET version = ? WHERE id = 1", (self.SCHEMA_VERSION,))
+            conn.commit()
+
+    def _migrate_database(self, conn, current_version):
+        """
+        Perform database schema migrations.
+        
+        Args:
+            conn: SQLite connection
+            current_version: Current schema version
+        """
+        cursor = conn.cursor()
+        
+        try:
+            # Start transaction
+            cursor.execute("BEGIN TRANSACTION")
+            
+            # Migration paths
+            if current_version < 1:
+                # Initial schema or pre-versioning schema
+                # Check if table exists - if not, it will be created in _init_long_term_storage
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='long_term_memory'")
+                if cursor.fetchone():
+                    # Table exists, check for columns
+                    self._ensure_column_exists(cursor, "long_term_memory", "last_accessed", "TEXT")
+                    self._ensure_column_exists(cursor, "long_term_memory", "access_count", "INTEGER DEFAULT 0")
+            
+            if current_version < 2:
+                # Create memory_stats table if it doesn't exist
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS memory_stats (
+                        key TEXT PRIMARY KEY,
+                        value TEXT
+                    )
+                """)
+                
+                # Add verification_score column if it doesn't exist
+                self._ensure_column_exists(cursor, "long_term_memory", "verification_score", "REAL DEFAULT 1.0")
+            
+            if current_version < 3:
+                # Add archived column to support archiving instead of deletion
+                self._ensure_column_exists(cursor, "long_term_memory", "archived", "INTEGER DEFAULT 0")
+                
+                # Add importance_score column for better memory prioritization
+                self._ensure_column_exists(cursor, "long_term_memory", "importance_score", "REAL DEFAULT 0.5")
+                
+                # Add knowledge_graph_id column for better integration with knowledge graph
+                self._ensure_column_exists(cursor, "long_term_memory", "knowledge_graph_id", "TEXT")
+                
+                # Create index for archived column
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_archived ON long_term_memory(archived)")
+                
+                # Create index for importance_score
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_importance ON long_term_memory(importance_score)")
+            
+            # Commit transaction
+            cursor.execute("COMMIT")
+            
+            self.logger.info(f"Database migrated from version {current_version} to {self.SCHEMA_VERSION}")
+        except Exception as e:
+            self.logger.error(f"Database migration error: {e}")
+            
+            # Rollback on error
+            try:
+                cursor.execute("ROLLBACK")
+            except Exception:
+                pass
+            
+            raise
+
+    def _ensure_column_exists(self, cursor, table, column, column_type):
+        """
+        Add column to table if it doesn't exist.
+        
+        Args:
+            cursor: SQLite cursor
+            table: Table name
+            column: Column name
+            column_type: Column type definition
+        """
+        # Check if column exists
+        cursor.execute(f"PRAGMA table_info({table})")
+        columns = [info[1] for info in cursor.fetchall()]
+        
+        if column not in columns:
+            self.logger.info(f"Adding column {column} to table {table}")
+            cursor.execute(f"ALTER TABLE {table} ADD COLUMN {column} {column_type}")
+
+    def _init_long_term_storage(self):
+        """Initialize long-term storage database with improved error handling and schema migration."""
+        try:
+            # Check if database folder exists
+            if not self.long_term_db.parent.exists():
+                self.long_term_db.parent.mkdir(parents=True, exist_ok=True)
+                
+            conn = sqlite3.connect(self.long_term_db)
+            cursor = conn.cursor()
+            
+            # Enable foreign keys support and WAL mode for better concurrency
+            cursor.execute("PRAGMA foreign_keys = ON")
+            cursor.execute("PRAGMA journal_mode = WAL")
+            
+            # Check if database is valid
+            try:
+                cursor.execute("PRAGMA integrity_check")
+                result = cursor.fetchone()
+                if result[0] != "ok":
+                    self.logger.warning(f"Database integrity check failed: {result[0]}")
+                    
+                    # Create backup of corrupted database
+                    backup_path = self.long_term_db.with_suffix('.db.bak')
+                    if self.long_term_db.exists():
+                        shutil.copy(self.long_term_db, backup_path)
+                        self.logger.info(f"Created backup of corrupted database at {backup_path}")
+            except Exception as e:
+                self.logger.warning(f"Could not check database integrity: {e}")
+            
+            # Check schema version and migrate if needed
+            self._check_db_version(conn)
+            
+            # Create table if it doesn't exist
+            cursor.execute("BEGIN TRANSACTION")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS long_term_memory (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    timestamp TEXT NOT NULL,
+                    memory_type TEXT NOT NULL,
+                    content TEXT NOT NULL,
+                    metadata TEXT,
+                    embedding BLOB,
+                    verification_score REAL DEFAULT 1.0,
+                    last_accessed TEXT,
+                    access_count INTEGER DEFAULT 0,
+                    archived INTEGER DEFAULT 0,
+                    importance_score REAL DEFAULT 0.5,
+                    knowledge_graph_id TEXT
+                )
+            """)
+            
+            # Create indices for better performance
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_memory_type ON long_term_memory(memory_type)
+            """)
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_timestamp ON long_term_memory(timestamp)
+            """)
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_verification ON long_term_memory(verification_score)
+            """)
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_archived ON long_term_memory(archived)
+            """)
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_importance ON long_term_memory(importance_score)
+            """)
+            
+            # Only create last_accessed index if column exists
+            cursor.execute("PRAGMA table_info(long_term_memory)")
+            columns = [info[1] for info in cursor.fetchall()]
+            if "last_accessed" in columns:
+                cursor.execute("""
+                    CREATE INDEX IF NOT EXISTS idx_last_accessed ON long_term_memory(last_accessed)
+                """)
+            
+            # Create a separate search table with FTS5 for efficient text search
+            try:
+                cursor.execute("""
+                    CREATE VIRTUAL TABLE IF NOT EXISTS memory_search
+                    USING FTS5(content, metadata)
+                """)
+            except sqlite3.Error as e:
+                # FTS5 might not be available, try FTS4 as fallback
+                self.logger.warning(f"FTS5 not available, trying FTS4: {e}")
+                try:
+                    cursor.execute("""
+                        CREATE VIRTUAL TABLE IF NOT EXISTS memory_search
+                        USING FTS4(content, metadata)
+                    """)
+                except sqlite3.Error as e2:
+                    error_msg = f"Neither FTS5 nor FTS4 is available. Full-text search functionality will be limited: {e2}"
+                    self.logger.critical(error_msg)
+                    print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            
+            # Create memory_stats table
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS memory_stats (
+                    key TEXT PRIMARY KEY,
+                    value TEXT
+                )
+            """)
+            
+            cursor.execute("COMMIT")
+            conn.close()
+            
+            self.logger.info("Long-term storage initialized")
+            self.long_term_storage_initialized = True
+        except sqlite3.Error as e:
+            error_msg = f"CRITICAL: SQLite error in long-term storage initialization: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"SQLite error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            
+            # If transaction failed, try to rollback
+            try:
+                cursor.execute("ROLLBACK")
+                conn.close()
+            except Exception:
+                pass
+                
+            raise
+        except Exception as e:
+            error_msg = f"CRITICAL: Failed to initialize long-term storage: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"Storage initialization error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise
+
+    def _init_conversation_db(self):
+        """Initialize SQLite database for conversation logs with improved error handling."""
+        try:
+            # Check if database folder exists
+            if not self.conversation_db.parent.exists():
+                self.conversation_db.parent.mkdir(parents=True, exist_ok=True)
+                
+            conn = sqlite3.connect(self.conversation_db)
+            cursor = conn.cursor()
+            
+            # Enable WAL mode for better concurrency
+            cursor.execute("PRAGMA journal_mode = WAL")
+            
+            # Create table with transaction support
+            cursor.execute("BEGIN TRANSACTION")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS conversations (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    timestamp TEXT NOT NULL,
+                    user_input TEXT,
+                    stt_transcript TEXT,
+                    memory_context TEXT,
+                    prompt TEXT,
+                    model_response TEXT,
+                    thinking_process TEXT,
+                    json_response TEXT,
+                    command_result TEXT,
+                    tts_output TEXT,
+                    error TEXT,
+                    metadata TEXT,
+                    verification_result TEXT,
+                    knowledge_graph_id TEXT,
+                    archived INTEGER DEFAULT 0,
+                    importance_score REAL DEFAULT 0.5
+                )
+            """)
+            
+            # Create index for efficient queries
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_conv_timestamp ON conversations(timestamp)
+            """)
+            
+            # Add user_input index for faster searching
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_conv_user_input ON conversations(user_input)
+            """)
+            
+            # Add archived index
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_conv_archived ON conversations(archived)
+            """)
+            
+            # Add importance index
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_conv_importance ON conversations(importance_score)
+            """)
+            
+            # Create FTS index for full-text search (try FTS5 first, with fallback to FTS4)
+            try:
+                cursor.execute("""
+                    CREATE VIRTUAL TABLE IF NOT EXISTS conversation_search
+                    USING FTS5(user_input, model_response, thinking_process)
+                """)
+            except sqlite3.Error as e:
+                # FTS5 might not be available, try FTS4 as fallback
+                self.logger.warning(f"FTS5 not available for conversation search, trying FTS4: {e}")
+                try:
+                    cursor.execute("""
+                        CREATE VIRTUAL TABLE IF NOT EXISTS conversation_search
+                        USING FTS4(user_input, model_response, thinking_process)
+                    """)
+                except sqlite3.Error as e2:
+                    error_msg = f"Neither FTS5 nor FTS4 is available. Conversation search will be limited: {e2}"
+                    self.logger.critical(error_msg)
+                    print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+                    
+            cursor.execute("COMMIT")
+            conn.close()
+            
+            self.logger.info("Conversation database initialized")
+            self.conversation_db_initialized = True
+        except sqlite3.Error as e:
+            error_msg = f"CRITICAL: SQLite error in conversation database initialization: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"Conversation DB error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            
+            # If transaction failed, try to rollback
+            try:
+                cursor.execute("ROLLBACK")
+                conn.close()
+            except Exception:
+                pass
+                
+            raise
+        except Exception as e:
+            error_msg = f"CRITICAL: Failed to initialize conversation database: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"Conversation DB error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise
+
+    def _init_critical_memory(self):
+        """Load critical memory from disk with improved error handling."""
+        self.critical_memory = {}
+        
+        try:
+            if self.critical_memory_file.exists():
+                try:
+                    with open(self.critical_memory_file, 'rb') as f:
+                        # Verify hash/digest before loading (to be implemented)
+                        self.critical_memory = pickle.load(f)
+                        
+                    self.logger.info(f"Loaded {len(self.critical_memory)} critical memories")
+                    self.critical_memory_initialized = True
+                except (pickle.PickleError, EOFError) as e:
+                    error_msg = f"Pickle error loading critical memory: {e}"
+                    self.logger.error(error_msg)
+                    self.memory_stats["last_error"] = f"Critical memory error: {e}"
+                    self.memory_stats["last_error_time"] = datetime.now().isoformat()
+                    
+                    # Create backup of corrupted file
+                    if self.critical_memory_file.exists():
+                        backup_path = self.critical_memory_file.with_suffix('.pkl.bak')
+                        try:
+                            shutil.copy(self.critical_memory_file, backup_path)
+                            self.logger.info(f"Created backup of critical memory at {backup_path}")
+                        except Exception as be:
+                            self.logger.error(f"Failed to create backup: {be}")
+                    
+                    # Reset and recreate critical memory
+                    self._recreate_critical_memory()
+            else:
+                # If no critical memory file exists, initialize it as empty
+                self.critical_memory = {}
+                
+                # Call async method from sync context using asyncio.run
+                try:
+                    loop = asyncio.get_event_loop()
+                    if loop.is_running():
+                        # If we're already in an event loop, create a new one
+                        loop = asyncio.new_event_loop()
+                        asyncio.set_event_loop(loop)
+                        loop.run_until_complete(self._save_critical_memory())
+                    else:
+                        asyncio.run(self._save_critical_memory())
+                except RuntimeError:
+                    # Handle case when already in an event loop
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+                    loop.run_until_complete(self._save_critical_memory())
+                    loop.close()
+                
+                self.critical_memory_initialized = True
+                self.logger.info("Created new critical memory file")
+        except Exception as e:
+            error_msg = f"CRITICAL: Failed to load critical memory: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"Critical memory error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            
+            # Reset critical memory to empty state
+            self.critical_memory = {}
+            raise
+
+    # Fixed to be async since it calls await self._save_critical_memory()
+    async def _recreate_critical_memory(self):
+        """Recreate critical memory from long-term storage if available."""
+        self.logger.info("Attempting to recreate critical memory from long-term storage")
+        self.critical_memory = {}
+        
+        # Only attempt reconstruction if long-term storage is initialized
+        if not self.long_term_storage_initialized:
+            error_msg = "CRITICAL: Long-term storage not initialized, cannot recreate critical memory"
+            self.logger.critical(error_msg)
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise RuntimeError(error_msg)
+            
+        try:
+            conn = sqlite3.connect(self.long_term_db)
+            cursor = conn.cursor()
+            
+            # Get critical memories from long-term storage
+            # Check for column existence first
+            cursor.execute("PRAGMA table_info(long_term_memory)")
+            columns = [info[1] for info in cursor.fetchall()]
+            
+            # Construct query based on available columns
+            query = """
+                SELECT timestamp, content, metadata
+                FROM long_term_memory
+                WHERE memory_type = ?
+                ORDER BY timestamp DESC
+            """
+            
+            # Add verification_score if it exists
+            if "verification_score" in columns:
+                query = """
+                    SELECT timestamp, content, metadata, verification_score
+                    FROM long_term_memory
+                    WHERE memory_type = ?
+                    ORDER BY timestamp DESC
+                """
+                
+            cursor.execute(query, (MemoryType.CRITICAL.value,))
+            rows = cursor.fetchall()
+            
+            for row in rows:
+                key = f"critical_{row[0]}"  # timestamp
+                memory_data = {
+                    'content': row[1],
+                    'metadata': json.loads(row[2]) if row[2] else {},
+                }
+                
+                # Add verification score if available
+                if len(row) > 3 and row[3] is not None:
+                    memory_data['verification_score'] = row[3]
+                else:
+                    memory_data['verification_score'] = 1.0
+                    
+                self.critical_memory[key] = memory_data
+                
+            conn.close()
+            
+            self.logger.info(f"Recreated {len(self.critical_memory)} critical memories from long-term storage")
+            
+            # Save the recreated critical memory
+            await self._save_critical_memory()
+            self.critical_memory_initialized = True
+        except Exception as e:
+            error_msg = f"CRITICAL: Failed to recreate critical memory: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"Critical memory recreation error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            self.critical_memory = {}
+            raise
+
+    def _init_memory_stores(self):
+        """Initialize all memory stores including mem0 and memories-dev."""
+        self.logger.info("Initializing memory stores...")
+        
+        # Tier 1: mem0 with hybrid vector/graph memory
+        try:
+            # Configure hybrid vector store with both FAISS and Qdrant
+            self.mem0_config = {
+                "vector_store": {
+                    "provider": "hybrid",  # Fixed: Updated from "engine": "hybrid"
+                    "config": {
+                        "collection_name": "grace_memory",
+                        "providers": [
+                            {
+                                "name": "faiss",
+                                "config": {
+                                    "index_type": "IndexFlatIP",
+                                    "dimension": 1536,
+                                    "metric": "inner_product",
+                                    "path": str(MEMORY_DB_PATH / "faiss_index")
+                                }
+                            },
+                            {
+                                "name": "qdrant",
+                                "config": {
+                                    "collection_name": "grace_memory",
+                                    "host": self.config.get('qdrant_host', 'localhost'),
+                                    "port": self.config.get('qdrant_port', 6333),
+                                    "on_disk": True,
+                                    "embedding_model_dims": 1536
+                                }
+                            }
+                        ],
+                        "store_providers": ["faiss", "qdrant"],
+                        "search_providers": ["faiss", "qdrant"],
+                        "search_strategy": "merge",
+                        "embedding_dimension": 1536
+                    }
+                },
+                "version": "v1.1"
+            }
+            
+            # Print debug info if in debug mode
+            if self.debug_mode:
+                print_debug_separator("MEM0 CONFIGURATION")
+                print(json.dumps(self.mem0_config, indent=2))
+                
+            # Initialize with strict error checking - Fixed: using config_dict
+            self.mem0 = Memory.from_config(config_dict=self.mem0_config)
+            self.logger.info("mem0 initialized successfully with hybrid FAISS/Qdrant configuration")
+        except Exception as e:
+            error_msg = f"CRITICAL: Failed to initialize mem0: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"mem0 initialization error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise
+            
+        # Tier 2: memories-dev for critical memory and verification
+        try:
+            # Use proper memory classes with optimized configuration
+            # Reduced memory sizes to be more realistic for hardware
+            self.hot_memory = HotMemory(
+                max_size_gb=min(4, self.config.get('hot_memory_gb', 4)),
+                eviction_policy="lru"
+            )
+            
+            self.warm_memory = WarmMemory(
+                max_size_gb=min(16, self.config.get('warm_memory_gb', 16)),
+                compression_level="medium"
+            )
+            
+            self.cold_memory = ColdMemory(
+                storage_type=self.config.get('cold_memory_type', 'file'),
+                path=str(MEMORY_DB_PATH / 'cold_memory'),
+                lifecycle_policy="90_days"  # Changed from "never" to enable automatic cleanup
+            )
+            
+            self.logger.info("memories-dev components initialized with tiered storage configuration")
+        except Exception as e:
+            error_msg = f"CRITICAL: Failed to initialize memories-dev components: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"memories-dev initialization error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise
+            
+        # Mark as initialized
+        self.memory_stores_initialized = True
+
+    def _init_knowledge_graph(self):
+        """Initialize the knowledge graph component."""
+        try:
+            # Initialize the knowledge graph with persistent storage
+            self.knowledge_graph = KnowledgeGraph(
+                storage_path=str(MEMORY_DB_PATH / 'knowledge_graph'),
+                max_entities=1000000,  # Support up to 1 million entities
+                max_relations=5000000  # Support up to 5 million relations
+            )
+            
+            self.logger.info("Knowledge graph initialized successfully")
+            self.knowledge_graph_initialized = True
+        except Exception as e:
+            error_msg = f"CRITICAL: Failed to initialize knowledge graph: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"Knowledge graph initialization error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise
+
+    def _init_verification_engine(self):
+        """Initialize the verification engine component."""
+        try:
+            # Initialize the verification engine from memories.core.verification
+            self.verification_engine = VerificationEngine(
+                storage_path=str(MEMORY_DB_PATH / 'verification_data'),
+                verification_threshold=self.config.get('verification_threshold', 0.85)
+            )
+            
+            # Initialize the fact checker with reference materials
+            from memories.core.verification import FactChecker  # Updated import
+            
+            self.fact_checker = FactChecker(
+                reference_path=str(REFERENCE_PATH),
+                cache_path=str(MEMORY_DB_PATH / 'fact_checker_cache')
+            )
+            
+            self.logger.info("Verification engine initialized successfully")
+            self.verification_engine_initialized = True
+        except Exception as e:
+            error_msg = f"CRITICAL: Failed to initialize verification engine: {e}"
+            self.logger.critical(error_msg)
+            self.memory_stats["last_error"] = f"Verification engine initialization error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise
+
+    async def _save_critical_memory(self):
+        """Save critical memory to disk with improved error handling and locking."""
+        if self.amnesia_mode:
+            return
+            
+        async with self.critical_memory_lock:
+            try:
+                # Create a temporary file first to avoid corruption
+                with tempfile.NamedTemporaryFile('wb', suffix='.pkl.tmp', delete=False) as f:
+                    temp_file = Path(f.name)
+                    pickle.dump(self.critical_memory, f)
+                
+                # Replace the original file with the temporary file (atomic operation)
+                os.replace(temp_file, self.critical_memory_file)
+                
+                self.logger.debug(f"Saved {len(self.critical_memory)} critical memories")
+            except Exception as e:
+                error_msg = f"Error saving critical memory: {e}"
+                self.logger.error(error_msg)
+                self.memory_stats["last_error"] = f"Critical memory save error: {e}"
+                self.memory_stats["last_error_time"] = datetime.now().isoformat()
+                
+                # Try to clean up temp file if it exists
+                try:
+                    if os.path.exists(temp_file):
+                        os.remove(temp_file)
+                except Exception:
+                    pass
+
+    def _load_memory_stats(self):
+        """Load memory statistics from database."""
+        # Only attempt to load if long-term storage is initialized
+        if not self.long_term_storage_initialized:
+            return
+            
+        try:
+            with sqlite3.connect(self.long_term_db) as conn:
+                cursor = conn.cursor()
+                
+                # Check if table exists first
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='memory_stats'")
+                if cursor.fetchone() is None:
+                    self.logger.error("Failed to load memory stats: memory_stats table does not exist")
+                    return
+                    
+                cursor.execute("SELECT key, value FROM memory_stats")
+                rows = cursor.fetchall()
+                
+                for key, value in rows:
+                    if key in ["total_memories", "insertion_count", "search_count"]:
+                        self.memory_stats[key] = int(value)
+                    elif key == "last_maintenance":
+                        try:
+                            self.memory_stats[key] = datetime.fromisoformat(value)
+                        except ValueError:
+                            # Handle incorrect date format
+                            self.memory_stats[key] = datetime.now()
+                    elif key == "last_error_time":
+                        try:
+                            self.memory_stats[key] = datetime.fromisoformat(value)
+                        except ValueError:
+                            # Handle incorrect date format
+                            self.memory_stats[key] = None
+                    else:
+                        self.memory_stats[key] = value
+        except Exception as e:
+            error_msg = f"Failed to load memory stats: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Memory stats load error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+
+    def _save_memory_stats(self):
+        """Save memory statistics to database."""
+        if self.amnesia_mode or not self.long_term_storage_initialized:
+            return
+            
+        try:
+            with sqlite3.connect(self.long_term_db) as conn:
+                cursor = conn.cursor()
+                
+                # Check if table exists first
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='memory_stats'")
+                if cursor.fetchone() is None:
+                    # Create table if it doesn't exist
+                    cursor.execute("""
+                        CREATE TABLE IF NOT EXISTS memory_stats (
+                            key TEXT PRIMARY KEY,
+                            value TEXT
+                        )
+                    """)
+                
+                cursor.execute("BEGIN TRANSACTION")
+                
+                # Convert datetime to string for storage
+                stats_dict = self.memory_stats.copy()
+                if isinstance(stats_dict.get("last_maintenance"), datetime):
+                    stats_dict["last_maintenance"] = stats_dict["last_maintenance"].isoformat()
+                if isinstance(stats_dict.get("last_error_time"), datetime):
+                    stats_dict["last_error_time"] = stats_dict["last_error_time"].isoformat()
+                
+                # Update or insert stats
+                for key, value in stats_dict.items():
+                    if value is not None:  # Skip None values
+                        cursor.execute("""
+                            INSERT OR REPLACE INTO memory_stats (key, value)
+                            VALUES (?, ?)
+                        """, (key, str(value)))
+                
+                cursor.execute("COMMIT")
+        except Exception as e:
+            error_msg = f"Failed to save memory stats: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Memory stats save error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            try:
+                cursor.execute("ROLLBACK")
+            except Exception:
+                pass
+
+    def _schedule_maintenance(self):
+        """Schedule periodic memory maintenance tasks."""
+        # We'll use a simple approach with timestamp checks
+        self.maintenance_interval = timedelta(hours=24)  # Run once a day
+        self.last_maintenance = datetime.now()
+        
+        # Initialize maintenance state
+        self.maintenance_needed = False
+        self.maintenance_running = False
+
+    async def _check_and_run_maintenance(self):
+        """Check if maintenance is needed and run it if necessary."""
+        if self.amnesia_mode:
+            return
+            
+        # Check if maintenance is due
+        if (datetime.now() - self.last_maintenance) >= self.maintenance_interval:
+            if not self.maintenance_running:
+                self.maintenance_running = True
+                try:
+                    # Create and keep reference to the maintenance task
+                    maintenance_task = asyncio.create_task(self._run_maintenance())
+                    # Wait for maintenance to complete
+                    await maintenance_task
+                except Exception as e:
+                    self.logger.error(f"Maintenance error: {e}")
+                finally:
+                    self.maintenance_running = False
+                    self.last_maintenance = datetime.now()
+
+    async def _run_maintenance(self):
+        """Run memory maintenance tasks asynchronously."""
+        self.logger.info("Running memory maintenance")
+        
+        tasks = [
+            self._archive_old_memories(),
+            self._compact_databases(),
+            self._optimize_search_index(),
+            self._clean_memory_cache()
+        ]
+        
+        # Execute maintenance tasks
+        await asyncio.gather(*tasks)
+        
+        # Update memory stats
+        self.memory_stats["last_maintenance"] = datetime.now()
+        self._save_memory_stats()
+        
+        self.logger.info("Memory maintenance completed")
+
+    async def _archive_old_memories(self):
+        """Archive old memories without deleting them."""
+        # Skip if not initialized or in amnesia mode
+        if not self.long_term_storage_initialized or self.amnesia_mode:
+            return
+            
+        try:
+            # Run in thread pool to avoid blocking
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(self.executor, self._archive_old_memories_sync)
+        except Exception as e:
+            error_msg = f"Error during memory archiving: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Memory archiving error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+
+    def _archive_old_memories_sync(self):
+        """Synchronous implementation of memory archiving."""
+        try:
+            with sqlite3.connect(self.long_term_db) as conn:
+                cursor = conn.cursor()
+                
+                # Check if required columns exist
+                cursor.execute("PRAGMA table_info(long_term_memory)")
+                columns = [info[1] for info in cursor.fetchall()]
+                
+                if "archived" not in columns:
+                    self.logger.warning("Cannot archive memories: required columns missing")
+                    return
+                    
+                # Get archiving configuration
+                archive_age_days = self.config.get('archive_age_days', 365)
+                
+                # Calculate cutoff date
+                cutoff_date = (datetime.now() - timedelta(days=archive_age_days)).isoformat()
+                
+                # Mark memories as archived instead of deleting them
+                cursor.execute("""
+                    UPDATE long_term_memory
+                    SET archived = 1
+                    WHERE timestamp < ?
+                    AND archived = 0
+                    AND memory_type NOT IN (?, ?)
+                """, (
+                    cutoff_date,
+                    MemoryType.CRITICAL.value,  # Never archive critical memories
+                    MemoryType.REFERENCE.value  # Never archive reference materials
+                ))
+                
+                archived_count = cursor.rowcount
+                
+                # Same for conversations table
+                if self.conversation_db_initialized:
+                    try:
+                        with sqlite3.connect(self.conversation_db) as conv_conn:
+                            conv_cursor = conv_conn.cursor()
+                            
+                            # Check if archived column exists
+                            conv_cursor.execute("PRAGMA table_info(conversations)")
+                            conv_columns = [info[1] for info in conv_cursor.fetchall()]
+                            
+                            if "archived" in conv_columns:
+                                conv_cursor.execute("""
+                                    UPDATE conversations
+                                    SET archived = 1
+                                    WHERE timestamp < ?
+                                    AND archived = 0
+                                """, (cutoff_date,))
+                                
+                                archived_count += conv_cursor.rowcount
+                    except Exception as e:
+                        self.logger.error(f"Error archiving conversations: {e}")
+                
+                self.logger.info(f"Archived {archived_count} old memories")
+        except Exception as e:
+            error_msg = f"Error in memory archiving: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Memory archiving error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+
+    async def _compact_databases(self):
+        """Compact SQLite databases to recover space."""
+        # Skip if databases aren't initialized
+        if not (self.long_term_storage_initialized and self.conversation_db_initialized):
+            return
+            
+        try:
+            # Run in thread pool to avoid blocking
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(self.executor, self._compact_databases_sync)
+        except Exception as e:
+            error_msg = f"Error during database compaction: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Database compaction error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+
+    def _compact_databases_sync(self):
+        """Synchronous implementation of database compaction."""
+        for db_path in [self.long_term_db, self.conversation_db]:
+            if not db_path.exists():
+                continue
+                
+            try:
+                with sqlite3.connect(db_path) as conn:
+                    # Analyze database first for better compaction
+                    conn.execute("ANALYZE")
+                    
+                    # Compact the database
+                    conn.execute("VACUUM")
+            except Exception as e:
+                error_msg = f"Error compacting database {db_path}: {e}"
+                self.logger.error(error_msg)
+                self.memory_stats["last_error"] = f"Database compaction error: {e}"
+                self.memory_stats["last_error_time"] = datetime.now().isoformat()
+
+    async def _optimize_search_index(self):
+        """Optimize FTS5 search index."""
+        # Skip if databases aren't initialized
+        if not (self.long_term_storage_initialized and self.conversation_db_initialized):
+            return
+            
+        try:
+            # Run in thread pool to avoid blocking
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(self.executor, self._optimize_search_index_sync)
+        except Exception as e:
+            error_msg = f"Error during search index optimization: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Search index optimization error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+
+    def _optimize_search_index_sync(self):
+        """Synchronous implementation of search index optimization."""
+        try:
+            # Optimize long-term memory search index
+            if self.long_term_db.exists():
+                with sqlite3.connect(self.long_term_db) as conn:
+                    cursor = conn.cursor()
+                    
+                    # Check if FTS table exists
+                    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='memory_search'")
+                    if cursor.fetchone():
+                        # Check if it's FTS5 or FTS4
+                        cursor.execute("PRAGMA module_list")
+                        modules = [row[0] for row in cursor.fetchall()]
+                        
+                        try:
+                            # Fixed: Use the same command for both FTS4 and FTS5
+                            if "fts5" in modules or "fts4" in modules:
+                                # Both FTS4 and FTS5 use the same optimization syntax
+                                cursor.execute("INSERT INTO memory_search(memory_search) VALUES('optimize')")
+                            else:
+                                self.logger.warning("No FTS module available for memory_search optimization")
+                        except sqlite3.Error as e:
+                            self.logger.warning(f"Could not optimize memory_search index: {e}")
+            
+            # Optimize conversation search index
+            if self.conversation_db.exists():
+                with sqlite3.connect(self.conversation_db) as conn:
+                    cursor = conn.cursor()
+                    
+                    # Check if FTS table exists
+                    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='conversation_search'")
+                    if cursor.fetchone():
+                        # Check if it's FTS5 or FTS4
+                        cursor.execute("PRAGMA module_list")
+                        modules = [row[0] for row in cursor.fetchall()]
+                        
+                        try:
+                            # Fixed: Use the same command for both FTS4 and FTS5
+                            if "fts5" in modules or "fts4" in modules:
+                                # Both FTS4 and FTS5 use the same optimization syntax
+                                cursor.execute("INSERT INTO conversation_search(conversation_search) VALUES('optimize')")
+                            else:
+                                self.logger.warning("No FTS module available for conversation_search optimization")
+                        except sqlite3.Error as e:
+                            self.logger.warning(f"Could not optimize conversation_search index: {e}")
+        except Exception as e:
+            error_msg = f"Error optimizing search index: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Search index optimization error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+
+    async def _clean_memory_cache(self):
+        """Clean in-memory caches with size limits."""
+        # Clear query cache
+        self.query_cache.clear()
+        
+        # Limit memory cache size
+        if len(self.memory_cache) > self.memory_cache_size:
+            # Keep most recently accessed items
+            items = list(self.memory_cache.items())
+            items.sort(key=lambda x: x[1].get('last_accessed', 0), reverse=True)
+            keep_items = items[:self.memory_cache_size]
+            self.memory_cache = dict(keep_items)
+        
+        self.logger.debug("Memory caches cleared during maintenance")
+
+    async def add_memory(self, content: str, memory_type: MemoryType,
+                       user_id: str = "grace_user", metadata: Dict = None):
+        """
+        Add memory without verification.
+        
+        Args:
+            content: Memory content
+            memory_type: Type of memory
+            user_id: User identifier
+            metadata: Additional metadata
+        """
+        if self.amnesia_mode:
+            self.logger.debug("Amnesia mode: not storing new memory")
+            return
+            
+        # Skip empty content
+        if not content or not content.strip():
+            return
+            
+        await self.add_memory_with_verification(content, memory_type, user_id, metadata)
+
+    @timed_operation
+    async def add_memory_with_verification(self, content: str, memory_type: MemoryType,
+                                         user_id: str = "grace_user", metadata: Dict = None,
+                                         skip_verification: bool = False):
+        """
+        Add memory with verification using memories-dev.
+        
+        Args:
+            content: Memory content
+            memory_type: Type of memory
+            user_id: User identifier
+            metadata: Additional metadata
+            skip_verification: Whether to skip verification (for routine memories)
+        
+        Returns:
+            None
+        """
+        if self.amnesia_mode:
+            self.logger.debug("Amnesia mode: not storing new memory")
+            return
+            
+        # Skip empty content
+        if not content or not content.strip():
+            return
+            
+        timestamp = datetime.now().isoformat()
+        metadata = metadata or {}
+        metadata['timestamp'] = timestamp
+        metadata['memory_type'] = memory_type.value
+        
+        # Print debug info if in debug mode
+        if self.debug_mode:
+            print_debug_separator("ADDING MEMORY")
+            print(f"Type: {memory_type.value}")
+            print(f"Content length: {len(content)} chars")
+            if len(content) < 200:
+                print(f"Content: {content}")
+            else:
+                print(f"Content: {content[:100]}... [truncated] ...{content[-100:]}")
+            print(f"Metadata: {metadata}")
+        
+        # Prepare verification - skip for certain memory types or if requested
+        if skip_verification or memory_type in [MemoryType.CONVERSATION, MemoryType.CONTEXTUAL]:
+            verification_result = {
+                "score": 1.0,
+                "verified": True,
+                "reason": "Verification skipped"
+            }
+        else:
+            verification_result = await self._verify_new_memory(content, memory_type, metadata)
+            
+        verification_score = verification_result["score"]
+        
+        # Extract entities for knowledge graph
+        knowledge_graph_id = None
+        if self.knowledge_graph_initialized:
+            try:
+                entities = self.knowledge_graph.extract_entities(content)
+                relations = self.knowledge_graph.extract_relations(content)
+                
+                if entities:
+                    # Create a memory node in the knowledge graph
+                    memory_node_id = f"memory_{memory_type.value}_{timestamp}"
+                    self.knowledge_graph.add_entity({
+                        "id": memory_node_id,
+                        "type": "memory",
+                        "subtype": memory_type.value,
+                        "content": content[:500],  # Store a preview
+                        "timestamp": timestamp
+                    })
+                    
+                    # Track existing entities to avoid duplication
+                    added_entities = set()
+                    
+                    # Connect entities to this memory, with deduplication
+                    for entity in entities:
+                        # Create hash of entity for deduplication
+                        entity_hash = hash(json.dumps(entity, sort_keys=True))
+                        if entity_hash not in added_entities:
+                            entity_id = self.knowledge_graph.add_entity(entity)
+                            self.knowledge_graph.add_relation(
+                                source=memory_node_id,
+                                target=entity_id,
+                                relation_type="mentions"
+                            )
+                            added_entities.add(entity_hash)
+                    
+                    # Add relations with proper handling of tuple format
+                    for relation in relations:
+                        # Handle both dict and tuple formats
+                        if isinstance(relation, tuple) and len(relation) >= 3:
+                            source, relation_type, target = relation[:3]
+                            self.knowledge_graph.add_relation(
+                                source=source,
+                                target=target,
+                                relation_type=relation_type
+                            )
+                        elif isinstance(relation, dict) and "source" in relation and "target" in relation:
+                            self.knowledge_graph.add_relation(
+                                source=relation["source"],
+                                target=relation["target"],
+                                relation_type=relation.get("type", "related_to")
+                            )
+                    
+                    knowledge_graph_id = memory_node_id
+            except Exception as e:
+                self.logger.error(f"Error updating knowledge graph: {e}")
+        
+        # Check if maintenance should run (async, non-blocking)
+        asyncio.create_task(self._check_and_run_maintenance())
+        
+        # Store based on memory type
+        try:
+            if memory_type == MemoryType.CRITICAL and self.critical_memory_initialized:
+                key = f"{memory_type.value}_{timestamp}"
+                self.critical_memory[key] = {
+                    'content': content,
+                    'metadata': metadata,
+                    'verification_score': verification_score,
+                    'knowledge_graph_id': knowledge_graph_id
+                }
+                await self._save_critical_memory()
+                
+                # Also store in hot memory with corrected parameter name
+                self.hot_memory.add(
+                    key,
+                    content=content,
+                    metadata=metadata,
+                    importance=verification_score,  # Fixed: Changed from priority to importance
+                    knowledge_graph_id=knowledge_graph_id
+                )
+            
+            # Always store in mem0 regardless of memory type (updated to match current API)
+            self.mem0.add(
+                content,
+                metadata={
+                    **metadata,
+                    "verification_score": verification_score,
+                    "knowledge_graph_id": knowledge_graph_id
+                }
+            )
+            
+            # Always store in long-term SQL database for permanent record
+            with sqlite3.connect(self.long_term_db) as conn:
+                cursor = conn.cursor()
+                
+                # Insert with all available fields
+                cursor.execute("""
+                    INSERT INTO long_term_memory (
+                        timestamp, memory_type, content, metadata,
+                        verification_score, last_accessed, access_count,
+                        archived, importance_score, knowledge_graph_id
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    timestamp,
+                    memory_type.value,
+                    content,
+                    json.dumps(metadata),
+                    verification_score,
+                    timestamp,  # last_accessed = now
+                    1,  # Initial access count
+                    0,  # Not archived
+                    verification_score,  # Use verification score as initial importance
+                    knowledge_graph_id
+                ))
+                
+                # Get the inserted ID
+                memory_id = cursor.lastrowid
+                
+                # Also add to search index
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='memory_search'")
+                if cursor.fetchone():
+                    cursor.execute("""
+                        INSERT INTO memory_search (rowid, content, metadata)
+                        VALUES (?, ?, ?)
+                    """, (memory_id, content, json.dumps(metadata)))
+            
+            # Update memory stats
+            self.memory_stats["total_memories"] = self.memory_stats.get("total_memories", 0) + 1
+            self.memory_stats["insertion_count"] = self.memory_stats.get("insertion_count", 0) + 1
+            
+            # Save stats periodically
+            if self.memory_stats["insertion_count"] % 10 == 0:
+                self._save_memory_stats()
+        except Exception as e:
+            error_msg = f"Error adding memory: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Memory addition error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            # Continue operation despite error - don't raise an exception
+
+    async def _verify_new_memory(self, content: str, memory_type: MemoryType, metadata: Dict) -> Dict:
+        """
+        Verify new memory content using the verification engine.
+        
+        Args:
+            content: Memory content
+            memory_type: Type of memory
+            metadata: Memory metadata
+            
+        Returns:
+            Verification result dictionary
+        """
+        # Skip detailed verification for certain memory types
+        if memory_type in [MemoryType.CONVERSATION, MemoryType.CONTEXTUAL]:
+            return {"score": 1.0, "verified": True, "reason": "Skip verification for this memory type"}
+        
+        # Use verification engine if available
+        if self.verification_engine_initialized:
+            try:
+                # Check against reference materials
+                references = self.fact_checker.get_relevant_references(content)
+                
+                # Perform verification
+                verification_result = self.verification_engine.verify(
+                    content=content,
+                    references=references,
+                    memory_type=memory_type.value
+                )
+                
+                # Check for duplication
+                is_duplicate = await self._is_duplicate_memory(content)
+                if is_duplicate:
+                    verification_result["score"] *= 0.5
+                    verification_result["reason"] = "Duplicate or similar memory exists"
+                    
+                return verification_result
+            except Exception as e:
+                self.logger.error(f"Verification engine error: {e}")
+                # Fall back to basic verification on error
+        
+        # Basic verification (fallback)
+        score = 1.0
+        
+        # Check for content quality factors
+        if len(content) < 10:  # Very short content
+            score *= 0.8
+            
+        # Check for duplication
+        try:
+            if await self._is_duplicate_memory(content):
+                score *= 0.5
+        except Exception as e:
+            self.logger.error(f"Error checking for duplicate memory: {e}")
+        
+        # Return basic verification result
+        return {
+            "score": max(0.1, min(score, 1.0)),
+            "verified": score >= 0.5,
+            "reason": "Basic verification check"
+        }
+
+    async def _is_duplicate_memory(self, content: str) -> bool:
+        """
+        Check if memory content is a duplicate.
+        
+        Args:
+            content: Memory content to check
+            
+        Returns:
+            True if it's a duplicate, False otherwise
+        """
+        # Skip checking if databases aren't initialized
+        if not (self.critical_memory_initialized and self.long_term_storage_initialized):
+            return False
+            
+        # Check against recent memories first
+        try:
+            # Create a simplified version for comparison
+            simplified = ' '.join(content.lower().split())
+            
+            # Check critical memory
+            for memory in self.critical_memory.values():
+                existing = ' '.join(memory['content'].lower().split())
+                if existing == simplified:
+                    return True
+            
+            # Search in long-term memory
+            with sqlite3.connect(self.long_term_db) as conn:
+                cursor = conn.cursor()
+                
+                # Use a LIKE query with minimal text to detect near-duplicates
+                # Get first 50 chars for the search
+                search_text = simplified[:50] if len(simplified) > 50 else simplified
+                # Escape special characters for LIKE
+                search_text = search_text.replace('%', '\\%').replace('_', '\\_')
+                
+                cursor.execute("""
+                    SELECT COUNT(*) FROM long_term_memory
+                    WHERE content LIKE ? ESCAPE '\\'
+                """, (f'%{search_text}%',))
+                
+                count = cursor.fetchone()[0]
+            
+            # If we found potential matches, do a more thorough check
+            if count > 0:
+                # Get the potential duplicates
+                with sqlite3.connect(self.long_term_db) as conn:
+                    cursor = conn.cursor()
+                    
+                    cursor.execute("""
+                        SELECT content FROM long_term_memory
+                        WHERE content LIKE ? ESCAPE '\\'
+                        LIMIT 10
+                    """, (f'%{search_text}%',))
+                    
+                    rows = cursor.fetchall()
+                
+                # Check if any are actual duplicates using a similarity measure
+                for row in rows:
+                    existing = ' '.join(row[0].lower().split())
+                    similarity = self._calculate_text_similarity(simplified, existing)
+                    if similarity > 0.9:  # 90% similar
+                        return True
+                        
+            return False
+        except Exception as e:
+            self.logger.error(f"Error checking for duplicate memory: {e}")
+            self.memory_stats["last_error"] = f"Duplicate check error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            return False
+
+    def _calculate_text_similarity(self, text1: str, text2: str) -> float:
+        """
+        Calculate similarity between two text strings.
+        
+        Args:
+            text1: First text
+            text2: Second text
+            
+        Returns:
+            Similarity score (0.0-1.0)
+        """
+        # Simple Jaccard similarity
+        # Convert texts to sets of words
+        if not text1 or not text2:
+            return 0.0
+            
+        set1 = set(text1.split())
+        set2 = set(text2.split())
+        
+        # Calculate Jaccard similarity: intersection / union
+        intersection = len(set1.intersection(set2))
+        union = len(set1) + len(set2) - intersection
+        
+        if union == 0:
+            return 0.0
+            
+        return intersection / union
+
+    @timed_operation
+    async def search_memories_with_verification(self, query: str, user_id: str = "grace_user",
+                                              limit: int = None) -> Dict[str, List]:
+        """
+        Search memories across all tiers with verification support.
+        
+        Args:
+            query: Search query
+            user_id: User identifier
+            limit: Maximum results to return
+            
+        Returns:
+            Dictionary of memory results by category
+        """
+        # Check for empty query
+        if not query or not query.strip():
+            return {
+                "contextual": [],
+                "critical": [],
+                "reference": [],
+                "conversations": [],
+                "verified": [],
+                "knowledge_graph": []
+            }
+        
+        # Print debug info if in debug mode
+        if self.debug_mode:
+            print_debug_separator("MEMORY SEARCH")
+            print(f"Query: {query}")
+            print(f"User: {user_id}")
+            print(f"Limit: {limit or 'default'}")
+            start_time = time.time()
+        
+        # Update search count
+        self.memory_stats["search_count"] += 1
+        
+        # Check cache first if query is not too long (long queries are less likely to be repeated)
+        cache_key = f"{query}_{user_id}_{limit or 'default'}"
+        if len(query) < 100 and cache_key in self.query_cache:
+            if self.debug_mode:
+                print("Using cached results")
+                print(f"Cache hit for key: {cache_key}")
+            return self.query_cache[cache_key]
+        
+        limit = limit or self.config.get('search_limit', 50)
+        
+        results = {
+            "contextual": [],
+            "critical": [],
+            "reference": [],
+            "conversations": [],
+            "verified": [],
+            "knowledge_graph": []
+        }
+        
+        # Prepare empty result as fallback
+        empty_result = results.copy()
+        
+        try:
+            # Phase 1: Knowledge graph search if available
+            if self.knowledge_graph_initialized:
+                try:
+                    # Search for related entities and concepts
+                    graph_results = self.knowledge_graph.search(
+                        query,
+                        max_results=20
+                    )
+                    results["knowledge_graph"] = graph_results
+                    if self.debug_mode:
+                        print(f"Found {len(results['knowledge_graph'])} knowledge graph results")
+                except Exception as e:
+                    self.logger.error(f"Knowledge graph search error: {e}")
+                    results["knowledge_graph"] = []
+            
+            # Phase 2: Search mem0 (contextual memories) with semantic search
+            try:
+                mem0_results = self.mem0.search(
+                    query=query,
+                    limit=limit,
+                    search_options={
+                        "strategy": "semantic-hybrid",  # Updated from "semantic"
+                        "reranking": True,
+                        "minimum_relevance": 0.2
+                    }
+                )
+                
+                if isinstance(mem0_results, dict) and "results" in mem0_results:
+                    results["contextual"] = mem0_results.get("results", [])
+                elif isinstance(mem0_results, list):
+                    results["contextual"] = mem0_results
+                    
+                if self.debug_mode:
+                    print(f"Found {len(results['contextual'])} contextual memories")
+            except Exception as e:
+                self.logger.error(f"mem0 search error: {e}")
+                self.memory_stats["last_error"] = f"mem0 search error: {e}"
+                self.memory_stats["last_error_time"] = datetime.now().isoformat()
+                results["contextual"] = []  # Ensure we have an empty list
+            
+            # Phase 3: Search critical memory with tiered access (hot → warm → cold)
+            critical_results = []
+            try:
+                # Try hot memory first (fastest access)
+                hot_results = self.hot_memory.search(
+                    query,
+                    memory_type=MemoryType.CRITICAL.value,
+                    limit=limit
+                )
+                
+                # If not enough results, try warm memory
+                if len(hot_results) < limit:
+                    warm_results = self.warm_memory.search(
+                        query,
+                        memory_type=MemoryType.CRITICAL.value,
+                        limit=limit - len(hot_results),
+                        skip_keys=[]  # Getting key field is not supported in current API
+                    )
+                    hot_results.extend(warm_results)
+                
+                # If still not enough, try cold memory
+                if len(hot_results) < limit:
+                    cold_results = self.cold_memory.search(
+                        query,
+                        memory_type=MemoryType.CRITICAL.value,
+                        limit=limit - len(hot_results),
+                        skip_keys=[]  # Getting key field is not supported in current API
+                    )
+                    hot_results.extend(cold_results)
+                
+                # Apply relevance scoring
+                for result in hot_results:
+                    content = result.get('content', '')
+                    if content:
+                        relevance = calculate_relevance(query, content)
+                        result['relevance'] = relevance
+                        if relevance > 0.2:  # Minimum relevance threshold
+                            critical_results.append(result)
+                
+                # Sort by relevance and add to results
+                if critical_results:
+                    critical_results.sort(key=lambda x: x.get('relevance', 0), reverse=True)
+                    results["critical"] = critical_results[:limit]
+                    if self.debug_mode:
+                        print(f"Found {len(results['critical'])} critical memories")
+            except Exception as e:
+                self.logger.error(f"Tiered memory search error: {e}")
+                self.memory_stats["last_error"] = f"Tiered memory search error: {e}"
+                self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            
+            # Phase 4: Reference material search
+            if self.verification_engine_initialized:
+                try:
+                    # Search for relevant reference materials using correct method name
+                    reference_results = self.fact_checker.get_relevant_references(
+                        query,
+                        limit=limit
+                    )
+                    
+                    # Apply relevance scoring
+                    for result in reference_results:
+                        content = result.get('content', '')
+                        if content:
+                            relevance = calculate_relevance(query, content)
+                            result['relevance'] = relevance
+                    
+                    # Sort by relevance and filter by minimum threshold
+                    reference_results = [r for r in reference_results if r.get('relevance', 0) > 0.2]
+                    reference_results.sort(key=lambda x: x.get('relevance', 0), reverse=True)
+                    results["reference"] = reference_results[:limit]
+                    
+                    if self.debug_mode:
+                        print(f"Found {len(results['reference'])} reference memories")
+                except Exception as e:
+                    self.logger.error(f"Reference search error: {e}")
+                    self.memory_stats["last_error"] = f"Reference search error: {e}"
+                    self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            
+            # Phase 5: Search long-term SQL storage for conversations and verification records
+            if self.long_term_storage_initialized:
+                try:
+                    with sqlite3.connect(self.long_term_db) as conn:
+                        cursor = conn.cursor()
+                        
+                        # Check which columns exist
+                        cursor.execute("PRAGMA table_info(long_term_memory)")
+                        columns = [info[1] for info in cursor.fetchall()]
+                        
+                        # Check if FTS is available
+                        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='memory_search'")
+                        fts_available = cursor.fetchone() is not None
+                        
+                        # Check if FTS is FTS5 or FTS4
+                        cursor.execute("PRAGMA module_list")
+                        modules = [row[0] for row in cursor.fetchall()]
+                        use_fts5 = "fts5" in modules
+                        
+                        # Try to use FTS if available
+                        if fts_available:
+                            try:
+                                # Prepare search query for FTS - clean up and escape special characters
+                                clean_query = re.sub(r'["\'\[\](),.:;?!]', ' ', query).strip()
+                                
+                                # Handle empty query after cleanup
+                                if not clean_query:
+                                    clean_query = query
+                                    
+                                # Generate OR terms for better matching
+                                search_terms = ' OR '.join([term for term in clean_query.split() if len(term) > 2])
+                                if not search_terms:
+                                    search_terms = clean_query
+                                    
+                                # Use correct FTS query syntax based on version
+                                if use_fts5:
+                                    # FTS5 syntax
+                                    cursor.execute("""
+                                        SELECT m.id, m.timestamp, m.memory_type, m.content, m.metadata,
+                                               m.verification_score, m.importance_score, m.knowledge_graph_id,
+                                               m.archived
+                                        FROM memory_search s
+                                        JOIN long_term_memory m ON s.rowid = m.id
+                                        WHERE s MATCH ?
+                                        ORDER BY m.importance_score DESC, m.timestamp DESC
+                                        LIMIT ?
+                                    """, (search_terms, limit * 2))  # Get more results for filtering
+                                else:
+                                    # FTS4 syntax
+                                    cursor.execute("""
+                                        SELECT m.id, m.timestamp, m.memory_type, m.content, m.metadata,
+                                               m.verification_score, m.importance_score, m.knowledge_graph_id,
+                                               m.archived
+                                        FROM memory_search s
+                                        JOIN long_term_memory m ON s.docid = m.id
+                                        WHERE s MATCH ?
+                                        ORDER BY m.importance_score DESC, m.timestamp DESC
+                                        LIMIT ?
+                                    """, (search_terms, limit * 2))
+                                    
+                                rows = cursor.fetchall()
+                                
+                                # Update access stats for retrieved memories
+                                if rows and "last_accessed" in columns and "access_count" in columns:
+                                    memory_ids = [row[0] for row in rows]
+                                    access_time = datetime.now().isoformat()
+                                    
+                                    # Handle empty list edge case
+                                    if memory_ids:
+                                        placeholders = ','.join(['?'] * len(memory_ids))
+                                        cursor.execute(f"""
+                                            UPDATE long_term_memory
+                                            SET last_accessed = ?, access_count = access_count + 1
+                                            WHERE id IN ({placeholders})
+                                        """, [access_time] + memory_ids)
+                            except sqlite3.Error as e:
+                                self.logger.debug(f"FTS search error, falling back to LIKE: {e}")
+                                fts_available = False  # Force fallback
+                        
+                        # Fallback to LIKE query if FTS not available or failed
+                        if not fts_available:
+                            # Escape special characters for LIKE
+                            search_query = query.replace('%', '\\%').replace('_', '\\_')
+                            
+                            cursor.execute("""
+                                SELECT id, timestamp, memory_type, content, metadata,
+                                       verification_score, importance_score, knowledge_graph_id,
+                                       archived
+                                FROM long_term_memory
+                                WHERE content LIKE ? ESCAPE '\\'
+                                ORDER BY importance_score DESC, timestamp DESC
+                                LIMIT ?
+                            """, (f"%{search_query}%", limit * 2))
+                            
+                            rows = cursor.fetchall()
+                            
+                            # Update access stats if columns exist
+                            if rows and "last_accessed" in columns and "access_count" in columns:
+                                memory_ids = [row[0] for row in rows]
+                                
+                                # Handle empty list edge case
+                                if memory_ids:
+                                    access_time = datetime.now().isoformat()
+                                    placeholders = ','.join(['?'] * len(memory_ids))
+                                    cursor.execute(f"""
+                                        UPDATE long_term_memory
+                                        SET last_accessed = ?, access_count = access_count + 1
+                                        WHERE id IN ({placeholders})
+                                    """, [access_time] + memory_ids)
+                        
+                        # Process results
+                        for row in rows:
+                            try:
+                                memory_data = {
+                                    "id": row[0],
+                                    "timestamp": row[1],
+                                    "memory_type": row[2],
+                                    "content": row[3],
+                                    "metadata": json.loads(row[4]) if row[4] else {},
+                                    "verification_score": row[5] if len(row) > 5 else 1.0,
+                                    "importance_score": row[6] if len(row) > 6 else 0.5,
+                                    "knowledge_graph_id": row[7] if len(row) > 7 else None,
+                                    "archived": row[8] if len(row) > 8 else 0
+                                }
+                                
+                                # Add relevance score
+                                relevance = calculate_relevance(query, memory_data["content"])
+                                memory_data["relevance"] = relevance
+                                
+                                # Skip items with low relevance
+                                if relevance < 0.2:
+                                    continue
+                                    
+                                if row[2] == MemoryType.CONVERSATION.value:
+                                    results["conversations"].append(memory_data)
+                                elif row[2] == MemoryType.REFERENCE.value:
+                                    # Skip if we already have this in the reference results
+                                    if not any(r.get('id') == memory_data['id'] for r in results["reference"]):
+                                        results["reference"].append(memory_data)
+                                elif row[2] == MemoryType.VERIFICATION.value:
+                                    results["verified"].append(memory_data)
+                            except Exception as e:
+                                self.logger.debug(f"Error processing memory result: {e}")
+                        
+                        # Sort results by relevance
+                        for key in ["conversations", "reference", "verified"]:
+                            results[key].sort(key=lambda x: x.get("relevance", 0), reverse=True)
+                            
+                            # Limit to requested number after sorting
+                            results[key] = results[key][:limit]
+                            
+                        if self.debug_mode:
+                            print(f"Found {len(results['conversations'])} conversation memories")
+                            print(f"Found {len(results['verified'])} verification memories")
+                except Exception as e:
+                    self.logger.error(f"SQL search error: {e}")
+                    self.memory_stats["last_error"] = f"SQL search error: {e}"
+                    self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            
+            # Save results in cache
+            if len(query) < 100:
+                self.query_cache[cache_key] = results
+                
+                # Limit cache size
+                if len(self.query_cache) > 100:
+                    # Remove oldest items (simple approach)
+                    keys_to_remove = list(sorted(self.query_cache.keys()))[:-50]
+                    for k in keys_to_remove:
+                        self.query_cache.pop(k, None)
+            
+            # Print search timing in debug mode
+            if self.debug_mode:
+                end_time = time.time()
+                search_time = end_time - start_time
+                print(f"Search completed in {search_time:.3f} seconds")
+                
+            return results
+        except Exception as e:
+            error_msg = f"Memory search error: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Memory search error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            return empty_result
+
+    @timed_operation
+    async def verify_response(self, response: str, context: Dict) -> Dict:
+        """
+        Verify a response against reference materials.
+        
+        Args:
+            response: Response to verify
+            context: Verification context
+            
+        Returns:
+            Verification result
+        """
+        # Skip verification if disabled or if memory system isn't fully initialized
+        if not self.config.get('enable_verification', True) or not self.verification_engine_initialized:
+            return {
+                "verified": True,
+                "score": 1.0,
+                "reason": "Verification disabled or not fully initialized"
+            }
+        
+        # Handle empty response
+        if not response or not response.strip():
+            return {
+                "verified": True,
+                "score": 0.8,
+                "reason": "Empty response cannot be verified"
+            }
+        
+        # Print debug info if in debug mode
+        if self.debug_mode:
+            print_debug_separator("VERIFICATION")
+            print(f"Response length: {len(response)} chars")
+            print(f"Context: {context}")
+            start_time = time.time()
+        
+        try:
+            # Use verification engine for comprehensive verification
+            user_input = context.get('user_input', '')
+            
+            # Get relevant reference materials
+            references = self.fact_checker.get_relevant_references(user_input)
+            
+            # Perform verification
+            verification_result = self.verification_engine.verify(
+                content=response,
+                references=references,
+                context=context
+            )
+            
+            # Store verification result for learning if not in amnesia mode
+            # and not already a verification memory to avoid infinite recursion
+            if not self.amnesia_mode and context.get('memory_type') != MemoryType.VERIFICATION.value:
+                verification_memory = {
+                    "query": user_input,
+                    "response": response,
+                    "verification_result": verification_result
+                }
+                
+                await self.add_memory(
+                    content=json.dumps(verification_memory),
+                    memory_type=MemoryType.VERIFICATION,
+                    metadata={"verification_result": verification_result.get("verified", False)}
+                )
+            
+            if self.debug_mode:
+                print(f"Verification score: {verification_result.get('score', 0):.2f}")
+                print(f"Verified: {verification_result.get('verified', False)}")
+                end_time = time.time()
+                print(f"Verification completed in {end_time - start_time:.3f} seconds")
+                
+            return verification_result
+        except Exception as e:
+            error_msg = f"Verification error: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Verification error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            return {
+                "verified": True,
+                "score": 0.8,
+                "reason": f"Verification error: {str(e)}"
+            }
+
+    def log_conversation(self, entry: ConversationEntry):
+        """
+        Log conversation to database and memory systems.
+        
+        Args:
+            entry: Conversation entry to log
+            
+        Returns:
+            None
+        """
+        if self.amnesia_mode or not self.conversation_db_initialized:
+            self.logger.debug("Amnesia mode or conversation DB not initialized: not logging conversation")
+            return
+            
+        try:
+            # Validate entry fields to avoid issues
+            if not entry.timestamp:
+                entry.timestamp = datetime.now().isoformat()
+                
+            # Generate a knowledge graph ID for this conversation if possible
+            knowledge_graph_id = None
+            if self.knowledge_graph_initialized and entry.user_input:
+                try:
+                    conversation_node_id = f"conversation_{entry.timestamp}"
+                    
+                    # Add conversation node
+                    self.knowledge_graph.add_entity({
+                        "id": conversation_node_id,
+                        "type": "conversation",
+                        "content": entry.user_input[:500],  # Store a preview
+                        "response": entry.json_response.get("response", "")[:500] if entry.json_response else "",
+                        "timestamp": entry.timestamp
+                    })
+                    
+                    # Extract entities and add connections
+                    entities = self.knowledge_graph.extract_entities(
+                        entry.user_input + " " +
+                        (entry.json_response.get("response", "") if entry.json_response else "")
+                    )
+                    
+                    # Track entity IDs to avoid duplication
+                    added_entities = set()
+                    
+                    for entity in entities:
+                        # Create hash for deduplication
+                        entity_hash = hash(json.dumps(entity, sort_keys=True))
+                        if entity_hash not in added_entities:
+                            entity_id = self.knowledge_graph.add_entity(entity)
+                            self.knowledge_graph.add_relation(
+                                source=conversation_node_id,
+                                target=entity_id,
+                                relation_type="mentions"
+                            )
+                            added_entities.add(entity_hash)
+                            
+                    knowledge_graph_id = conversation_node_id
+                except Exception as e:
+                    self.logger.error(f"Error adding conversation to knowledge graph: {e}")
+            
+            with sqlite3.connect(self.conversation_db) as conn:
+                cursor = conn.cursor()
+                
+                # Insert in conversations table with all fields
+                cursor.execute("""
+                    INSERT INTO conversations (
+                        timestamp, user_input, stt_transcript, memory_context,
+                        prompt, model_response, thinking_process, json_response,
+                        command_result, tts_output, error, metadata, verification_result,
+                        knowledge_graph_id, archived, importance_score
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    entry.timestamp,
+                    entry.user_input,
+                    entry.stt_transcript,
+                    json.dumps(entry.memory_context) if entry.memory_context else None,
+                    entry.prompt,
+                    entry.model_response,
+                    entry.thinking_process,
+                    json.dumps(entry.json_response) if entry.json_response else None,
+                    entry.command_result,
+                    entry.tts_output,
+                    entry.error,
+                    json.dumps(entry.metadata) if entry.metadata else None,
+                    json.dumps(entry.verification_result) if entry.verification_result else None,
+                    knowledge_graph_id,
+                    0,  # Not archived
+                    0.5  # Default importance score
+                ))
+                
+                # Get the inserted ID
+                conversation_id = cursor.lastrowid
+                
+                # Check if search table exists
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='conversation_search'")
+                if cursor.fetchone():
+                    # Also insert in search table
+                    cursor.execute("""
+                        INSERT INTO conversation_search (rowid, user_input, model_response, thinking_process)
+                        VALUES (?, ?, ?, ?)
+                    """, (
+                        conversation_id,
+                        entry.user_input,
+                        entry.model_response,
+                        entry.thinking_process
+                    ))
+            
+            # Store conversation in memory systems if initialized
+            # Use properly safety-checked asyncio task creation
+            try:
+                # Check if we're in an event loop
+                if asyncio.get_event_loop().is_running():
+                    # Create a task but don't await it (non-blocking)
+                    asyncio.create_task(self.add_memory(
+                        content=json.dumps(entry.to_dict()),
+                        memory_type=MemoryType.CONVERSATION,
+                        metadata={"conversation_id": entry.timestamp, "knowledge_graph_id": knowledge_graph_id},
+                        skip_verification=True  # Skip verification for conversation logging
+                    ))
+                else:
+                    self.logger.warning("Not in asyncio event loop - skipping async memory storage")
+            except RuntimeError:
+                self.logger.warning("No running event loop - skipping async memory storage")
+        except sqlite3.Error as e:
+            error_msg = f"SQLite error logging conversation: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Conversation logging error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+        except Exception as e:
+            error_msg = f"Failed to log conversation: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Conversation logging error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+
+    async def load_reference_file(self, file_path: Path):
+        """
+        Load a single reference file into memory.
+        
+        Args:
+            file_path: Path to reference file
+            
+        Returns:
+            Success status
+        """
+        if self.amnesia_mode or not self.long_term_storage_initialized:
+            self.logger.debug("Amnesia mode or long-term storage not initialized: not loading reference file")
+            return False
+            
+        if not file_path.exists() or not file_path.is_file():
+            self.logger.warning(f"Reference file not found: {file_path}")
+            return False
+            
+        try:
+            # Determine appropriate encoding based on file type
+            encoding = 'utf-8'
+            if file_path.suffix.lower() in ['.json', '.md', '.txt', '.py', '.html', '.csv']:
+                encoding = 'utf-8'
+                
+            # Read file with error handling
+            try:
+                with open(file_path, 'r', encoding=encoding) as f:
+                    content = f.read()
+            except UnicodeDecodeError:
+                # Try with different encoding if UTF-8 fails
+                with open(file_path, 'r', encoding='latin-1') as f:
+                    content = f.read()
+                encoding = 'latin-1'
+            
+            # Skip empty files
+            if not content or not content.strip():
+                self.logger.warning(f"Empty file, skipping: {file_path}")
+                return False
+                
+            # Get file stats for metadata
+            import os
+            stats = os.stat(file_path)
+            
+            # Generate a knowledge graph ID for this reference if possible
+            knowledge_graph_id = None
+            if self.knowledge_graph_initialized:
+                try:
+                    reference_node_id = f"reference_{file_path.stem}_{stats.st_mtime}"
+                    
+                    # Add reference node
+                    self.knowledge_graph.add_entity({
+                        "id": reference_node_id,
+                        "type": "reference",
+                        "filename": file_path.name,
+                        "content": content[:500],  # Store a preview
+                        "file_type": file_path.suffix.lower()[1:] if file_path.suffix else "unknown"
+                    })
+                    
+                    # Extract entities and add connections
+                    entities = self.knowledge_graph.extract_entities(content[:10000])  # Limit to first 10K chars for large files
+                    
+                    # Track for deduplication
+                    added_entities = set()
+                    
+                    for entity in entities:
+                        # Hash for deduplication
+                        entity_hash = hash(json.dumps(entity, sort_keys=True))
+                        if entity_hash not in added_entities:
+                            entity_id = self.knowledge_graph.add_entity(entity)
+                            self.knowledge_graph.add_relation(
+                                source=reference_node_id,
+                                target=entity_id,
+                                relation_type="contains"
+                            )
+                            added_entities.add(entity_hash)
+                            
+                    knowledge_graph_id = reference_node_id
+                except Exception as e:
+                    self.logger.error(f"Error adding reference to knowledge graph: {e}")
+            
+            # Add to memory with verification (but flag it to skip heavy verification)
+            await self.add_memory_with_verification(
+                content,
+                MemoryType.REFERENCE,
+                "grace_system",
+                {
+                    "source": str(file_path),
+                    "filename": file_path.name,
+                    "file_size": stats.st_size,
+                    "encoding": encoding,
+                    "last_modified": datetime.fromtimestamp(stats.st_mtime).isoformat(),
+                    "loaded_at": datetime.now().isoformat(),
+                    "knowledge_graph_id": knowledge_graph_id
+                },
+                skip_verification=True  # Skip heavy verification for references
+            )
+            
+            # Add to fact checker if available
+            if self.verification_engine_initialized:
+                self.fact_checker.add_reference(
+                    content=content,
+                    source=str(file_path),
+                    metadata={
+                        "filename": file_path.name,
+                        "file_type": file_path.suffix.lower()[1:] if file_path.suffix else "unknown",
+                        "last_modified": datetime.fromtimestamp(stats.st_mtime).isoformat()
+                    }
+                )
+                
+            self.logger.info(f"Loaded reference: {file_path.name}")
+            return True
+        except UnicodeDecodeError as e:
+            self.logger.error(f"Encoding error loading {file_path}: {e}")
+            
+            # Try with binary mode as a last resort for binary files
+            try:
+                with open(file_path, 'rb') as f:
+                    content = str(f.read(4096)) + " [binary data truncated]"
+                    
+                await self.add_memory_with_verification(
+                    content,
+                    MemoryType.REFERENCE,
+                    "grace_system",
+                    {
+                        "source": str(file_path),
+                        "filename": file_path.name,
+                        "encoding": "binary",
+                        "binary_file": True,
+                        "loaded_at": datetime.now().isoformat()
+                    },
+                    skip_verification=True  # Skip verification for binary files
+                )
+                
+                self.logger.info(f"Loaded binary reference file: {file_path.name}")
+                return True
+            except Exception as e2:
+                self.logger.error(f"Failed to load binary file {file_path}: {e2}")
+                return False
+        except Exception as e:
+            error_msg = f"Failed to load {file_path}: {e}"
+            self.logger.error(error_msg)
+            self.memory_stats["last_error"] = f"Reference file loading error: {e}"
+            self.memory_stats["last_error_time"] = datetime.now().isoformat()
+            return False
+
+    # Moved the method inside the class with proper indentation
+    async def load_reference_directory(self, directory: Path = None):
+        """
+        Load all reference materials from a directory.
+        
+        Args:
+            directory: Directory containing reference files
+            
+        Returns:
+            Number of files loaded
+        """
+        if self.amnesia_mode:
+            self.logger.info("Amnesia mode: not loading reference materials")
+            return 0
+            
+        if not self.long_term_storage_initialized:
+            error_msg = "CRITICAL: Long-term storage not initialized: cannot load reference materials"
+            self.logger.critical(error_msg)
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise RuntimeError(error_msg)
+            
+        directory = directory or REFERENCE_PATH
+        
+        # Print debug info if in debug mode
+        if self.debug_mode:
+            print_debug_separator("LOADING REFERENCE MATERIALS")
+            print(f"Directory: {directory}")
+            start_time = time.time()
+            
+        if not directory.exists():
+            try:
+                # Try to create the directory if it doesn't exist
+                directory.mkdir(parents=True, exist_ok=True)
+                self.logger.info(f"Created reference directory: {directory}")
+            except Exception as e:
+                error_msg = f"CRITICAL: Reference directory not found and cannot be created: {directory} ({e})"
+                self.logger.critical(error_msg)
+                print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+                raise
+                
+        self.logger.info(f"Loading reference materials from {directory}")
+        files_loaded = 0
+        
+        # Use glob patterns for common supported extensions
+        supported_extensions = ['*.txt', '*.md', '*.json', '*.py', '*.html', '*.csv', '*.yaml', '*.yml']
+        all_files = []
+        
+        # First check if directory exists and is readable
+        if not directory.is_dir():
+            error_msg = f"CRITICAL: Reference path is not a directory: {directory}"
+            self.logger.critical(error_msg)
+            print(f"\n{'!'*80}\n{error_msg}\n{'!'*80}\n")
+            raise RuntimeError(error_msg)
+            
+        # Get all files with supported extensions
+        for pattern in supported_extensions:
+            try:
+                all_files.extend(list(directory.glob(pattern)))
+            except Exception as e:
+                self.logger.error(f"Error searching for {pattern} files: {e}")
+                
+        # Recursively search for subdirectories
+        try:
+            for subdir in [d for d in directory.iterdir() if d.is_dir()]:
+                for pattern in supported_extensions:
+                    try:
+                        all_files.extend(list(subdir.glob(pattern)))
+                    except Exception as e:
+                        self.logger.error(f"Error searching for {pattern} files in {subdir}: {e}")
+        except Exception as e:
+            self.logger.error(f"Error searching subdirectories: {e}")
+            
+        # Print file count in debug mode
+        if self.debug_mode:
+            print(f"Found {len(all_files)} files with supported extensions")
+            for ext in supported_extensions:
+                ext_count = sum(1 for f in all_files if f.match(ext))
+                if ext_count > 0:
+                    print(f"  {ext}: {ext_count} files")
+        
+        # Reset the fact checker to prepare for loading
+        if self.verification_engine_initialized:
+            self.fact_checker.reset()
+            
+        # Load files in parallel with limit
+        tasks = []
+        for file_path in all_files:
+            tasks.append(self.load_reference_file(file_path))
+            
+            # Process in batches to avoid too many concurrent tasks
+            if len(tasks) >= 10:
+                results = await asyncio.gather(*tasks)
+                files_loaded += sum(1 for r in results if r)
+                tasks = []
+                
+        # Process any remaining tasks
+        if tasks:
+            results = await asyncio.gather(*tasks)
+            files_loaded += sum(1 for r in results if r)
+            
+        self.logger.info(f"Loaded {files_loaded} reference files")
+        
+        # Print timing in debug mode
+        if self.debug_mode:
+            end_time = time.time()
+            print(f"Loaded {files_loaded} reference files in {end_time - start_time:.2f} seconds")
+            
+        # Index reference materials in the fact checker
+        if self.verification_engine_initialized:
+            self.fact_checker.build_indices()
+            self.logger.info("Built indices for reference materials")
+            
+        return files_loaded
+
+    async def get_memory_stats(self) -> Dict:
+        """
+        Get memory system statistics.
+        
+        Args:
+            None
+            
+        Returns:
+            Dictionary of statistics
+        """
+        stats = {
+            "total_memories": self.memory_stats.get("total_memories", 0),
+            "critical_memories": len(self.critical_memory) if self.critical_memory_initialized else 0,
+            "last_maintenance": self.memory_stats.get("last_maintenance", datetime.now()).isoformat(),
+            "queries_processed": self.memory_stats.get("search_count", 0),
+            "memories_added": self.memory_stats.get("insertion_count", 0),
+            "mem0_available": MEM0_AVAILABLE,
+            "memories_dev_available": MEMORIES_DEV_AVAILABLE,
+            "last_error": self.memory_stats.get("last_error"),
+            "last_error_time": self.memory_stats.get("last_error_time"),
+            "system_state": {
+                "long_term_storage_initialized": self.long_term_storage_initialized,
+                "conversation_db_initialized": self.conversation_db_initialized,
+                "critical_memory_initialized": self.critical_memory_initialized,
+                "memory_stores_initialized": self.memory_stores_initialized,
+                "knowledge_graph_initialized": self.knowledge_graph_initialized,
+                "verification_engine_initialized": self.verification_engine_initialized
+            }
+        }
+        
+        # Get DB counts if databases are initialized
+        if self.long_term_storage_initialized and self.conversation_db_initialized:
+            try:
+                # Long-term memory counts
+                with sqlite3.connect(self.long_term_db) as conn:
+                    cursor = conn.cursor()
+                    
+                    # Get total count
+                    cursor.execute("SELECT COUNT(*) FROM long_term_memory")
+                    stats["long_term_memories"] = cursor.fetchone()[0]
+                    
+                    # Get counts by type and archival status
+                    cursor.execute("SELECT memory_type, archived, COUNT(*) FROM long_term_memory GROUP BY memory_type, archived")
+                    type_counts = {}
+                    for row in cursor.fetchall():
+                        memory_type = row[0]
+                        archived = row[1]
+                        count = row[2]
+                        
+                        if memory_type not in type_counts:
+                            type_counts[memory_type] = {"active": 0, "archived": 0}
+                            
+                        if archived:
+                            type_counts[memory_type]["archived"] = count
+                        else:
+                            type_counts[memory_type]["active"] = count
+                            
+                    stats["memory_type_counts"] = type_counts
+                    
+                    # Get reference counts
+                    cursor.execute("SELECT COUNT(*) FROM long_term_memory WHERE memory_type = ?", (MemoryType.REFERENCE.value,))
+                    stats["reference_memories"] = cursor.fetchone()[0]
+                    
+                    # Get conversation memory counts
+                    cursor.execute("SELECT COUNT(*) FROM long_term_memory WHERE memory_type = ?", (MemoryType.CONVERSATION.value,))
+                    stats["conversation_memories"] = cursor.fetchone()[0]
+                
+                # Conversation DB counts
+                with sqlite3.connect(self.conversation_db) as conn:
+                    cursor = conn.cursor()
+                    
+                    cursor.execute("SELECT COUNT(*) FROM conversations")
+                    stats["conversations_logged"] = cursor.fetchone()[0]
+                    
+                    # Get archived conversation count if column exists
+                    cursor.execute("PRAGMA table_info(conversations)")
+                    columns = [info[1] for info in cursor.fetchall()]
+                    
+                    if "archived" in columns:
+                        cursor.execute("SELECT COUNT(*) FROM conversations WHERE archived = 1")
+                        stats["archived_conversations"] = cursor.fetchone()[0]
+                
+                # Get knowledge graph stats if available
+                if self.knowledge_graph_initialized:
+                    try:
+                        graph_stats = self.knowledge_graph.get_stats()
+                        stats["knowledge_graph"] = graph_stats
+                    except Exception as e:
+                        self.logger.error(f"Error getting knowledge graph stats: {e}")
+                        stats["knowledge_graph_error"] = str(e)
+                
+                # Get memory tier stats
+                if self.memory_stores_initialized:
+                    try:
+                        stats["memory_tiers"] = {
+                            "hot": {
+                                "size": len(self.hot_memory),
+                                "max_size_gb": self.config.get('hot_memory_gb', 4)  # Updated from 32 to 4
+                            },
+                            "warm": {
+                                "size": len(self.warm_memory),
+                                "max_size_gb": self.config.get('warm_memory_gb', 16)  # Updated from 64 to 16
+                            },
+                            "cold": {
+                                "size": len(self.cold_memory),
+                                "lifecycle_policy": "90_days"  # Changed from "never" to "90_days"
+                            }
+                        }
+                    except Exception as e:
+                        self.logger.error(f"Error getting memory tier stats: {e}")
+                        stats["memory_tiers_error"] = str(e)
+            except Exception as e:
+                self.logger.error(f"Error getting memory stats: {e}")
+                stats["db_error"] = str(e)
+                
+        return stats
+
+    async def get_memory_system_status(self) -> Dict:
+        """Get detailed status report of all memory subsystems."""
+        status = {
+            "overall": "unknown",
+            "last_update": datetime.now().isoformat(),
+            "tiers": {
+                "vector": {
+                    "status": "unknown",
+                    "details": {}
+                },
+                "tiered": {
+                    "status": "unknown",
+                    "details": {}
+                },
+                "long_term": {
+                    "status": "unknown",
+                    "details": {}
+                },
+                "knowledge_graph": {
+                    "status": "unknown",
+                    "details": {}
+                }
+            },
+            "dependencies": {
+                "mem0": MEM0_AVAILABLE,
+                "memories_dev": MEMORIES_DEV_AVAILABLE,
+                "qdrant": QDRANT_AVAILABLE
+            },
+            "stats": {},
+            "errors": []
+        }
+        
+        # Check vector memory (mem0)
+        try:
+            if self.mem0:
+                vector_status = self.mem0.get_status() if hasattr(self.mem0, 'get_status') else {"status": "ok"}
+                status["tiers"]["vector"]["status"] = "ok"
+                status["tiers"]["vector"]["details"] = vector_status
+            else:
+                status["tiers"]["vector"]["status"] = "not_initialized"
+                status["errors"].append("Vector memory (mem0) not initialized")
+        except Exception as e:
+            status["tiers"]["vector"]["status"] = "error"
+            status["tiers"]["vector"]["details"]["error"] = str(e)
+            status["errors"].append(f"Vector memory error: {e}")
+            
+        # Check tiered memory
+        try:
+            tiered_status = {
+                "hot": {
+                    "size": len(self.hot_memory) if hasattr(self, 'hot_memory') else 0,
+                    "status": "ok" if hasattr(self, 'hot_memory') else "not_initialized"
+                },
+                "warm": {
+                    "size": len(self.warm_memory) if hasattr(self, 'warm_memory') else 0,
+                    "status": "ok" if hasattr(self, 'warm_memory') else "not_initialized"
+                },
+                "cold": {
+                    "size": len(self.cold_memory) if hasattr(self, 'cold_memory') else 0,
+                    "status": "ok" if hasattr(self, 'cold_memory') else "not_initialized"
+                }
+            }
+            
+            status["tiers"]["tiered"]["details"] = tiered_status
+            
+            if all(t["status"] == "ok" for t in tiered_status.values()):
+                status["tiers"]["tiered"]["status"] = "ok"
+            elif any(t["status"] == "ok" for t in tiered_status.values()):
+                status["tiers"]["tiered"]["status"] = "partial"
+            else:
+                status["tiers"]["tiered"]["status"] = "not_initialized"
+                status["errors"].append("Tiered memory not initialized")
+        except Exception as e:
+            status["tiers"]["tiered"]["status"] = "error"
+            status["errors"].append(f"Tiered memory error: {e}")
+            
+        # Check knowledge graph
+        try:
+            if hasattr(self, 'knowledge_graph'):
+                graph_stats = self.knowledge_graph.get_stats() if hasattr(self.knowledge_graph, 'get_stats') else {"status": "ok"}
+                status["tiers"]["knowledge_graph"]["status"] = "ok"
+                status["tiers"]["knowledge_graph"]["details"] = graph_stats
+            else:
+                status["tiers"]["knowledge_graph"]["status"] = "not_initialized"
+                status["errors"].append("Knowledge graph not initialized")
+        except Exception as e:
+            status["tiers"]["knowledge_graph"]["status"] = "error"
+            status["errors"].append(f"Knowledge graph error: {e}")
+            
+        # Long-term storage
+        try:
+            if self.long_term_storage_initialized:
+                with sqlite3.connect(self.long_term_db) as conn:
+                    cursor = conn.cursor()
+                    
+                    cursor.execute("SELECT COUNT(*) FROM long_term_memory")
+                    memory_count = cursor.fetchone()[0]
+                    
+                    cursor.execute("SELECT COUNT(DISTINCT memory_type) FROM long_term_memory")
+                    type_count = cursor.fetchone()[0]
+                    
+                    # Get disk usage
+                    db_size = os.path.getsize(self.long_term_db) / (1024 * 1024)  # MB
+                    
+                    status["tiers"]["long_term"]["status"] = "ok"
+                    status["tiers"]["long_term"]["details"] = {
+                        "memory_count": memory_count,
+                        "type_count": type_count,
+                        "db_size_mb": round(db_size, 2)
+                    }
+            else:
+                status["tiers"]["long_term"]["status"] = "not_initialized"
+                status["errors"].append("Long-term storage not initialized")
+        except Exception as e:
+            status["tiers"]["long_term"]["status"] = "error"
+            status["errors"].append(f"Long-term storage error: {e}")
+            
+        # Overall status
+        tier_statuses = [t["status"] for t in status["tiers"].values()]
+        
+        if all(s == "ok" for s in tier_statuses):
+            status["overall"] = "ok"
+        elif any(s == "error" for s in tier_statuses):
+            status["overall"] = "error"
+        elif any(s == "not_initialized" for s in tier_statuses):
+            status["overall"] = "partial"
+            
+        # Add memory stats
+        status["stats"] = self.memory_stats
+        
+        return status
+
+    def print_memory_status_dashboard(self):
+        """Print a detailed memory system status dashboard to the terminal."""
+        status = asyncio.run(self.get_memory_system_status())
+        
+        print("\n" + "=" * 80)
+        print(f"GRACE MEMORY SYSTEM STATUS - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("=" * 80)
+        
+        # Overall status with color
+        overall = status["overall"]
+        if overall == "ok":
+            print(f"Overall Status: \033[92m{overall.upper()}\033[0m - All systems operational")
+        elif overall == "partial":
+            print(f"Overall Status: \033[93m{overall.upper()}\033[0m - Some systems degraded")
+        elif overall == "error":
+            print(f"Overall Status: \033[91m{overall.upper()}\033[0m - System errors detected")
+        else:
+            print(f"Overall Status: \033[90m{overall.upper()}\033[0m - Status unknown")
+            
+        print("\nMemory Tier Status:")
+        print("-" * 40)
+        
+        # Vector memory
+        vector_status = status["tiers"]["vector"]["status"]
+        if vector_status == "ok":
+            vector_details = status["tiers"]["vector"]["details"]
+            print(f"  Vector Memory: \033[92mOK\033[0m - {vector_details.get('count', 'N/A')} memories")
+        else:
+            print(f"  Vector Memory: \033[91m{vector_status.upper()}\033[0m")
+            
+        # Tiered memory
+        tiered_status = status["tiers"]["tiered"]["status"]
+        tiered_details = status["tiers"]["tiered"]["details"]
+        
+        if tiered_status == "ok":
+            print(f"  Tiered Memory: \033[92mOK\033[0m")
+            print(f"    Hot:  {tiered_details['hot']['size']} memories")
+            print(f"    Warm: {tiered_details['warm']['size']} memories")
+            print(f"    Cold: {tiered_details['cold']['size']} memories")
+        else:
+            print(f"  Tiered Memory: \033[91m{tiered_status.upper()}\033[0m")
+            
+        # Long-term storage
+        lt_status = status["tiers"]["long_term"]["status"]
+        if lt_status == "ok":
+            lt_details = status["tiers"]["long_term"]["details"]
+            print(f"  Long-term Storage: \033[92mOK\033[0m - {lt_details['memory_count']} memories ({lt_details['db_size_mb']} MB)")
+        else:
+            print(f"  Long-term Storage: \033[91m{lt_status.upper()}\033[0m")
+            
+        # Knowledge graph
+        kg_status = status["tiers"]["knowledge_graph"]["status"]
+        if kg_status == "ok":
+            kg_details = status["tiers"]["knowledge_graph"]["details"]
+            print(f"  Knowledge Graph: \033[92mOK\033[0m - {kg_details.get('entities', 'N/A')} entities, {kg_details.get('relations', 'N/A')} relations")
+        else:
+            print(f"  Knowledge Graph: \033[91m{kg_status.upper()}\033[0m")
+            
+        # Dependencies
+        print("\nDependencies:")
+        print("-" * 40)
+        for dep, available in status["dependencies"].items():
+            if available:
+                print(f"  {dep}: \033[92mAvailable\033[0m")
+            else:
+                print(f"  {dep}: \033[91mNot Available\033[0m")
+                
+        # Errors
+        if status["errors"]:
+            print("\nErrors:")
+            print("-" * 40)
+            for i, error in enumerate(status["errors"], 1):
+                print(f"  {i}. \033[91m{error}\033[0m")
+                
+        print("\nMemory Statistics:")
+        print("-" * 40)
+        stats = status["stats"]
+        print(f"  Total Memories: {stats.get('total_memories', 'N/A')}")
+        print(f"  Search Count: {stats.get('search_count', 'N/A')}")
+        print(f"  Insertion Count: {stats.get('insertion_count', 'N/A')}")
+        print(f"  Last Maintenance: {stats.get('last_maintenance', 'N/A')}")
+        
+        print("=" * 80 + "\n")
+
+    def shutdown(self):
+        """Clean shutdown of memory systems."""
+        self.logger.info("Shutting down memory system")
+        
+        # Save critical memory
+        if not self.amnesia_mode and self.critical_memory_initialized:
+            # Run synchronously during shutdown
+            asyncio.run(self._save_critical_memory())
+            
+        # Save memory stats
+        if not self.amnesia_mode and self.long_term_storage_initialized:
+            self._save_memory_stats()
+            
+        # Close mem0
+        if self.mem0 and hasattr(self.mem0, 'close'):
+            try:
+                self.mem0.close()
+                self.logger.debug("Closed mem0 vector store")
+            except Exception as e:
+                self.logger.debug(f"Error closing mem0: {e}")
+                
+        # Close knowledge graph
+        if self.knowledge_graph_initialized:
+            try:
+                if hasattr(self.knowledge_graph, 'close'):
+                    self.knowledge_graph.close()
+                    self.logger.debug("Closed knowledge graph")
+            except Exception as e:
+                self.logger.debug(f"Error closing knowledge graph: {e}")
+                
+        # Close verification engine
+        if self.verification_engine_initialized:
+            try:
+                if hasattr(self.verification_engine, 'close'):
+                    self.verification_engine.close()
+                    self.logger.debug("Closed verification engine")
+                    
+                if hasattr(self.fact_checker, 'close'):
+                    self.fact_checker.close()
+                    self.logger.debug("Closed fact checker")
+            except Exception as e:
+                self.logger.debug(f"Error closing verification engine: {e}")
+                
+        # Shutdown thread pool
+        try:
+            self.executor.shutdown(wait=True)
+            self.logger.debug("Shut down thread pool")
+        except Exception as e:
+            self.logger.debug(f"Error shutting down thread pool: {e}")
+            
+        self.logger.info("Memory system shutdown complete")

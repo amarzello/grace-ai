@@ -1,0 +1,10 @@
+"""
+Grace AI System - Top-level package
+
+This package contains the core Grace AI system modules.
+"""
+
+from . import memory
+from . import utils
+
+__version__ = "0.1.0"

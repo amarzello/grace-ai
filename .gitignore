@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+
+# Exclude symlink to models explicitly to avoid accidents
+models
+
+# Exclude actual models folder just in case
+models/
+
+# Common temporary/cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs and databases (optional)
+*.log
+*.sqlite
+logs/

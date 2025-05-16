@@ -1,0 +1,17 @@
+# Grace Requirements File
+# Core dependencies for the Grace AI System
+
+# Memory System
+mem0>=0.3.0
+qdrant-client>=1.7.0
+numpy>=1.24.0
+
+# Utilities
+PyYAML>=6.0
+tqdm>=4.66.0
+
+# Optional dependencies (uncomment if needed)
+# llama-cpp-python>=0.2.16        # For LLM functionality
+# faster-whisper>=0.8.0           # For speech-to-text
+# webrtcvad>=2.0.10               # For voice activity detection
+# sounddevice>=0.4.6              # For microphone handling

@@ -1,0 +1,92 @@
+{"instruction": "Pause that", "input": "", "output": {"command": "speak", "response": "Which audio source would you like me to pause, music or podcast?"}}
+{"instruction": "The podcast", "input": "", "output": {"command": "ovos.audio.service.pause", "response": "Pausing the podcast."}}
+{"instruction": "#event ovos.audio.service.pause.result", "input": "{\"status\":\"paused\"}", "output": {"command": "speak", "response": "Your podcast is now paused."}}
+{"instruction": "Resume playback", "input": "", "output": {"command": "speak", "response": "Do you want to resume music or the podcast?"}}
+{"instruction": "Resume the music", "input": "", "output": {"command": "ovos.audio.service.resume", "response": "Resuming music playback."}}
+{"instruction": "#event ovos.audio.service.resume.result", "input": "{\"status\":\"playing\"}", "output": {"command": "speak", "response": "Music playback has resumed."}}
+{"instruction": "Stop the audio", "input": "", "output": {"command": "speak", "response": "Do you want to stop just the music or all sounds?"}}
+{"instruction": "Stop all sounds", "input": "", "output": {"command": "ovos.audio.service.stop", "response": "Stopping all audio output."}}
+{"instruction": "#event ovos.audio.service.stop.result", "input": "{\"status\":\"stopped\"}", "output": {"command": "speak", "response": "All audio has been stopped."}}
+{"instruction": "Skip this track", "input": "", "output": {"command": "speak", "response": "Would you like the next song in the playlist?"}}
+{"instruction": "Yes, next song please", "input": "", "output": {"command": "ovos.audio.service.next", "response": "Skipping to the next track."}}
+{"instruction": "#event ovos.audio.service.next.result", "input": "{\"title\":\"Morning Mood\"}", "output": {"command": "speak", "response": "Now playing 'Morning Mood'."}}
+{"instruction": "Go back", "input": "", "output": {"command": "speak", "response": "Do you want to go back by song or by seconds?"}}
+{"instruction": "By seconds", "input": "", "output": {"command": "speak", "response": "How many seconds should I rewind?"}}
+{"instruction": "Rewind 15 seconds", "input": "", "output": {"command": "ovos.audio.service.seek_back", "response": "Rewinding fifteen seconds."}}
+{"instruction": "#event ovos.audio.service.seek_back.result", "input": "{\"position\":\"1:05\"}", "output": {"command": "speak", "response": "Rewound to 1 minute and 5 seconds."}}
+{"instruction": "Adjust the volume", "input": "", "output": {"command": "speak", "response": "What percentage would you like?"}}
+{"instruction": "Set it to 65 percent", "input": "", "output": {"command": "ovos.volume.set", "response": "Setting volume to 65 percent."}}
+{"instruction": "#event ovos.volume.set.result", "input": "{\"level\":65}", "output": {"command": "speak", "response": "Volume is now at 65 percent."}}
+{"instruction": "Lower the volume", "input": "", "output": {"command": "speak", "response": "By how much should I decrease it?"}}
+{"instruction": "Decrease by 20 percent", "input": "", "output": {"command": "ovos.volume.decrease", "response": "Decreasing volume by twenty percent."}}
+{"instruction": "#event ovos.volume.decrease.result", "input": "{\"level\":45}", "output": {"command": "speak", "response": "Volume reduced to 45 percent."}}
+{"instruction": "Bring sound back", "input": "", "output": {"command": "speak", "response": "Would you like to unmute all audio?"}}
+{"instruction": "Yes, unmute", "input": "", "output": {"command": "ovos.volume.unmute", "response": "Unmuting all audio."}}
+{"instruction": "#event ovos.volume.unmute.result", "input": "{\"state\":\"unmuted\"}", "output": {"command": "speak", "response": "Audio is unmuted."}}
+{"instruction": "Snooze the timer", "input": "", "output": {"command": "speak", "response": "Which timer should I snooze?"}}
+{"instruction": "My study timer", "input": "", "output": {"command": "speak", "response": "How many minutes to snooze the study timer?"}}
+{"instruction": "Snooze for 5 minutes", "input": "", "output": {"command": "alerts.snooze.timer", "response": "Snoozing study timer for five minutes."}}
+{"instruction": "#event alerts.snooze.timer.result", "input": "{\"time_remaining\":\"5m\"}", "output": {"command": "speak", "response": "Study timer snoozed for five minutes."}}
+{"instruction": "Cancel the timer", "input": "", "output": {"command": "speak", "response": "Which timer would you like to cancel?"}}
+{"instruction": "Cancel the kitchen timer", "input": "", "output": {"command": "alerts.cancel.timer", "response": "Cancelling the kitchen timer."}}
+{"instruction": "#event alerts.cancel.timer.result", "input": "{\"label\":\"kitchen\"}", "output": {"command": "speak", "response": "Kitchen timer has been cancelled."}}
+{"instruction": "What timers are running?", "input": "", "output": {"command": "speak", "response": "Do you want all timers or just a specific one?"}}
+{"instruction": "List all timers", "input": "", "output": {"command": "alerts.list.timers", "response": "Fetching your active timers."}}
+{"instruction": "#event alerts.list.timers.result", "input": "{\"timers\":[\"kitchen 3m left\",\"study 12m left\"]}", "output": {"command": "speak", "response": "You have a kitchen timer with 3 minutes left and a study timer with 12 minutes left."}}
+{"instruction": "Timer status", "input": "", "output": {"command": "speak", "response": "Which timer's status would you like?"}}
+{"instruction": "Status of the study timer", "input": "", "output": {"command": "status.timer", "response": "Checking status of study timer."}}
+{"instruction": "#event status.timer.result", "input": "{\"label\":\"study\",\"time_remaining\":\"12m\"}", "output": {"command": "speak", "response": "Study timer has 12 minutes remaining."}}
+{"instruction": "Show my alarms", "input": "", "output": {"command": "speak", "response": "Do you want the next alarm or an overview of all?"}}
+{"instruction": "Give me an overview", "input": "", "output": {"command": "show.alarms.overview", "response": "Gathering all alarm times."}}
+{"instruction": "#event show.alarms.overview.result", "input": "{\"alarms\":[\"6:30 AM\",\"7:45 PM\"]}", "output": {"command": "speak", "response": "You have alarms set for 6:30 AM and 7:45 PM."}}
+{"instruction": "Search my research notes", "input": "", "output": {"command": "speak", "response": "What topic should I look for?"}}
+{"instruction": "Solar panel optimization", "input": "", "output": {"command": "mem0-g.search", "response": "Searching long-term research notes…"}}
+{"instruction": "#event mem0-g.search.result", "input": "{\"top\":\"Use a 30° tilt for December\",\"hits\":2}", "output": {"command": "speak", "response": "I found two notes; top result: use a 30° tilt for December."}}
+{"instruction": "Forecast for Friday", "input": "", "output": {"command": "speak", "response": "Which location for Friday's forecast?"}}
+{"instruction": "Seattle", "input": "", "output": {"command": "weather.forecast.intent", "response": "Getting Seattle's Friday forecast."}}
+{"instruction": "#event weather.forecast.intent.result", "input": "{\"forecast\":\"Rainy, high 12°C\"}", "output": {"command": "speak", "response": "Friday in Seattle will be rainy with a high of 12 °C."}}
+{"instruction": "When does the sun rise?", "input": "", "output": {"command": "speak", "response": "For which city?"}}
+{"instruction": "Dubai", "input": "", "output": {"command": "weather.sunrise.intent", "response": "Fetching sunrise time for Dubai."}}
+{"instruction": "#event weather.sunrise.intent.result", "input": "{\"time\":\"06:12 AM\"}", "output": {"command": "speak", "response": "Sunrise in Dubai is at 6:12 AM."}}
+{"instruction": "What's sunset time?", "input": "", "output": {"command": "speak", "response": "Which date do you mean?"}}
+{"instruction": "Tomorrow", "input": "", "output": {"command": "weather.sunset.intent", "response": "Getting tomorrow's sunset time."}}
+{"instruction": "#event weather.sunset.intent.result", "input": "{\"time\":\"07:45 PM\"}", "output": {"command": "speak", "response": "Tomorrow's sunset is at 7:45 PM."}}
+{"instruction": "Turn off shuffle", "input": "", "output": {"command": "speak", "response": "Do you want to disable shuffle for current playlist?"}}
+{"instruction": "Yes, disable it", "input": "", "output": {"command": "ovos.audio.service.shuffle_off", "response": "Disabling shuffle mode."}}
+{"instruction": "#event ovos.audio.service.shuffle_off.result", "input": "{}", "output": {"command": "speak", "response": "Shuffle mode is off."}}
+{"instruction": "Repeat everything", "input": "", "output": {"command": "speak", "response": "You want to repeat the entire playlist?"}}
+{"instruction": "Yes, repeat all songs", "input": "", "output": {"command": "ovos.audio.service.repeat_all", "response": "Repeating all tracks."}}
+{"instruction": "#event ovos.audio.service.repeat_all.result", "input": "{}", "output": {"command": "speak", "response": "Playlist repeat is enabled."}}
+{"instruction": "Rewind please", "input": "", "output": {"command": "speak", "response": "How far back would you like me to rewind?"}}
+{"instruction": "Ten seconds", "input": "", "output": {"command": "ovos.audio.service.seek_back", "response": "Rewinding ten seconds."}}
+{"instruction": "#event ovos.audio.service.seek_back.result", "input": "{\"position\":\"2:05\"}", "output": {"command": "speak", "response": "Rewound to 2:05."}}
+{"instruction": "Clear the display", "input": "", "output": {"command": "speak", "response": "Do you want to clear all widgets?"}}
+{"instruction": "Yes, clear everything", "input": "", "output": {"command": "ovos.gui.clear", "response": "Clearing all on-screen elements."}}
+{"instruction": "#event ovos.gui.clear.result", "input": "{}", "output": {"command": "speak", "response": "Display has been cleared."}}
+{"instruction": "Cancel all alarms", "input": "", "output": {"command": "speak", "response": "Are you sure you want to cancel every alarm?"}}
+{"instruction": "Yes, cancel them", "input": "", "output": {"command": "cancel.all.alarms", "response": "Cancelling all alarms."}}
+{"instruction": "#event cancel.all.alarms.result", "input": "{\"status\":\"cancelled\"}", "output": {"command": "speak", "response": "All alarms have been cancelled."}}
+{"instruction": "Speak this phrase", "input": "", "output": {"command": "speak", "response": "What phrase should I speak?"}}
+{"instruction": "Hello from Grace", "input": "", "output": {"command": "ovos.tts.speak", "response": "Speaking: 'Hello from Grace'."}}
+{"instruction": "#event ovos.tts.speak.result", "input": "{}", "output": {"command": "speak", "response": "Hello from Grace"}}
+{"instruction": "Install a skill", "input": "", "output": {"command": "speak", "response": "Which skill would you like to install?"}}
+{"instruction": "Skill-aqi", "input": "", "output": {"command": "ovos.skills.install", "response": "Installing the aqi skill."}}
+{"instruction": "#event ovos.skills.install.result", "input": "{\"status\":\"installed\"}", "output": {"command": "speak", "response": "AQI skill installed successfully."}}
+{"instruction": "Show my skills", "input": "", "output": {"command": "speak", "response": "Do you want installed or available skills?"}}
+{"instruction": "Installed ones", "input": "", "output": {"command": "ovos.skills.list", "response": "Listing installed skills."}}
+{"instruction": "#event ovos.skills.list.result", "input": "{\"skills\":[\"weather\",\"alerts\",\"music\"]}", "output": {"command": "speak", "response": "You have weather, alerts, and music skills installed."}}
+{"instruction": "Update a skill", "input": "", "output": {"command": "speak", "response": "Which skill should I update?"}}
+{"instruction": "alerts", "input": "", "output": {"command": "ovos.skills.update", "response": "Updating the alerts skill."}}
+{"instruction": "#event ovos.skills.update.result", "input": "{\"status\":\"updated\"}", "output": {"command": "speak", "response": "Alerts skill updated successfully."}}
+{"instruction": "Start a timer", "input": "", "output": {"command": "speak", "response": "How long should the timer run?"}}
+{"instruction": "Twenty minutes", "input": "", "output": {"command": "start.timer", "response": "Starting a twenty-minute timer."}}
+{"instruction": "#event start.timer.result", "input": "{\"label\":\"timer\",\"duration\":\"20m\"}", "output": {"command": "speak", "response": "Timer started for twenty minutes."}}
+{"instruction": "Cancel any timers", "input": "", "output": {"command": "speak", "response": "Which timer would you like to cancel?"}}
+{"instruction": "Cancel the timer labeled timer", "input": "", "output": {"command": "cancel.timer", "response": "Cancelling timer labeled 'timer'."}}
+{"instruction": "#event cancel.timer.result", "input": "{\"label\":\"timer\",\"status\":\"cancelled\"}", "output": {"command": "speak", "response": "Timer 'timer' has been cancelled."}}
+{"instruction": "When's my alarm?", "input": "", "output": {"command": "speak", "response": "Do you mean your next alarm or all alarms?"}}
+{"instruction": "Next alarm", "input": "", "output": {"command": "query.next.alarm", "response": "Retrieving your next alarm."}}
+{"instruction": "#event query.next.alarm.result", "input": "{\"time\":\"6:45 AM\"}", "output": {"command": "speak", "response": "Your next alarm is set for 6:45 AM."}}
+{"instruction": "Snooze", "input": "", "output": {"command": "speak", "response": "What should I snooze, alarm or timer?"}}
+{"instruction": "The alarm", "input": "", "output": {"command": "snooze", "response": "Snoozing the next alarm."}}
+{"instruction": "#event snooze.result", "input": "{\"time_remaining\":\"9m\"}", "output": {"command": "speak", "response": "Alarm snoozed for nine minutes."}}

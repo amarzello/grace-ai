@@ -1,0 +1,146 @@
+{"instruction": "When is my next alarm?", "input": "", "output": {"command": "alarm.status", "response": "Executing status."}}
+{"instruction": "#event alarm.status.result", "input": "{\"next_alarm\": \"06:45 AM\"}", "output": {"command": "speak", "response": "Your next alarm is set for 06:45 AM."}}
+{"instruction": "When is my alarm scheduled?", "input": "", "output": {"command": "alarm.status", "response": "Executing status."}}
+{"instruction": "#event alarm.status.result", "input": "{\"next_alarm\": \"06:45 AM\"}", "output": {"command": "speak", "response": "Your next alarm is set for 06:45 AM."}}
+{"instruction": "What's the time of my next alarm?", "input": "", "output": {"command": "alarm.status", "response": "Executing status."}}
+{"instruction": "#event alarm.status.result", "input": "{\"next_alarm\": \"06:45 AM\"}", "output": {"command": "speak", "response": "Your next alarm is set for 06:45 AM."}}
+{"instruction": "Cancel every alarm I have set", "input": "", "output": {"command": "cancel.all.alarms", "response": "Executing alarms."}}
+{"instruction": "#event cancel.all.alarms.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Clear every alarm I've set", "input": "", "output": {"command": "cancel.all.alarms", "response": "Executing alarms."}}
+{"instruction": "#event cancel.all.alarms.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Delete all active alarms", "input": "", "output": {"command": "cancel.all.alarms", "response": "Executing alarms."}}
+{"instruction": "#event cancel.all.alarms.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Could you play some music?", "input": "", "output": {"command": "gui.namespace.displayed", "response": "Executing displayed."}}
+{"instruction": "#event gui.namespace.displayed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please page gained focus", "input": "", "output": {"command": "gui.page_gained_focus", "response": "Executing page gained focus."}}
+{"instruction": "#event gui.page_gained_focus.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please request page upload", "input": "", "output": {"command": "gui.request_page_upload", "response": "Executing request page upload."}}
+{"instruction": "#event gui.request_page_upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please volunteer page upload", "input": "", "output": {"command": "gui.volunteer_page_upload", "response": "Executing volunteer page upload."}}
+{"instruction": "#event gui.volunteer_page_upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Play a confirmation beep", "input": "", "output": {"command": "ovos.audio.play_sound", "response": "Executing play sound."}}
+{"instruction": "#event ovos.audio.play_sound.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Play the notification chime", "input": "", "output": {"command": "ovos.audio.play_sound", "response": "Executing play sound."}}
+{"instruction": "#event ovos.audio.play_sound.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Sound a short beep", "input": "", "output": {"command": "ovos.audio.play_sound", "response": "Executing play sound."}}
+{"instruction": "#event ovos.audio.play_sound.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Start playing some music", "input": "", "output": {"command": "ovos.audio.playing_track", "response": "Executing playing track."}}
+{"instruction": "#event ovos.audio.playing_track.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I'd like to listen to music now", "input": "", "output": {"command": "ovos.audio.playing_track", "response": "Executing playing track."}}
+{"instruction": "#event ovos.audio.playing_track.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please get track length", "input": "", "output": {"command": "ovos.audio.service.get_track_length", "response": "Executing get track length."}}
+{"instruction": "#event ovos.audio.service.get_track_length.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please get track position", "input": "", "output": {"command": "ovos.audio.service.get_track_position", "response": "Executing get track position."}}
+{"instruction": "#event ovos.audio.service.get_track_position.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Skip to the next track", "input": "", "output": {"command": "ovos.audio.service.next", "response": "Executing next."}}
+{"instruction": "#event ovos.audio.service.next.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Skip this song", "input": "", "output": {"command": "ovos.audio.service.next", "response": "Executing next."}}
+{"instruction": "#event ovos.audio.service.next.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Next track on the playlist", "input": "", "output": {"command": "ovos.audio.service.next", "response": "Executing next."}}
+{"instruction": "#event ovos.audio.service.next.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Pause the music playback", "input": "", "output": {"command": "ovos.audio.service.pause", "response": "Executing pause."}}
+{"instruction": "#event ovos.audio.service.pause.result", "input": "{\"status\": \"paused\"}", "output": {"command": "speak", "response": "Playback paused."}}
+{"instruction": "Pause the current track", "input": "", "output": {"command": "ovos.audio.service.pause", "response": "Executing pause."}}
+{"instruction": "#event ovos.audio.service.pause.result", "input": "{\"status\": \"paused\"}", "output": {"command": "speak", "response": "Playback paused."}}
+{"instruction": "Hold the music for now", "input": "", "output": {"command": "ovos.audio.service.pause", "response": "Executing pause."}}
+{"instruction": "#event ovos.audio.service.pause.result", "input": "{\"status\": \"paused\"}", "output": {"command": "speak", "response": "Playback paused."}}
+{"instruction": "Play some lofi beats", "input": "", "output": {"command": "ovos.audio.service.play", "response": "Executing play."}}
+{"instruction": "#event ovos.audio.service.play.result", "input": "{\"status\": \"playing\", \"title\": \"lofi beats\"}", "output": {"command": "speak", "response": "Now playing lofi beats."}}
+{"instruction": "Play some instrumental jazz", "input": "", "output": {"command": "ovos.audio.service.play", "response": "Executing play."}}
+{"instruction": "#event ovos.audio.service.play.result", "input": "{\"status\": \"playing\", \"title\": \"lofi beats\"}", "output": {"command": "speak", "response": "Now playing lofi beats."}}
+{"instruction": "I want background study music", "input": "", "output": {"command": "ovos.audio.service.play", "response": "Executing play."}}
+{"instruction": "#event ovos.audio.service.play.result", "input": "{\"status\": \"playing\", \"title\": \"lofi beats\"}", "output": {"command": "speak", "response": "Now playing lofi beats."}}
+{"instruction": "Go back to the previous track", "input": "", "output": {"command": "ovos.audio.service.prev", "response": "Executing prev."}}
+{"instruction": "#event ovos.audio.service.prev.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Go back to the previous song", "input": "", "output": {"command": "ovos.audio.service.prev", "response": "Executing prev."}}
+{"instruction": "#event ovos.audio.service.prev.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Replay the last track", "input": "", "output": {"command": "ovos.audio.service.prev", "response": "Executing prev."}}
+{"instruction": "#event ovos.audio.service.prev.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Resume the music", "input": "", "output": {"command": "ovos.audio.service.resume", "response": "Executing resume."}}
+{"instruction": "#event ovos.audio.service.resume.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Resume the song", "input": "", "output": {"command": "ovos.audio.service.resume", "response": "Executing resume."}}
+{"instruction": "#event ovos.audio.service.resume.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Continue playing the music", "input": "", "output": {"command": "ovos.audio.service.resume", "response": "Executing resume."}}
+{"instruction": "#event ovos.audio.service.resume.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Rewind ten seconds", "input": "", "output": {"command": "ovos.audio.service.seek_backward", "response": "Executing seek backward."}}
+{"instruction": "#event ovos.audio.service.seek_backward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Go back ten seconds", "input": "", "output": {"command": "ovos.audio.service.seek_backward", "response": "Executing seek backward."}}
+{"instruction": "#event ovos.audio.service.seek_backward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Jump ahead thirty seconds", "input": "", "output": {"command": "ovos.audio.service.seek_forward", "response": "Executing seek forward."}}
+{"instruction": "#event ovos.audio.service.seek_forward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Skip forward half a minute", "input": "", "output": {"command": "ovos.audio.service.seek_forward", "response": "Executing seek forward."}}
+{"instruction": "#event ovos.audio.service.seek_forward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please set track position", "input": "", "output": {"command": "ovos.audio.service.set_track_position", "response": "Executing set track position."}}
+{"instruction": "#event ovos.audio.service.set_track_position.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Stop all audio output", "input": "", "output": {"command": "ovos.audio.service.stop", "response": "Executing stop."}}
+{"instruction": "#event ovos.audio.service.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Stop all audio playback", "input": "", "output": {"command": "ovos.audio.service.stop", "response": "Executing stop."}}
+{"instruction": "#event ovos.audio.service.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Turn the music off completely", "input": "", "output": {"command": "ovos.audio.service.stop", "response": "Executing stop."}}
+{"instruction": "#event ovos.audio.service.stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please track info reply", "input": "", "output": {"command": "ovos.audio.service.track_info_reply", "response": "Executing track info reply."}}
+{"instruction": "#event ovos.audio.service.track_info_reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Could you play some tunes?", "input": "", "output": {"command": "ovos.common_play.announce", "response": "Executing announce."}}
+{"instruction": "#event ovos.common_play.announce.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Could you play some songs? (3)", "input": "", "output": {"command": "ovos.common_play.player.state", "response": "Executing state."}}
+{"instruction": "#event ovos.common_play.player.state.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Could you play some songs? (2)", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.previous", "response": "Executing previous."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.previous.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Could you play some music? (3)", "input": "", "output": {"command": "ovos.phal.gui.display.connected.network.settings", "response": "Executing settings."}}
+{"instruction": "#event ovos.phal.gui.display.connected.network.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Could you play some music? (2)", "input": "", "output": {"command": "ovos.shell.oauth.display.qr.code", "response": "Executing code."}}
+{"instruction": "#event ovos.shell.oauth.display.qr.code.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please remove cross context", "input": "", "output": {"command": "ovos.skill.remove_cross_context", "response": "Executing remove cross context."}}
+{"instruction": "#event ovos.skill.remove_cross_context.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please set cross context", "input": "", "output": {"command": "ovos.skill.set_cross_context", "response": "Executing set cross context."}}
+{"instruction": "#event ovos.skill.set_cross_context.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Decrease volume slightly", "input": "", "output": {"command": "ovos.volume.decrease", "response": "Executing decrease."}}
+{"instruction": "#event ovos.volume.decrease.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Lower the volume slightly", "input": "", "output": {"command": "ovos.volume.decrease", "response": "Executing decrease."}}
+{"instruction": "#event ovos.volume.decrease.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Reduce the sound by ten percent", "input": "", "output": {"command": "ovos.volume.decrease", "response": "Executing decrease."}}
+{"instruction": "#event ovos.volume.decrease.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Increase volume by ten percent", "input": "", "output": {"command": "ovos.volume.increase", "response": "Executing increase."}}
+{"instruction": "#event ovos.volume.increase.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Turn it up a notch", "input": "", "output": {"command": "ovos.volume.increase", "response": "Executing increase."}}
+{"instruction": "#event ovos.volume.increase.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Mute all sounds (1)", "input": "", "output": {"command": "ovos.volume.mute.toggle", "response": "Executing toggle."}}
+{"instruction": "#event ovos.volume.mute.toggle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:audio output end", "input": "", "output": {"command": "recognizer_loop:audio_output_end", "response": "Executing recognizer loop:audio output end."}}
+{"instruction": "#event recognizer_loop:audio_output_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:audio output start", "input": "", "output": {"command": "recognizer_loop:audio_output_start", "response": "Executing recognizer loop:audio output start."}}
+{"instruction": "#event recognizer_loop:audio_output_start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:record begin", "input": "", "output": {"command": "recognizer_loop:record_begin", "response": "Executing recognizer loop:record begin."}}
+{"instruction": "#event recognizer_loop:record_begin.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:record end", "input": "", "output": {"command": "recognizer_loop:record_end", "response": "Executing recognizer loop:record end."}}
+{"instruction": "#event recognizer_loop:record_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:record stop", "input": "", "output": {"command": "recognizer_loop:record_stop", "response": "Executing recognizer loop:record stop."}}
+{"instruction": "#event recognizer_loop:record_stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:wake up", "input": "", "output": {"command": "recognizer_loop:wake_up", "response": "Executing recognizer loop:wake up."}}
+{"instruction": "#event recognizer_loop:wake_up.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Could you play some songs?", "input": "", "output": {"command": "speaker.extension.display.set.auto.dim", "response": "Executing dim."}}
+{"instruction": "#event speaker.extension.display.set.auto.dim.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Could you play some tunes? (2)", "input": "", "output": {"command": "speaker.extension.display.set.auto.nightmode", "response": "Executing nightmode."}}
+{"instruction": "#event speaker.extension.display.set.auto.nightmode.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Set a 15‑minute coffee timer", "input": "", "output": {"command": "start.timer", "response": "Executing timer."}}
+{"instruction": "#event start.timer.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "brightness please", "input": "", "output": {"command": "brightness", "response": "Executing brightness."}}
+{"instruction": "#event brightness.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "brightness please please", "input": "", "output": {"command": "brightness", "response": "Executing brightness."}}
+{"instruction": "#event brightness.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "sound please", "input": "", "output": {"command": "change.alarm.sound", "response": "Executing sound."}}
+{"instruction": "#event change.alarm.sound.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "sound please please", "input": "", "output": {"command": "change.alarm.sound", "response": "Executing sound."}}
+{"instruction": "#event change.alarm.sound.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "wallpaper please", "input": "", "output": {"command": "change.wallpaper", "response": "Executing wallpaper."}}
+{"instruction": "#event change.wallpaper.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "wallpaper please please", "input": "", "output": {"command": "change.wallpaper", "response": "Executing wallpaper."}}
+{"instruction": "#event change.wallpaper.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "question please", "input": "", "output": {"command": "common_query.question", "response": "Executing question."}}
+{"instruction": "#event common_query.question.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "question please please", "input": "", "output": {"command": "common_query.question", "response": "Executing question."}}
+{"instruction": "#event common_query.question.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "activated please", "input": "", "output": {"command": "extension.manager.activated", "response": "Executing activated."}}
+{"instruction": "#event extension.manager.activated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "activated please please", "input": "", "output": {"command": "extension.manager.activated", "response": "Executing activated."}}
+{"instruction": "#event extension.manager.activated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}

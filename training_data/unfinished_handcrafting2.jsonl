@@ -1,0 +1,630 @@
+{"instruction": "Execute command namespace", "input": "", "output": {"command": "gui.clear.namespace", "response": "Executing namespace."}}
+{"instruction": "#event gui.clear.namespace.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to namespace", "input": "", "output": {"command": "gui.clear.namespace", "response": "Executing namespace."}}
+{"instruction": "#event gui.clear.namespace.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command send", "input": "", "output": {"command": "gui.event.send", "response": "Executing send."}}
+{"instruction": "#event gui.event.send.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to send", "input": "", "output": {"command": "gui.event.send", "response": "Executing send."}}
+{"instruction": "#event gui.event.send.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command displayed", "input": "", "output": {"command": "gui.namespace.displayed", "response": "Executing displayed."}}
+{"instruction": "#event gui.namespace.displayed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command removed", "input": "", "output": {"command": "gui.namespace.removed", "response": "Executing removed."}}
+{"instruction": "#event gui.namespace.removed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to removed", "input": "", "output": {"command": "gui.namespace.removed", "response": "Executing removed."}}
+{"instruction": "#event gui.namespace.removed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command delete", "input": "", "output": {"command": "gui.page.delete", "response": "Executing delete."}}
+{"instruction": "#event gui.page.delete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to delete", "input": "", "output": {"command": "gui.page.delete", "response": "Executing delete."}}
+{"instruction": "#event gui.page.delete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command show", "input": "", "output": {"command": "gui.page.show", "response": "Executing show."}}
+{"instruction": "#event gui.page.show.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to show", "input": "", "output": {"command": "gui.page.show", "response": "Executing show."}}
+{"instruction": "#event gui.page.show.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command upload", "input": "", "output": {"command": "gui.page.upload", "response": "Executing upload."}}
+{"instruction": "#event gui.page.upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to upload", "input": "", "output": {"command": "gui.page.upload", "response": "Executing upload."}}
+{"instruction": "#event gui.page.upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command page gained focus", "input": "", "output": {"command": "gui.page_gained_focus", "response": "Executing page gained focus."}}
+{"instruction": "#event gui.page_gained_focus.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command page interaction", "input": "", "output": {"command": "gui.page_interaction", "response": "Executing page interaction."}}
+{"instruction": "#event gui.page_interaction.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request page upload", "input": "", "output": {"command": "gui.request_page_upload", "response": "Executing request page upload."}}
+{"instruction": "#event gui.request_page_upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command request", "input": "", "output": {"command": "gui.status.request", "response": "Executing request."}}
+{"instruction": "#event gui.status.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to request", "input": "", "output": {"command": "gui.status.request", "response": "Executing request."}}
+{"instruction": "#event gui.status.request.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command response", "input": "", "output": {"command": "gui.status.request.response", "response": "Executing response."}}
+{"instruction": "#event gui.status.request.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to response", "input": "", "output": {"command": "gui.status.request.response", "response": "Executing response."}}
+{"instruction": "#event gui.status.request.response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command set", "input": "", "output": {"command": "gui.value.set", "response": "Executing set."}}
+{"instruction": "#event gui.value.set.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to set", "input": "", "output": {"command": "gui.value.set", "response": "Executing set."}}
+{"instruction": "#event gui.value.set.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command volunteer page upload", "input": "", "output": {"command": "gui.volunteer_page_upload", "response": "Executing volunteer page upload."}}
+{"instruction": "#event gui.volunteer_page_upload.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get", "input": "", "output": {"command": "intent.service.active_skills.get", "response": "Executing get."}}
+{"instruction": "#event intent.service.active_skills.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to get", "input": "", "output": {"command": "intent.service.active_skills.get", "response": "Executing get."}}
+{"instruction": "#event intent.service.active_skills.get.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reply", "input": "", "output": {"command": "intent.service.active_skills.reply", "response": "Executing reply."}}
+{"instruction": "#event intent.service.active_skills.reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to reply", "input": "", "output": {"command": "intent.service.active_skills.reply", "response": "Executing reply."}}
+{"instruction": "#event intent.service.active_skills.reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command manifest", "input": "", "output": {"command": "intent.service.adapt.manifest", "response": "Executing manifest."}}
+{"instruction": "#event intent.service.adapt.manifest.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to manifest", "input": "", "output": {"command": "intent.service.adapt.manifest", "response": "Executing manifest."}}
+{"instruction": "#event intent.service.adapt.manifest.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command activate", "input": "", "output": {"command": "intent.service.skills.activate", "response": "Executing activate."}}
+{"instruction": "#event intent.service.skills.activate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to activate", "input": "", "output": {"command": "intent.service.skills.activate", "response": "Executing activate."}}
+{"instruction": "#event intent.service.skills.activate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deactivate", "input": "", "output": {"command": "intent.service.skills.deactivate", "response": "Executing deactivate."}}
+{"instruction": "#event intent.service.skills.deactivate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to deactivate", "input": "", "output": {"command": "intent.service.skills.deactivate", "response": "Executing deactivate."}}
+{"instruction": "#event intent.service.skills.deactivate.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deactivated", "input": "", "output": {"command": "intent.service.skills.deactivated", "response": "Executing deactivated."}}
+{"instruction": "#event intent.service.skills.deactivated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to deactivated", "input": "", "output": {"command": "intent.service.skills.deactivated", "response": "Executing deactivated."}}
+{"instruction": "#event intent.service.skills.deactivated.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command info", "input": "", "output": {"command": "oauth.get.app.host.info", "response": "Executing info."}}
+{"instruction": "#event oauth.get.app.host.info.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to info", "input": "", "output": {"command": "oauth.get.app.host.info", "response": "Executing info."}}
+{"instruction": "#event oauth.get.app.host.info.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command register", "input": "", "output": {"command": "oauth.register", "response": "Executing register."}}
+{"instruction": "#event oauth.register.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to register", "input": "", "output": {"command": "oauth.register", "response": "Executing register."}}
+{"instruction": "#event oauth.register.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command start", "input": "", "output": {"command": "oauth.start", "response": "Executing start."}}
+{"instruction": "#event oauth.start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to start", "input": "", "output": {"command": "oauth.start", "response": "Executing start."}}
+{"instruction": "#event oauth.start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command munged id", "input": "", "output": {"command": "oauth.token.response.munged_id", "response": "Executing munged id."}}
+{"instruction": "#event oauth.token.response.munged_id.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command {munged id}", "input": "", "output": {"command": "oauth.token.response.{munged_id}", "response": "Executing {munged id}."}}
+{"instruction": "#event oauth.token.response.{munged_id}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command url", "input": "", "output": {"command": "oauth.url", "response": "Executing url."}}
+{"instruction": "#event oauth.url.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to url", "input": "", "output": {"command": "oauth.url", "response": "Executing url."}}
+{"instruction": "#event oauth.url.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query", "input": "", "output": {"command": "opm.audio.query", "response": "Executing query."}}
+{"instruction": "#event opm.audio.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to query", "input": "", "output": {"command": "opm.audio.query", "response": "Executing query."}}
+{"instruction": "#event opm.audio.query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command close", "input": "", "output": {"command": "ovos-PHAL-plugin-homeassistant.close", "response": "Executing close."}}
+{"instruction": "#event ovos-PHAL-plugin-homeassistant.close.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to close", "input": "", "output": {"command": "ovos-PHAL-plugin-homeassistant.close", "response": "Executing close."}}
+{"instruction": "#event ovos-PHAL-plugin-homeassistant.close.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command home", "input": "", "output": {"command": "ovos-PHAL-plugin-homeassistant.home", "response": "Executing home."}}
+{"instruction": "#event ovos-PHAL-plugin-homeassistant.home.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to home", "input": "", "output": {"command": "ovos-PHAL-plugin-homeassistant.home", "response": "Executing home."}}
+{"instruction": "#event ovos-PHAL-plugin-homeassistant.home.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command internet check", "input": "", "output": {"command": "ovos.PHAL.internet_check", "response": "Executing internet check."}}
+{"instruction": "#event ovos.PHAL.internet_check.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command is speaking", "input": "", "output": {"command": "ovos.audio.is_speaking", "response": "Executing is speaking."}}
+{"instruction": "#event ovos.audio.is_speaking.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command playing track", "input": "", "output": {"command": "ovos.audio.playing_track", "response": "Executing playing track."}}
+{"instruction": "#event ovos.audio.playing_track.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command queue", "input": "", "output": {"command": "ovos.audio.queue", "response": "Executing queue."}}
+{"instruction": "#event ovos.audio.queue.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to queue", "input": "", "output": {"command": "ovos.audio.queue", "response": "Executing queue."}}
+{"instruction": "#event ovos.audio.queue.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command queue end", "input": "", "output": {"command": "ovos.audio.queue_end", "response": "Executing queue end."}}
+{"instruction": "#event ovos.audio.queue_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get track length", "input": "", "output": {"command": "ovos.audio.service.get_track_length", "response": "Executing get track length."}}
+{"instruction": "#event ovos.audio.service.get_track_length.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get track position", "input": "", "output": {"command": "ovos.audio.service.get_track_position", "response": "Executing get track position."}}
+{"instruction": "#event ovos.audio.service.get_track_position.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command list backends", "input": "", "output": {"command": "ovos.audio.service.list_backends", "response": "Executing list backends."}}
+{"instruction": "#event ovos.audio.service.list_backends.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command seek backward", "input": "", "output": {"command": "ovos.audio.service.seek_backward", "response": "Executing seek backward."}}
+{"instruction": "#event ovos.audio.service.seek_backward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command seek forward", "input": "", "output": {"command": "ovos.audio.service.seek_forward", "response": "Executing seek forward."}}
+{"instruction": "#event ovos.audio.service.seek_forward.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command set track position", "input": "", "output": {"command": "ovos.audio.service.set_track_position", "response": "Executing set track position."}}
+{"instruction": "#event ovos.audio.service.set_track_position.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command track info", "input": "", "output": {"command": "ovos.audio.service.track_info", "response": "Executing track info."}}
+{"instruction": "#event ovos.audio.service.track_info.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command track info reply", "input": "", "output": {"command": "ovos.audio.service.track_info_reply", "response": "Executing track info reply."}}
+{"instruction": "#event ovos.audio.service.track_info_reply.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command awoken", "input": "", "output": {"command": "ovos.awoken", "response": "Executing awoken."}}
+{"instruction": "#event ovos.awoken.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to awoken", "input": "", "output": {"command": "ovos.awoken", "response": "Executing awoken."}}
+{"instruction": "#event ovos.awoken.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command announce", "input": "", "output": {"command": "ovos.common_play.announce", "response": "Executing announce."}}
+{"instruction": "#event ovos.common_play.announce.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command state", "input": "", "output": {"command": "ovos.common_play.player.state", "response": "Executing state."}}
+{"instruction": "#event ovos.common_play.player.state.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command search end", "input": "", "output": {"command": "ovos.common_play.skill.search_end", "response": "Executing search end."}}
+{"instruction": "#event ovos.common_play.skill.search_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command search start", "input": "", "output": {"command": "ovos.common_play.skill.search_start", "response": "Executing search start."}}
+{"instruction": "#event ovos.common_play.skill.search_start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command previous", "input": "", "output": {"command": "ovos.common_play.{self.skill_id}.previous", "response": "Executing previous."}}
+{"instruction": "#event ovos.common_play.{self.skill_id}.previous.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disable", "input": "", "output": {"command": "ovos.ggwave.disable", "response": "Executing disable."}}
+{"instruction": "#event ovos.ggwave.disable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to disable", "input": "", "output": {"command": "ovos.ggwave.disable", "response": "Executing disable."}}
+{"instruction": "#event ovos.ggwave.disable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disabled", "input": "", "output": {"command": "ovos.ggwave.disabled", "response": "Executing disabled."}}
+{"instruction": "#event ovos.ggwave.disabled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to disabled", "input": "", "output": {"command": "ovos.ggwave.disabled", "response": "Executing disabled."}}
+{"instruction": "#event ovos.ggwave.disabled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enable", "input": "", "output": {"command": "ovos.ggwave.enable", "response": "Executing enable."}}
+{"instruction": "#event ovos.ggwave.enable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to enable", "input": "", "output": {"command": "ovos.ggwave.enable", "response": "Executing enable."}}
+{"instruction": "#event ovos.ggwave.enable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enabled", "input": "", "output": {"command": "ovos.ggwave.enabled", "response": "Executing enabled."}}
+{"instruction": "#event ovos.ggwave.enabled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to enabled", "input": "", "output": {"command": "ovos.ggwave.enabled", "response": "Executing enabled."}}
+{"instruction": "#event ovos.ggwave.enabled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command available", "input": "", "output": {"command": "ovos.gui.available", "response": "Executing available."}}
+{"instruction": "#event ovos.gui.available.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to available", "input": "", "output": {"command": "ovos.gui.available", "response": "Executing available."}}
+{"instruction": "#event ovos.gui.available.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connected", "input": "", "output": {"command": "ovos.gui.connected", "response": "Executing connected."}}
+{"instruction": "#event ovos.gui.connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to connected", "input": "", "output": {"command": "ovos.gui.connected", "response": "Executing connected."}}
+{"instruction": "#event ovos.gui.connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command screenclose", "input": "", "output": {"command": "ovos.gui.force.screenclose", "response": "Executing screenclose."}}
+{"instruction": "#event ovos.gui.force.screenclose.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to screenclose", "input": "", "output": {"command": "ovos.gui.force.screenclose", "response": "Executing screenclose."}}
+{"instruction": "#event ovos.gui.force.screenclose.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command forceHome", "input": "", "output": {"command": "ovos.gui.forceHome", "response": "Executing forceHome."}}
+{"instruction": "#event ovos.gui.forceHome.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to forceHome", "input": "", "output": {"command": "ovos.gui.forceHome", "response": "Executing forceHome."}}
+{"instruction": "#event ovos.gui.forceHome.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command port", "input": "", "output": {"command": "ovos.gui.port", "response": "Executing port."}}
+{"instruction": "#event ovos.gui.port.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to port", "input": "", "output": {"command": "ovos.gui.port", "response": "Executing port."}}
+{"instruction": "#event ovos.gui.port.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command back", "input": "", "output": {"command": "ovos.gui.screen.request.page.back", "response": "Executing back."}}
+{"instruction": "#event ovos.gui.screen.request.page.back.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to back", "input": "", "output": {"command": "ovos.gui.screen.request.page.back", "response": "Executing back."}}
+{"instruction": "#event ovos.gui.screen.request.page.back.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command unavailable", "input": "", "output": {"command": "ovos.gui.unavailable", "response": "Executing unavailable."}}
+{"instruction": "#event ovos.gui.unavailable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to unavailable", "input": "", "output": {"command": "ovos.gui.unavailable", "response": "Executing unavailable."}}
+{"instruction": "#event ovos.gui.unavailable.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command update", "input": "", "output": {"command": "ovos.ipgeo.update", "response": "Executing update."}}
+{"instruction": "#event ovos.ipgeo.update.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to update", "input": "", "output": {"command": "ovos.ipgeo.update", "response": "Executing update."}}
+{"instruction": "#event ovos.ipgeo.update.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command stt", "input": "", "output": {"command": "ovos.languages.stt", "response": "Executing stt."}}
+{"instruction": "#event ovos.languages.stt.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to stt", "input": "", "output": {"command": "ovos.languages.stt", "response": "Executing stt."}}
+{"instruction": "#event ovos.languages.stt.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command tts", "input": "", "output": {"command": "ovos.languages.tts", "response": "Executing tts."}}
+{"instruction": "#event ovos.languages.tts.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to tts", "input": "", "output": {"command": "ovos.languages.tts", "response": "Executing tts."}}
+{"instruction": "#event ovos.languages.tts.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command collect idle", "input": "", "output": {"command": "ovos.mark2.collect_idle", "response": "Executing collect idle."}}
+{"instruction": "#event ovos.mark2.collect_idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command register idle", "input": "", "output": {"command": "ovos.mark2.register_idle", "response": "Executing register idle."}}
+{"instruction": "#event ovos.mark2.register_idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get status", "input": "", "output": {"command": "ovos.mic.get_status", "response": "Executing get status."}}
+{"instruction": "#event ovos.mic.get_status.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command listen", "input": "", "output": {"command": "ovos.mic.listen", "response": "Executing listen."}}
+{"instruction": "#event ovos.mic.listen.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to listen", "input": "", "output": {"command": "ovos.mic.listen", "response": "Executing listen."}}
+{"instruction": "#event ovos.mic.listen.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command mute", "input": "", "output": {"command": "ovos.mic.mute", "response": "Executing mute."}}
+{"instruction": "#event ovos.mic.mute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to mute", "input": "", "output": {"command": "ovos.mic.mute", "response": "Executing mute."}}
+{"instruction": "#event ovos.mic.mute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command unmute", "input": "", "output": {"command": "ovos.mic.unmute", "response": "Executing unmute."}}
+{"instruction": "#event ovos.mic.unmute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to unmute", "input": "", "output": {"command": "ovos.mic.unmute", "response": "Executing unmute."}}
+{"instruction": "#event ovos.mic.unmute.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disconnected (1)", "input": "", "output": {"command": "ovos.network.disconnected", "response": "Executing disconnected."}}
+{"instruction": "#event ovos.network.disconnected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to disconnected", "input": "", "output": {"command": "ovos.network.disconnected", "response": "Executing disconnected."}}
+{"instruction": "#event ovos.network.disconnected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ask", "input": "", "output": {"command": "ovos.persona.ask", "response": "Executing ask."}}
+{"instruction": "#event ovos.persona.ask.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to ask", "input": "", "output": {"command": "ovos.persona.ask", "response": "Executing ask."}}
+{"instruction": "#event ovos.persona.ask.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command deregister", "input": "", "output": {"command": "ovos.persona.deregister", "response": "Executing deregister."}}
+{"instruction": "#event ovos.persona.deregister.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to deregister", "input": "", "output": {"command": "ovos.persona.deregister", "response": "Executing deregister."}}
+{"instruction": "#event ovos.persona.deregister.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings (4)", "input": "", "output": {"command": "ovos.phal.gui.display.connected.network.settings", "response": "Executing settings."}}
+{"instruction": "#event ovos.phal.gui.display.connected.network.settings.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command connect", "input": "", "output": {"command": "ovos.phal.nm.connect", "response": "Executing connect."}}
+{"instruction": "#event ovos.phal.nm.connect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to connect", "input": "", "output": {"command": "ovos.phal.nm.connect", "response": "Executing connect."}}
+{"instruction": "#event ovos.phal.nm.connect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command network", "input": "", "output": {"command": "ovos.phal.nm.connect.open.network", "response": "Executing network."}}
+{"instruction": "#event ovos.phal.nm.connect.open.network.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to network", "input": "", "output": {"command": "ovos.phal.nm.connect.open.network", "response": "Executing network."}}
+{"instruction": "#event ovos.phal.nm.connect.open.network.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failure", "input": "", "output": {"command": "ovos.phal.nm.connection.failure", "response": "Executing failure."}}
+{"instruction": "#event ovos.phal.nm.connection.failure.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to failure", "input": "", "output": {"command": "ovos.phal.nm.connection.failure", "response": "Executing failure."}}
+{"instruction": "#event ovos.phal.nm.connection.failure.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command successful", "input": "", "output": {"command": "ovos.phal.nm.connection.successful", "response": "Executing successful."}}
+{"instruction": "#event ovos.phal.nm.connection.successful.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to successful", "input": "", "output": {"command": "ovos.phal.nm.connection.successful", "response": "Executing successful."}}
+{"instruction": "#event ovos.phal.nm.connection.successful.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disconnect", "input": "", "output": {"command": "ovos.phal.nm.disconnect", "response": "Executing disconnect."}}
+{"instruction": "#event ovos.phal.nm.disconnect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to disconnect", "input": "", "output": {"command": "ovos.phal.nm.disconnect", "response": "Executing disconnect."}}
+{"instruction": "#event ovos.phal.nm.disconnect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command forget", "input": "", "output": {"command": "ovos.phal.nm.forget", "response": "Executing forget."}}
+{"instruction": "#event ovos.phal.nm.forget.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to forget", "input": "", "output": {"command": "ovos.phal.nm.forget", "response": "Executing forget."}}
+{"instruction": "#event ovos.phal.nm.forget.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reconnect", "input": "", "output": {"command": "ovos.phal.nm.reconnect", "response": "Executing reconnect."}}
+{"instruction": "#event ovos.phal.nm.reconnect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to reconnect", "input": "", "output": {"command": "ovos.phal.nm.reconnect", "response": "Executing reconnect."}}
+{"instruction": "#event ovos.phal.nm.reconnect.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command scan", "input": "", "output": {"command": "ovos.phal.nm.scan", "response": "Executing scan."}}
+{"instruction": "#event ovos.phal.nm.scan.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to scan", "input": "", "output": {"command": "ovos.phal.nm.scan", "response": "Executing scan."}}
+{"instruction": "#event ovos.phal.nm.scan.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command complete", "input": "", "output": {"command": "ovos.phal.nm.scan.complete", "response": "Executing complete."}}
+{"instruction": "#event ovos.phal.nm.scan.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to complete", "input": "", "output": {"command": "ovos.phal.nm.scan.complete", "response": "Executing complete."}}
+{"instruction": "#event ovos.phal.nm.scan.complete.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command intent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.assist.intent", "response": "Executing intent."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.assist.intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to intent", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.assist.intent", "response": "Executing intent."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.assist.intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command function", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.call.supported.function", "response": "Executing function."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.call.supported.function.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to function", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.call.supported.function", "response": "Executing function."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.call.supported.function.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dashboard", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.change.dashboard", "response": "Executing dashboard."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.change.dashboard.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to dashboard", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.change.dashboard", "response": "Executing dashboard."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.change.dashboard.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command check connected", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.check_connected", "response": "Executing check connected."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.check_connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command device", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device", "response": "Executing device."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to device", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.device", "response": "Executing device."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.device.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command devices", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.devices", "response": "Executing devices."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.devices.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to devices", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.devices", "response": "Executing devices."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.devices.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command color", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.color", "response": "Executing color."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.color.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to color", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.get.light.color", "response": "Executing color."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.get.light.color.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command query media", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.integration.query_media", "response": "Executing query media."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.integration.query_media.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command result", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.integration.query_media.result", "response": "Executing result."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.integration.query_media.result.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to result", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.integration.query_media.result", "response": "Executing result."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.integration.query_media.result.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ready", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.ready", "response": "Executing ready."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.ready.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to ready", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.ready", "response": "Executing ready."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.ready.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command flow", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.start.oauth.flow", "response": "Executing flow."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.start.oauth.flow.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to flow", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.start.oauth.flow", "response": "Executing flow."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.start.oauth.flow.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command registered", "input": "", "output": {"command": "ovos.phal.wallpaper.manager.provider.registered", "response": "Executing registered."}}
+{"instruction": "#event ovos.phal.wallpaper.manager.provider.registered.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to registered", "input": "", "output": {"command": "ovos.phal.wallpaper.manager.provider.registered", "response": "Executing registered."}}
+{"instruction": "#event ovos.phal.wallpaper.manager.provider.registered.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command install", "input": "", "output": {"command": "ovos.pip.install", "response": "Executing install."}}
+{"instruction": "#event ovos.pip.install.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to install", "input": "", "output": {"command": "ovos.pip.install", "response": "Executing install."}}
+{"instruction": "#event ovos.pip.install.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command failed", "input": "", "output": {"command": "ovos.pip.install.complete, ovos.pip.install.failed", "response": "Executing failed."}}
+{"instruction": "#event ovos.pip.install.complete, ovos.pip.install.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to failed", "input": "", "output": {"command": "ovos.pip.install.complete, ovos.pip.install.failed", "response": "Executing failed."}}
+{"instruction": "#event ovos.pip.install.complete, ovos.pip.install.failed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command uninstall", "input": "", "output": {"command": "ovos.pip.uninstall", "response": "Executing uninstall."}}
+{"instruction": "#event ovos.pip.uninstall.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to uninstall", "input": "", "output": {"command": "ovos.pip.uninstall", "response": "Executing uninstall."}}
+{"instruction": "#event ovos.pip.uninstall.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reset", "input": "", "output": {"command": "ovos.shell.exec.factory.reset", "response": "Executing reset."}}
+{"instruction": "#event ovos.shell.exec.factory.reset.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to reset", "input": "", "output": {"command": "ovos.shell.exec.factory.reset", "response": "Executing reset."}}
+{"instruction": "#event ovos.shell.exec.factory.reset.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command code", "input": "", "output": {"command": "ovos.shell.oauth.display.qr.code", "response": "Executing code."}}
+{"instruction": "#event ovos.shell.oauth.display.qr.code.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command credentials", "input": "", "output": {"command": "ovos.shell.oauth.register.credentials", "response": "Executing credentials."}}
+{"instruction": "#event ovos.shell.oauth.register.credentials.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to credentials", "input": "", "output": {"command": "ovos.shell.oauth.register.credentials", "response": "Executing credentials."}}
+{"instruction": "#event ovos.shell.oauth.register.credentials.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command authentication", "input": "", "output": {"command": "ovos.shell.oauth.start.authentication", "response": "Executing authentication."}}
+{"instruction": "#event ovos.shell.oauth.start.authentication.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to authentication", "input": "", "output": {"command": "ovos.shell.oauth.start.authentication", "response": "Executing authentication."}}
+{"instruction": "#event ovos.shell.oauth.start.authentication.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ok", "input": "", "output": {"command": "ovos.shell.status.ok", "response": "Executing ok."}}
+{"instruction": "#event ovos.shell.status.ok.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to ok", "input": "", "output": {"command": "ovos.shell.status.ok", "response": "Executing ok."}}
+{"instruction": "#event ovos.shell.status.ok.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command disable intent", "input": "", "output": {"command": "ovos.skill.disable_intent", "response": "Executing disable intent."}}
+{"instruction": "#event ovos.skill.disable_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command enable intent", "input": "", "output": {"command": "ovos.skill.enable_intent", "response": "Executing enable intent."}}
+{"instruction": "#event ovos.skill.enable_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command remove cross context", "input": "", "output": {"command": "ovos.skill.remove_cross_context", "response": "Executing remove cross context."}}
+{"instruction": "#event ovos.skill.remove_cross_context.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command set cross context", "input": "", "output": {"command": "ovos.skill.set_cross_context", "response": "Executing set cross context."}}
+{"instruction": "#event ovos.skill.set_cross_context.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command abort question", "input": "", "output": {"command": "ovos.skills.abort_question", "response": "Executing abort question."}}
+{"instruction": "#event ovos.skills.abort_question.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to abort question", "input": "", "output": {"command": "ovos.skills.abort_question", "response": "Executing abort question."}}
+{"instruction": "#event ovos.skills.abort_question.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command error", "input": "", "output": {"command": "ovos.skills.error", "response": "Executing error."}}
+{"instruction": "#event ovos.skills.error.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to error", "input": "", "output": {"command": "ovos.skills.error", "response": "Executing error."}}
+{"instruction": "#event ovos.skills.error.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command fallback", "input": "", "output": {"command": "ovos.skills.fallback", "response": "Executing fallback."}}
+{"instruction": "#event ovos.skills.fallback.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to fallback", "input": "", "output": {"command": "ovos.skills.fallback", "response": "Executing fallback."}}
+{"instruction": "#event ovos.skills.fallback.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command ping", "input": "", "output": {"command": "ovos.skills.fallback.ping", "response": "Executing ping."}}
+{"instruction": "#event ovos.skills.fallback.ping.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to ping", "input": "", "output": {"command": "ovos.skills.fallback.ping", "response": "Executing ping."}}
+{"instruction": "#event ovos.skills.fallback.ping.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command pong", "input": "", "output": {"command": "ovos.skills.fallback.pong", "response": "Executing pong."}}
+{"instruction": "#event ovos.skills.fallback.pong.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to pong", "input": "", "output": {"command": "ovos.skills.fallback.pong", "response": "Executing pong."}}
+{"instruction": "#event ovos.skills.fallback.pong.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command skill id", "input": "", "output": {"command": "ovos.skills.fallback.skill_id", "response": "Executing skill id."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command initialized", "input": "", "output": {"command": "ovos.skills.initialized", "response": "Executing initialized."}}
+{"instruction": "#event ovos.skills.initialized.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to initialized", "input": "", "output": {"command": "ovos.skills.initialized", "response": "Executing initialized."}}
+{"instruction": "#event ovos.skills.initialized.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command is ready (1)", "input": "", "output": {"command": "ovos.skills.is_ready", "response": "Executing is ready."}}
+{"instruction": "#event ovos.skills.is_ready.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command list", "input": "", "output": {"command": "ovos.skills.list", "response": "Executing list."}}
+{"instruction": "#event ovos.skills.list.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to list", "input": "", "output": {"command": "ovos.skills.list", "response": "Executing list."}}
+{"instruction": "#event ovos.skills.list.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command loaded", "input": "", "output": {"command": "ovos.skills.loaded", "response": "Executing loaded."}}
+{"instruction": "#event ovos.skills.loaded.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to loaded", "input": "", "output": {"command": "ovos.skills.loaded", "response": "Executing loaded."}}
+{"instruction": "#event ovos.skills.loaded.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command loading failure", "input": "", "output": {"command": "ovos.skills.loading_failure", "response": "Executing loading failure."}}
+{"instruction": "#event ovos.skills.loading_failure.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command changed", "input": "", "output": {"command": "ovos.skills.settings.changed", "response": "Executing changed."}}
+{"instruction": "#event ovos.skills.settings.changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to changed", "input": "", "output": {"command": "ovos.skills.settings.changed", "response": "Executing changed."}}
+{"instruction": "#event ovos.skills.settings.changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command settings changed", "input": "", "output": {"command": "ovos.skills.settings_changed", "response": "Executing settings changed."}}
+{"instruction": "#event ovos.skills.settings_changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command shutdown", "input": "", "output": {"command": "ovos.skills.shutdown", "response": "Executing shutdown."}}
+{"instruction": "#event ovos.skills.shutdown.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to shutdown", "input": "", "output": {"command": "ovos.skills.shutdown", "response": "Executing shutdown."}}
+{"instruction": "#event ovos.skills.shutdown.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command trained", "input": "", "output": {"command": "ovos.skills.trained", "response": "Executing trained."}}
+{"instruction": "#event ovos.skills.trained.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to trained", "input": "", "output": {"command": "ovos.skills.trained", "response": "Executing trained."}}
+{"instruction": "#event ovos.skills.trained.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command unknown", "input": "", "output": {"command": "ovos.speech.recognition.unknown", "response": "Executing unknown."}}
+{"instruction": "#event ovos.speech.recognition.unknown.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to unknown", "input": "", "output": {"command": "ovos.speech.recognition.unknown", "response": "Executing unknown."}}
+{"instruction": "#event ovos.speech.recognition.unknown.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command handled", "input": "", "output": {"command": "ovos.stop.handled", "response": "Executing handled."}}
+{"instruction": "#event ovos.stop.handled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to handled", "input": "", "output": {"command": "ovos.stop.handled", "response": "Executing handled."}}
+{"instruction": "#event ovos.stop.handled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command cancelled", "input": "", "output": {"command": "ovos.utterance.cancelled", "response": "Executing cancelled."}}
+{"instruction": "#event ovos.utterance.cancelled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to cancelled", "input": "", "output": {"command": "ovos.utterance.cancelled", "response": "Executing cancelled."}}
+{"instruction": "#event ovos.utterance.cancelled.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to toggle", "input": "", "output": {"command": "ovos.volume.mute.toggle", "response": "Executing toggle."}}
+{"instruction": "#event ovos.volume.mute.toggle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command rotation", "input": "", "output": {"command": "ovos.wallpaper.manager.disable.auto.rotation", "response": "Executing rotation."}}
+{"instruction": "#event ovos.wallpaper.manager.disable.auto.rotation.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to rotation", "input": "", "output": {"command": "ovos.wallpaper.manager.disable.auto.rotation", "response": "Executing rotation."}}
+{"instruction": "#event ovos.wallpaper.manager.disable.auto.rotation.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command provider", "input": "", "output": {"command": "ovos.wallpaper.manager.get.active.provider", "response": "Executing provider."}}
+{"instruction": "#event ovos.wallpaper.manager.get.active.provider.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to provider", "input": "", "output": {"command": "ovos.wallpaper.manager.get.active.provider", "response": "Executing provider."}}
+{"instruction": "#event ovos.wallpaper.manager.get.active.provider.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command collection", "input": "", "output": {"command": "ovos.wallpaper.manager.get.collection", "response": "Executing collection."}}
+{"instruction": "#event ovos.wallpaper.manager.get.collection.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to collection", "input": "", "output": {"command": "ovos.wallpaper.manager.get.collection", "response": "Executing collection."}}
+{"instruction": "#event ovos.wallpaper.manager.get.collection.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command config", "input": "", "output": {"command": "ovos.wallpaper.manager.get.provider.config", "response": "Executing config."}}
+{"instruction": "#event ovos.wallpaper.manager.get.provider.config.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to config", "input": "", "output": {"command": "ovos.wallpaper.manager.get.provider.config", "response": "Executing config."}}
+{"instruction": "#event ovos.wallpaper.manager.get.provider.config.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command providers", "input": "", "output": {"command": "ovos.wallpaper.manager.get.registered.providers", "response": "Executing providers."}}
+{"instruction": "#event ovos.wallpaper.manager.get.registered.providers.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to providers", "input": "", "output": {"command": "ovos.wallpaper.manager.get.registered.providers", "response": "Executing providers."}}
+{"instruction": "#event ovos.wallpaper.manager.get.registered.providers.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command {msg type}", "input": "", "output": {"command": "ovos_gui_plugin_shell_companion.{msg_type}", "response": "Executing {msg type}."}}
+{"instruction": "#event ovos_gui_plugin_shell_companion.{msg_type}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to {msg type}", "input": "", "output": {"command": "ovos_gui_plugin_shell_companion.{msg_type}", "response": "Executing {msg type}."}}
+{"instruction": "#event ovos_gui_plugin_shell_companion.{msg_type}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command padatious:register entity", "input": "", "output": {"command": "padatious:register_entity", "response": "Executing padatious:register entity."}}
+{"instruction": "#event padatious:register_entity.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command padatious:register intent", "input": "", "output": {"command": "padatious:register_intent", "response": "Executing padatious:register intent."}}
+{"instruction": "#event padatious:register_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command alarm", "input": "", "output": {"command": "query.next.alarm", "response": "Executing alarm."}}
+{"instruction": "#event query.next.alarm.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to alarm", "input": "", "output": {"command": "query.next.alarm", "response": "Executing alarm."}}
+{"instruction": "#event query.next.alarm.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command question:action", "input": "", "output": {"command": "question:action", "response": "Executing question:action."}}
+{"instruction": "#event question:action.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command question:query", "input": "", "output": {"command": "question:query", "response": "Executing question:query."}}
+{"instruction": "#event question:query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command timeout", "input": "", "output": {"command": "question:query.timeout", "response": "Executing timeout."}}
+{"instruction": "#event question:query.timeout.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to timeout", "input": "", "output": {"command": "question:query.timeout", "response": "Executing timeout."}}
+{"instruction": "#event question:query.timeout.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:audio output end", "input": "", "output": {"command": "recognizer_loop:audio_output_end", "response": "Executing recognizer loop:audio output end."}}
+{"instruction": "#event recognizer_loop:audio_output_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:audio output start", "input": "", "output": {"command": "recognizer_loop:audio_output_start", "response": "Executing recognizer loop:audio output start."}}
+{"instruction": "#event recognizer_loop:audio_output_start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:hotword", "input": "", "output": {"command": "recognizer_loop:hotword", "response": "Executing recognizer loop:hotword."}}
+{"instruction": "#event recognizer_loop:hotword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:record begin", "input": "", "output": {"command": "recognizer_loop:record_begin", "response": "Executing recognizer loop:record begin."}}
+{"instruction": "#event recognizer_loop:record_begin.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:record end", "input": "", "output": {"command": "recognizer_loop:record_end", "response": "Executing recognizer loop:record end."}}
+{"instruction": "#event recognizer_loop:record_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:record stop", "input": "", "output": {"command": "recognizer_loop:record_stop", "response": "Executing recognizer loop:record stop."}}
+{"instruction": "#event recognizer_loop:record_stop.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:sleep", "input": "", "output": {"command": "recognizer_loop:sleep", "response": "Executing recognizer loop:sleep."}}
+{"instruction": "#event recognizer_loop:sleep.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:state", "input": "", "output": {"command": "recognizer_loop:state", "response": "Executing recognizer loop:state."}}
+{"instruction": "#event recognizer_loop:state.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:stopword", "input": "", "output": {"command": "recognizer_loop:stopword", "response": "Executing recognizer loop:stopword."}}
+{"instruction": "#event recognizer_loop:stopword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:utterance", "input": "", "output": {"command": "recognizer_loop:utterance", "response": "Executing recognizer loop:utterance."}}
+{"instruction": "#event recognizer_loop:utterance.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:wake up", "input": "", "output": {"command": "recognizer_loop:wake_up", "response": "Executing recognizer loop:wake up."}}
+{"instruction": "#event recognizer_loop:wake_up.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:wakeupword", "input": "", "output": {"command": "recognizer_loop:wakeupword", "response": "Executing recognizer loop:wakeupword."}}
+{"instruction": "#event recognizer_loop:wakeupword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command recognizer loop:wakeword", "input": "", "output": {"command": "recognizer_loop:wakeword", "response": "Executing recognizer loop:wakeword."}}
+{"instruction": "#event recognizer_loop:wakeword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command event", "input": "", "output": {"command": "screen.close.idle.event", "response": "Executing event."}}
+{"instruction": "#event screen.close.idle.event.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to event", "input": "", "output": {"command": "screen.close.idle.event", "response": "Executing event."}}
+{"instruction": "#event screen.close.idle.event.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command overview", "input": "", "output": {"command": "show.alarms.overview", "response": "Executing overview."}}
+{"instruction": "#event show.alarms.overview.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to overview", "input": "", "output": {"command": "show.alarms.overview", "response": "Executing overview."}}
+{"instruction": "#event show.alarms.overview.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command keep", "input": "", "output": {"command": "skillmanager.keep", "response": "Executing keep."}}
+{"instruction": "#event skillmanager.keep.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to keep", "input": "", "output": {"command": "skillmanager.keep", "response": "Executing keep."}}
+{"instruction": "#event skillmanager.keep.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command about", "input": "", "output": {"command": "smartspeaker.extension.extend.about", "response": "Executing about."}}
+{"instruction": "#event smartspeaker.extension.extend.about.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to about", "input": "", "output": {"command": "smartspeaker.extension.extend.about", "response": "Executing about."}}
+{"instruction": "#event smartspeaker.extension.extend.about.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command snooze", "input": "", "output": {"command": "snooze", "response": "Executing snooze."}}
+{"instruction": "#event snooze.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to snooze", "input": "", "output": {"command": "snooze", "response": "Executing snooze."}}
+{"instruction": "#event snooze.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command dim", "input": "", "output": {"command": "speaker.extension.display.set.auto.dim", "response": "Executing dim."}}
+{"instruction": "#event speaker.extension.display.set.auto.dim.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command nightmode", "input": "", "output": {"command": "speaker.extension.display.set.auto.nightmode", "response": "Executing nightmode."}}
+{"instruction": "#event speaker.extension.display.set.auto.nightmode.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to timer", "input": "", "output": {"command": "start.timer", "response": "Executing timer."}}
+{"instruction": "#event start.timer.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command language", "input": "", "output": {"command": "system.configure.language", "response": "Executing language."}}
+{"instruction": "#event system.configure.language.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to language", "input": "", "output": {"command": "system.configure.language", "response": "Executing language."}}
+{"instruction": "#event system.configure.language.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command phal", "input": "", "output": {"command": "system.factory.reset.phal", "response": "Executing phal."}}
+{"instruction": "#event system.factory.reset.phal.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to phal", "input": "", "output": {"command": "system.factory.reset.phal", "response": "Executing phal."}}
+{"instruction": "#event system.factory.reset.phal.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command sync", "input": "", "output": {"command": "system.ntp.sync", "response": "Executing sync."}}
+{"instruction": "#event system.ntp.sync.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to sync", "input": "", "output": {"command": "system.ntp.sync", "response": "Executing sync."}}
+{"instruction": "#event system.ntp.sync.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command restart", "input": "", "output": {"command": "system.ovos.service.restart", "response": "Executing restart."}}
+{"instruction": "#event system.ovos.service.restart.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to restart", "input": "", "output": {"command": "system.ovos.service.restart", "response": "Executing restart."}}
+{"instruction": "#event system.ovos.service.restart.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command reboot", "input": "", "output": {"command": "system.reboot", "response": "Executing reboot."}}
+{"instruction": "#event system.reboot.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to reboot", "input": "", "output": {"command": "system.reboot", "response": "Executing reboot."}}
+{"instruction": "#event system.reboot.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command {", "input": "", "output": {"command": "{", "response": "Executing {."}}
+{"instruction": "#event {.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command triggered\",", "input": "", "output": {"command": "\"type\": \"ovos.events.triggered\",", "response": "Executing triggered\",."}}
+{"instruction": "#event \"type\": \"ovos.events.triggered\",.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command \"namespace\": \"ovos gui plugin shell companion\",", "input": "", "output": {"command": "\"namespace\": \"ovos_gui_plugin_shell_companion\",", "response": "Executing \"namespace\": \"ovos gui plugin shell companion\",."}}
+{"instruction": "#event \"namespace\": \"ovos_gui_plugin_shell_companion\",.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command \"event name\": MSG TYPE,", "input": "", "output": {"command": "\"event_name\": MSG_TYPE,", "response": "Executing \"event name\": MSG TYPE,."}}
+{"instruction": "#event \"event_name\": MSG_TYPE,.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command \"data\": {}", "input": "", "output": {"command": "\"data\": {}", "response": "Executing \"data\": {}."}}
+{"instruction": "#event \"data\": {}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command }", "input": "", "output": {"command": "}", "response": "Executing }."}}
+{"instruction": "#event }.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command get response", "input": "", "output": {"command": "{self.skill_id}.converse.get_response", "response": "Executing get response."}}
+{"instruction": "#event {self.skill_id}.converse.get_response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command idle (1)", "input": "", "output": {"command": "{self.skill_id}.idle", "response": "Executing idle."}}
+{"instruction": "#event {self.skill_id}.idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "I need you to idle", "input": "", "output": {"command": "{self.skill_id}.idle", "response": "Executing idle."}}
+{"instruction": "#event {self.skill_id}.idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Execute command public api", "input": "", "output": {"command": "{self.skill_id}.public_api", "response": "Executing public api."}}
+{"instruction": "#event {self.skill_id}.public_api.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please page interaction", "input": "", "output": {"command": "gui.page_interaction", "response": "Executing page interaction."}}
+{"instruction": "#event gui.page_interaction.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please munged id", "input": "", "output": {"command": "oauth.token.response.munged_id", "response": "Executing munged id."}}
+{"instruction": "#event oauth.token.response.munged_id.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please {munged id}", "input": "", "output": {"command": "oauth.token.response.{munged_id}", "response": "Executing {munged id}."}}
+{"instruction": "#event oauth.token.response.{munged_id}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please internet check", "input": "", "output": {"command": "ovos.PHAL.internet_check", "response": "Executing internet check."}}
+{"instruction": "#event ovos.PHAL.internet_check.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please is speaking", "input": "", "output": {"command": "ovos.audio.is_speaking", "response": "Executing is speaking."}}
+{"instruction": "#event ovos.audio.is_speaking.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please queue end", "input": "", "output": {"command": "ovos.audio.queue_end", "response": "Executing queue end."}}
+{"instruction": "#event ovos.audio.queue_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please list backends", "input": "", "output": {"command": "ovos.audio.service.list_backends", "response": "Executing list backends."}}
+{"instruction": "#event ovos.audio.service.list_backends.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please track info", "input": "", "output": {"command": "ovos.audio.service.track_info", "response": "Executing track info."}}
+{"instruction": "#event ovos.audio.service.track_info.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please search end", "input": "", "output": {"command": "ovos.common_play.skill.search_end", "response": "Executing search end."}}
+{"instruction": "#event ovos.common_play.skill.search_end.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please search start", "input": "", "output": {"command": "ovos.common_play.skill.search_start", "response": "Executing search start."}}
+{"instruction": "#event ovos.common_play.skill.search_start.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please collect idle", "input": "", "output": {"command": "ovos.mark2.collect_idle", "response": "Executing collect idle."}}
+{"instruction": "#event ovos.mark2.collect_idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please register idle", "input": "", "output": {"command": "ovos.mark2.register_idle", "response": "Executing register idle."}}
+{"instruction": "#event ovos.mark2.register_idle.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please get status", "input": "", "output": {"command": "ovos.mic.get_status", "response": "Executing get status."}}
+{"instruction": "#event ovos.mic.get_status.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please check connected", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.check_connected", "response": "Executing check connected."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.check_connected.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please query media", "input": "", "output": {"command": "ovos.phal.plugin.homeassistant.integration.query_media", "response": "Executing query media."}}
+{"instruction": "#event ovos.phal.plugin.homeassistant.integration.query_media.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please disable intent", "input": "", "output": {"command": "ovos.skill.disable_intent", "response": "Executing disable intent."}}
+{"instruction": "#event ovos.skill.disable_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please enable intent", "input": "", "output": {"command": "ovos.skill.enable_intent", "response": "Executing enable intent."}}
+{"instruction": "#event ovos.skill.enable_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please abort question", "input": "", "output": {"command": "ovos.skills.abort_question", "response": "Executing abort question."}}
+{"instruction": "#event ovos.skills.abort_question.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please skill id", "input": "", "output": {"command": "ovos.skills.fallback.skill_id", "response": "Executing skill id."}}
+{"instruction": "#event ovos.skills.fallback.skill_id.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please is ready", "input": "", "output": {"command": "ovos.skills.is_ready", "response": "Executing is ready."}}
+{"instruction": "#event ovos.skills.is_ready.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please loading failure", "input": "", "output": {"command": "ovos.skills.loading_failure", "response": "Executing loading failure."}}
+{"instruction": "#event ovos.skills.loading_failure.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please settings changed", "input": "", "output": {"command": "ovos.skills.settings_changed", "response": "Executing settings changed."}}
+{"instruction": "#event ovos.skills.settings_changed.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please padatious:register entity", "input": "", "output": {"command": "padatious:register_entity", "response": "Executing padatious:register entity."}}
+{"instruction": "#event padatious:register_entity.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please padatious:register intent", "input": "", "output": {"command": "padatious:register_intent", "response": "Executing padatious:register intent."}}
+{"instruction": "#event padatious:register_intent.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please question:action", "input": "", "output": {"command": "question:action", "response": "Executing question:action."}}
+{"instruction": "#event question:action.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please question:query", "input": "", "output": {"command": "question:query", "response": "Executing question:query."}}
+{"instruction": "#event question:query.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:hotword", "input": "", "output": {"command": "recognizer_loop:hotword", "response": "Executing recognizer loop:hotword."}}
+{"instruction": "#event recognizer_loop:hotword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:sleep", "input": "", "output": {"command": "recognizer_loop:sleep", "response": "Executing recognizer loop:sleep."}}
+{"instruction": "#event recognizer_loop:sleep.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:state", "input": "", "output": {"command": "recognizer_loop:state", "response": "Executing recognizer loop:state."}}
+{"instruction": "#event recognizer_loop:state.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:stopword", "input": "", "output": {"command": "recognizer_loop:stopword", "response": "Executing recognizer loop:stopword."}}
+{"instruction": "#event recognizer_loop:stopword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:utterance", "input": "", "output": {"command": "recognizer_loop:utterance", "response": "Executing recognizer loop:utterance."}}
+{"instruction": "#event recognizer_loop:utterance.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:wakeupword", "input": "", "output": {"command": "recognizer_loop:wakeupword", "response": "Executing recognizer loop:wakeupword."}}
+{"instruction": "#event recognizer_loop:wakeupword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please recognizer loop:wakeword", "input": "", "output": {"command": "recognizer_loop:wakeword", "response": "Executing recognizer loop:wakeword."}}
+{"instruction": "#event recognizer_loop:wakeword.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please {", "input": "", "output": {"command": "{", "response": "Executing {."}}
+{"instruction": "#event {.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please triggered\",", "input": "", "output": {"command": "\"type\": \"ovos.events.triggered\",", "response": "Executing triggered\",."}}
+{"instruction": "#event \"type\": \"ovos.events.triggered\",.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please \"data\": {}", "input": "", "output": {"command": "\"data\": {}", "response": "Executing \"data\": {}."}}
+{"instruction": "#event \"data\": {}.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please }", "input": "", "output": {"command": "}", "response": "Executing }."}}
+{"instruction": "#event }.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please get response", "input": "", "output": {"command": "{self.skill_id}.converse.get_response", "response": "Executing get response."}}
+{"instruction": "#event {self.skill_id}.converse.get_response.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please public api", "input": "", "output": {"command": "{self.skill_id}.public_api", "response": "Executing public api."}}
+{"instruction": "#event {self.skill_id}.public_api.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please \"namespace\": \"ovos gui plugin shell companion\",", "input": "", "output": {"command": "\"namespace\": \"ovos_gui_plugin_shell_companion\",", "response": "Executing \"namespace\": \"ovos gui plugin shell companion\",."}}
+{"instruction": "#event \"namespace\": \"ovos_gui_plugin_shell_companion\",.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
+{"instruction": "Please \"event name\": MSG TYPE,", "input": "", "output": {"command": "\"event_name\": MSG_TYPE,", "response": "Executing \"event name\": MSG TYPE,."}}
+{"instruction": "#event \"event_name\": MSG_TYPE,.result", "input": "{}", "output": {"command": "speak", "response": "Done."}}
