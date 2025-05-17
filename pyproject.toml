@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "grace"
+version = "0.1.0"
+description = "Offline AI assistant"
+authors = [{name = "Adam Marzello"}]
+requires-python = ">=3.12"
+
+[tool.setuptools.packages.find]
+where = ["src"]          # look only inside src/
+include = ["grace*"]     # packages that start with grace

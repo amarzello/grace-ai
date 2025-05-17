@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: grace
+Version: 0.1.0
+Summary: Offline AI assistant
+Author: Adam Marzello
+Requires-Python: >=3.12
