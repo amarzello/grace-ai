@@ -25,4 +25,10 @@ DEFAULT_CONFIG = {
             "password": "neo4j",
         },
     },
+    "embedder": {
+        "provider": "local",
+        "config": {
+            "model": "all-MiniLM-L6-v2"  # Or specify path to local model
+        }
+    }
 }

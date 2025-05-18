@@ -8,6 +8,21 @@ from typing import Dict, List, Any, Optional
 # Import mem0 for vector memory management
 from mem0 import AsyncMemory
 from grace.config.mem0_config import DEFAULT_CONFIG as MEM0_CFG
+from qdrant_client import QdrantClient, AsyncQdrantClient, models
+
+# Initialize both sync and async clients
+qdrant_client = QdrantClient(
+    host=config.get('qdrant_host', 'localhost'),
+    port=config.get('qdrant_port', 6333),
+    prefer_grpc=True
+)
+async_qdrant_client = AsyncQdrantClient(
+    host=config.get('qdrant_host', 'localhost'),
+    port=config.get('qdrant_port', 6333),
+    prefer_grpc=True
+)
+
+
 
 # Create a logger
 logger = logging.getLogger('grace.memory.vector')
@@ -32,10 +47,16 @@ class VectorStorage:
         self.config = config
         self.mem0_config = config.get('mem0', MEM0_CFG)
         
-        # Initialize memory with appropriate configuration
-        self.mem = AsyncMemory.from_config(self.mem0_config)
-        self.logger.info("Vector storage initialized with mem0")
-    
+        try:
+            # Initialize memory with appropriate configuration
+            self.mem = Memory.from_config(self.mem0_config)
+            self.async_mem = AsyncMemory.from_config(self.mem0_config)
+            self.logger.info("Vector storage initialized with mem0")
+        except Exception as e:
+            self.logger.error(f"Failed to initialize mem0: {e}")
+            self.mem = None
+            self.async_mem = None
+
     async def add_memory(self, content: str, memory_type: Any = None, 
                         user_id: str = "default", metadata: Dict = None,
                         encoding: Dict = None) -> str:
