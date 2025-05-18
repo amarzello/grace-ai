@@ -13,7 +13,7 @@ from typing import Dict, Any, Optional, List, Tuple, Union
 from pathlib import Path
 
 # Import utilities
-from grace.utils.common import estimate_tokens
+from grace.utils.token_utils import estimate_tokens
 
 # Try to import llama-cpp-python
 try:

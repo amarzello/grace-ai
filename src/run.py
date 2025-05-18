@@ -21,7 +21,7 @@ if script_dir not in sys.path:
 # Import Grace modules
 from grace.utils.common import setup_logging, load_config
 from grace.memory.core import MemorySystem
-from grace.language_model import LlamaWrapper
+from grace.llm.language_model import LlamaWrapper
 from grace.audio.audio_system import AudioSystem
 from grace.ovos import OVOSInterface
 from grace.orchestrator import SystemOrchestrator  # New central orchestrator
