@@ -3,6 +3,7 @@ src/grace.egg-info/PKG-INFO
 src/grace.egg-info/SOURCES.txt
 src/grace.egg-info/dependency_links.txt
 src/grace.egg-info/top_level.txt
+src/grace/orchestrator.py
 src/grace/audio/__init__.py
 src/grace/audio/audio_input.py
 src/grace/audio/audio_output.py

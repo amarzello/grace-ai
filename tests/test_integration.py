@@ -66,7 +66,7 @@ class IntegrationTest(BaseTest):
         memory_system = MemorySystem(self.test_config)
         
         # Import language model with a mock
-        from grace.language_model import LlamaWrapper
+        from grace.llm.language_model import LlamaWrapper
         
         # Create a minimal config for the language model
         language_model_config = self.test_config.copy()

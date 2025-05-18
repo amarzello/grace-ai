@@ -23,15 +23,15 @@ from datetime import datetime
 from typing import Dict, List, Optional, Tuple, Union, Any
 
 # Import components
-from utils import (
+from grace.utils.common import (
     setup_logging, load_config, ConversationEntry, check_required_dependencies,
     GRACE_HOME, MEMORY_DB_PATH, LOGS_PATH, CONFIG_PATH, MODELS_PATH, REFERENCE_PATH,
     MemoryType, get_memory_system_status_dashboard
 )
-from memory_system import EnhancedMemorySystem
-from language_model import LlamaWrapper
-from audio_system import AudioSystem
-from ovos_integration import OVOSInterface
+from grace.memory.core import EnhancedMemorySystem
+from grace.llm.language_model import LlamaWrapper
+from grace.audio.audio_system import AudioSystem
+from grace.ovos.ovos_integration import OVOSInterface
 
 
 class GraceSystem:
