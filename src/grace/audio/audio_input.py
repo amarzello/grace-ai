@@ -1,17 +1,21 @@
 """
 Grace AI System - Audio Input Module
 
-This module handles microphone input and recording functionality for the Grace AI system.
+This module handles microphone input and recording functionality with improved
+resource management and Voice Activity Detection (VAD).
 """
 
 import logging
 import time
 import queue
 import threading
+import socket
+import os
 import numpy as np
 import sys
 from pathlib import Path
 from typing import Dict, Optional, Tuple, Union, List
+from contextlib import contextmanager
 
 # Try to import optional audio dependencies
 try:
@@ -39,6 +43,7 @@ class AudioInput:
     - Direct microphone input with configurable parameters
     - Voice Activity Detection (VAD) for better speech recognition
     - Thread-safe audio recording and processing
+    - Proper resource management and cleanup
     """
     
     def __init__(self, config: Dict):
@@ -54,7 +59,7 @@ class AudioInput:
         # Initialize components
         self.vad = None
         self.audio_stream = None
-        self.audio_queue = queue.Queue()
+        self.audio_queue = queue.Queue(maxsize=100)  # Bounded queue to prevent memory issues
         self.recording = False
         self.recording_lock = threading.RLock()  # Use RLock to prevent deadlocks
         
@@ -66,11 +71,15 @@ class AudioInput:
         self.stream_sample_rate = self.audio_config.get('sample_rate', 16000)
         self.stream_channels = self.audio_config.get('channels', 1)
         
+        # Register cleanup for process exit
+        import atexit
+        atexit.register(self.stop)
+        
         # Initialize VAD if available
         self._init_vad()
     
     def _init_vad(self):
-        """Initialize Voice Activity Detection."""
+        """Initialize Voice Activity Detection with proper error handling."""
         if not WEBRTCVAD_AVAILABLE:
             self.logger.warning("webrtcvad not available. Install with: pip install webrtcvad")
             return
@@ -85,7 +94,7 @@ class AudioInput:
     
     def start_listening(self) -> bool:
         """
-        Start listening for audio input with Voice Activity Detection.
+        Start listening for audio input with Voice Activity Detection and improved resource management.
         
         Returns:
             Success status
@@ -115,7 +124,10 @@ class AudioInput:
             try:
                 # Clear any existing audio in the queue
                 while not self.audio_queue.empty():
-                    self.audio_queue.get_nowait()
+                    try:
+                        self.audio_queue.get_nowait()
+                    except Exception:
+                        break
                     
                 # Set up audio parameters
                 sample_rate = self.audio_config.get('sample_rate', 16000)
@@ -123,6 +135,7 @@ class AudioInput:
                 self.stream_sample_rate = sample_rate
                 self.stream_channels = channels
                 
+                # Create callback with proper VAD integration
                 def audio_callback(indata, frames, time_info, status):
                     """Callback for sounddevice stream to process incoming audio."""
                     if status:
@@ -135,23 +148,31 @@ class AudioInput:
                     if self.vad and WEBRTCVAD_AVAILABLE:
                         # VAD works on specific frame sizes (10, 20, or 30ms)
                         frame_duration_ms = 30
-                        frame_size = int(sample_rate * frame_duration_ms / 1000)
-                        if frame_size not in (160, 320, 480):  # WebRTC VAD requires these sizes
-                            raise ValueError(
-                                f"Invalid frame size {frame_size}; choose 10/20/30 ms at 16 kHz.")
+                        frame_size = int(sample_rate * frame_duration_ms / 1000) * 2  # 2 bytes per sample
+                        
+                        # Validate frame size for WebRTC VAD
+                        valid_frame_sizes = [320, 480, 640, 960, 1280, 1920]  # Valid sizes for different sample rates
+                        if frame_size not in valid_frame_sizes:
+                            # Adjust to nearest valid size
+                            frame_size = min(valid_frame_sizes, key=lambda x: abs(x - frame_size))
                         
                         # Process in VAD-compatible chunks
                         for i in range(0, len(audio_data), frame_size):
                             if i + frame_size <= len(audio_data):
-                                frame = audio_data[i:i+frame_size].tobytes()
+                                chunk = audio_data[i:i+frame_size].copy()
+                                frame = chunk.tobytes()
                                 try:
                                     if self.vad.is_speech(frame, sample_rate):
                                         # Only add if it's speech
                                         try:
-                                            self.audio_queue.put_nowait(audio_data[i:i+frame_size].copy())  # bounded buffer
+                                            self.audio_queue.put_nowait(chunk)
                                         except queue.Full:
-                                            _ = self.audio_queue.get_nowait()
-                                            self.audio_queue.put_nowait(audio_data[i:i+frame_size].copy())
+                                            # Remove oldest item if queue is full
+                                            try:
+                                                self.audio_queue.get_nowait()
+                                                self.audio_queue.put_nowait(chunk)
+                                            except Exception:
+                                                pass
                                 except Exception as e:
                                     self.logger.debug(f"VAD error: {e}")
                             # Handle the remaining incomplete chunk if any
@@ -164,28 +185,30 @@ class AudioInput:
                                     if self.vad.is_speech(frame, sample_rate):
                                         # Only add the actual data, not the padding
                                         try:
-                                            self.audio_queue.put_nowait(audio_data[i:].copy())  # bounded buffer
-                                        except queue.Full:
-                                            _ = self.audio_queue.get_nowait()
                                             self.audio_queue.put_nowait(audio_data[i:].copy())
+                                        except queue.Full:
+                                            # Remove oldest item if queue is full
+                                            try:
+                                                self.audio_queue.get_nowait()
+                                                self.audio_queue.put_nowait(audio_data[i:].copy())
+                                            except Exception:
+                                                pass
                                 except Exception as e:
                                     self.logger.debug(f"VAD error on last chunk: {e}")
                     else:
                         # Without VAD, add all audio
                         try:
-                            self.audio_queue.put_nowait(audio_data.copy())  # bounded buffer
-                        except queue.Full:
-                            _ = self.audio_queue.get_nowait()
                             self.audio_queue.put_nowait(audio_data.copy())
+                        except queue.Full:
+                            # Remove oldest item if queue is full
+                            try:
+                                self.audio_queue.get_nowait()
+                                self.audio_queue.put_nowait(audio_data.copy())
+                            except Exception:
+                                pass
                 
-                # First close any existing stream
-                if self.audio_stream:
-                    try:
-                        self.audio_stream.stop()
-                        self.audio_stream.close()
-                        self.audio_stream = None
-                    except Exception as e:
-                        self.logger.warning(f"Error closing existing audio stream: {e}")
+                # Clean up any existing stream first
+                self._cleanup_stream()
                 
                 # Check if we can get a device list before starting the stream
                 try:
@@ -205,15 +228,20 @@ class AudioInput:
                         except Exception as e:
                             self.logger.warning(f"Error finding default input device: {e}")
                     
-                    # Start the audio stream with the selected device
+                    # Start the audio stream with the selected device and blocksize
                     try:
+                        # Calculate appropriate blocksize for VAD
+                        frame_duration_ms = 30  # 30ms frames for VAD
+                        blocksize = int(sample_rate * frame_duration_ms / 1000)
+                        
                         self.audio_stream = sd.InputStream(
                             device=input_device,
                             samplerate=sample_rate,
                             channels=channels,
                             dtype='float32',
                             callback=audio_callback,
-                            blocksize=int(sample_rate * 0.03)  # 30ms blocks for VAD
+                            blocksize=blocksize,
+                            latency='low'  # Lower latency for better responsiveness
                         )
                     except Exception as e:
                         self.logger.warning(f"Error creating audio stream with device {input_device}: {e}")
@@ -223,21 +251,25 @@ class AudioInput:
                             channels=channels,
                             dtype='float32',
                             callback=audio_callback,
-                            blocksize=int(sample_rate * 0.03)  # 30ms blocks for VAD
+                            blocksize=blocksize,
+                            latency='low'
                         )
                     
                 except Exception as e:
                     self.logger.warning(f"Error querying audio devices: {e}")
-                    # Fall back to default device
+                    # Fall back to default device with minimal configuration
+                    frame_duration_ms = 30  # 30ms frames for VAD
+                    blocksize = int(sample_rate * frame_duration_ms / 1000)
+                    
                     self.audio_stream = sd.InputStream(
                         samplerate=sample_rate,
                         channels=channels,
                         dtype='float32',
                         callback=audio_callback,
-                        blocksize=int(sample_rate * 0.03)  # 30ms blocks for VAD
+                        blocksize=blocksize
                     )
                 
-                # Start the audio stream
+                # Start the audio stream with proper error handling
                 self.audio_stream.start()
                 self.recording = True
                 self.last_startup_time = time.time()
@@ -250,31 +282,37 @@ class AudioInput:
                 self.last_mic_error = str(e)
                 
                 # Clean up any partially initialized stream
-                if self.audio_stream:
-                    try:
-                        self.audio_stream.stop()
-                        self.audio_stream.close()
-                    except Exception:
-                        pass
-                    self.audio_stream = None
+                self._cleanup_stream()
                 
                 self.recording = False
                 return False
     
+    def _cleanup_stream(self):
+        """Clean up audio stream with proper resource management."""
+        if self.audio_stream:
+            try:
+                if self.audio_stream.active:
+                    self.audio_stream.stop()
+                self.audio_stream.close()
+            except Exception as e:
+                self.logger.warning(f"Error closing audio stream: {e}")
+            finally:
+                self.audio_stream = None
+    
     def stop_listening(self):
-        """Stop listening for audio input."""
+        """Stop listening for audio input with proper resource cleanup."""
         with self.recording_lock:
             self.recording = False
+            self._cleanup_stream()
             
-            stream = self.audio_stream
-            if stream:
+            # Clear the audio queue
+            while not self.audio_queue.empty():
                 try:
-                    stream.stop()
-                    stream.close()
-                    self.audio_stream = None
-                    self.logger.info("Stopped listening for audio input")
-                except Exception as e:
-                    self.logger.error(f"Error stopping audio stream: {e}")
+                    self.audio_queue.get_nowait()
+                except Exception:
+                    break
+                    
+            self.logger.info("Stopped listening for audio input")
     
     def listen_for_command(self, timeout: float = 5.0, silence_timeout: float = 1.0) -> Optional[np.ndarray]:
         """
@@ -296,7 +334,6 @@ class AudioInput:
         audio_chunks = []
         last_audio_time = time.time()
         start_time = time.time()
-        silence_threshold = self.audio_config.get('silence_threshold', 0.1)
         
         # Display a listening indicator if in interactive mode
         is_interactive = False
@@ -401,9 +438,9 @@ class AudioInput:
         self.logger.info("Shutting down audio input system")
         self.stop_listening()
         
-        # Clear the audio queue
+        # Force garbage collection to free resources
         try:
-            while not self.audio_queue.empty():
-                self.audio_queue.get_nowait()
+            import gc
+            gc.collect()
         except Exception:
             pass

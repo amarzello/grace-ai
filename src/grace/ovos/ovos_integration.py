@@ -1,7 +1,8 @@
 """
-Grace AI System - OpenVoiceOS Integration
+Grace AI System - OVOS Integration
 
-This module integrates Grace AI with OpenVoiceOS through messagebus communication.
+This module integrates Grace AI with OpenVoiceOS through messagebus communication
+with improved thread safety and connection handling.
 """
 
 import logging
@@ -20,10 +21,11 @@ from .ovos_message import OVOSMessage
 
 class OVOSInterface:
     """
-    OpenVoiceOS integration for the Grace AI system.
+    OpenVoiceOS integration for the Grace AI system with improved thread safety.
     
     This class coordinates the different components needed for OVOS integration,
-    providing a unified interface for interaction with OpenVoiceOS.
+    providing a unified interface for interaction with OpenVoiceOS with proper
+    resource management and error handling.
     """
     
     def __init__(self, config: Dict):
@@ -46,7 +48,7 @@ class OVOSInterface:
             self.commands = None
             return
             
-        # Initialize components
+        # Initialize components with proper error handling
         self.client = OVOSClient(config)
         self.message = OVOSMessage()
         
@@ -61,6 +63,9 @@ class OVOSInterface:
             self.handlers = None
             self.commands = None
             
+        # Use locks for thread-safe operations
+        self.lock = threading.RLock()
+        
         # Track OVOS ready state
         self.is_ready = False
         self.setup_complete = threading.Event()
@@ -70,27 +75,31 @@ class OVOSInterface:
             self._initialize()
             
         # Callback registry for external components to receive OVOS events
+        # with lock protection for thread safety
         self.callbacks = {}
+        self.callback_lock = threading.RLock()
     
     def _initialize(self):
-        """Initialize OVOS interface by gathering system information."""
+        """Initialize OVOS interface by gathering system information with proper error handling."""
         # Setup ready flag
         self.is_ready = False
         self.setup_complete.clear()
         
         def on_system_ready(message):
-            """Handle system ready message."""
-            self.logger.info("OVOS system is ready")
-            self.is_ready = True
-            self.setup_complete.set()
-            
-            # Trigger any registered callbacks
-            if 'system_ready' in self.callbacks:
-                for callback in self.callbacks['system_ready']:
-                    try:
-                        callback(message)
-                    except Exception as e:
-                        self.logger.error(f"Error in system_ready callback: {e}")
+            """Handle system ready message with thread safety."""
+            with self.lock:
+                self.logger.info("OVOS system is ready")
+                self.is_ready = True
+                self.setup_complete.set()
+                
+                # Trigger any registered callbacks with proper thread safety
+                with self.callback_lock:
+                    if 'system_ready' in self.callbacks:
+                        for callback in self.callbacks['system_ready']:
+                            try:
+                                callback(message)
+                            except Exception as e:
+                                self.logger.error(f"Error in system_ready callback: {e}")
             
         # Register for system ready message
         if self.handlers:
@@ -106,35 +115,38 @@ class OVOSInterface:
         setup_thread.start()
     
     def _wait_for_setup_completion(self):
-        """Wait for OVOS setup to complete."""
+        """Wait for OVOS setup to complete with timeout."""
         # Wait up to 30 seconds for setup to complete
         if self.setup_complete.wait(timeout=30):
             self.logger.info("OVOS interface initialization complete")
         else:
             self.logger.warning("OVOS interface initialization timed out, continuing without full setup")
             # Set ready state even though we timed out
-            self.is_ready = True
+            with self.lock:
+                self.is_ready = True
     
     def _on_skills_initialized(self, message):
-        """Handle skills initialized message."""
-        self.logger.info("OVOS skills are initialized")
-        
-        # Update ready status
-        if not self.is_ready:
-            self.is_ready = True
-            self.setup_complete.set()
+        """Handle skills initialized message with proper thread safety."""
+        with self.lock:
+            self.logger.info("OVOS skills are initialized")
             
-        # Trigger any registered callbacks
-        if 'skills_initialized' in self.callbacks:
-            for callback in self.callbacks['skills_initialized']:
-                try:
-                    callback(message)
-                except Exception as e:
-                    self.logger.error(f"Error in skills_initialized callback: {e}")
+            # Update ready status
+            if not self.is_ready:
+                self.is_ready = True
+                self.setup_complete.set()
+                
+            # Trigger any registered callbacks with proper thread safety
+            with self.callback_lock:
+                if 'skills_initialized' in self.callbacks:
+                    for callback in self.callbacks['skills_initialized']:
+                        try:
+                            callback(message)
+                        except Exception as e:
+                            self.logger.error(f"Error in skills_initialized callback: {e}")
     
     def wait_for_ready(self, timeout: float = 10.0) -> bool:
         """
-        Wait for OVOS interface to be ready.
+        Wait for OVOS interface to be ready with proper timeout handling.
         
         Args:
             timeout: Maximum wait time in seconds
@@ -175,7 +187,7 @@ class OVOSInterface:
     
     def send_message(self, message_type: str, data: Dict = None) -> bool:
         """
-        Send message to OVOS messagebus.
+        Send message to OVOS messagebus with improved error handling.
         
         Args:
             message_type: Type of message to send
@@ -191,7 +203,7 @@ class OVOSInterface:
     
     def send_utterance(self, utterance: str) -> bool:
         """
-        Send an utterance for intent processing.
+        Send an utterance for intent processing with improved error handling.
         
         Args:
             utterance: Utterance text
@@ -225,7 +237,7 @@ class OVOSInterface:
     
     def execute_command(self, command: Dict) -> bool:
         """
-        Execute an OVOS command.
+        Execute an OVOS command with improved error handling and thread safety.
         
         Args:
             command: Command dictionary with 'type' and 'data'
@@ -302,7 +314,7 @@ class OVOSInterface:
     
     def register_callback(self, event: str, callback: Callable) -> bool:
         """
-        Register a callback for an event.
+        Register a callback for an event with improved thread safety.
         
         Args:
             event: Event name
@@ -311,22 +323,20 @@ class OVOSInterface:
         Returns:
             Success status
         """
-        if not self.is_connected() or not self.handlers:
-            # Store callback for when we reconnect
+        with self.callback_lock:
+            # Store callback in local registry for reconnect scenarios
             if event not in self.callbacks:
                 self.callbacks[event] = []
-            self.callbacks[event].append(callback)
-            return False
             
-        # Register with handlers
-        success = self.handlers.register_callback(event, callback)
-        
-        # Also store locally for reconnect scenarios
-        if event not in self.callbacks:
-            self.callbacks[event] = []
-        self.callbacks[event].append(callback)
-        
-        return success
+            # Avoid duplicate callbacks
+            if callback not in self.callbacks[event]:
+                self.callbacks[event].append(callback)
+            
+            # Register with handlers if connected
+            if self.is_connected() and self.handlers:
+                return self.handlers.register_callback(event, callback)
+                
+            return True
     
     def handle_fallback_intent(self, utterance: str) -> Dict:
         """
@@ -430,20 +440,22 @@ class OVOSInterface:
         
         # If reconnected, reinitialize handlers and commands
         if success:
-            self.handlers = OVOSHandlers(self.client)
-            self.commands = OVOSCommands(self.client)
-            
-            # Register default handlers
-            self.handlers.register_default_handlers()
-            
-            # Register stored callbacks
-            for event, callbacks in self.callbacks.items():
-                for callback in callbacks:
-                    if self.handlers:
-                        self.handlers.register_callback(event, callback)
-            
-            # Restart initialization
-            self._initialize()
+            with self.lock:
+                self.handlers = OVOSHandlers(self.client)
+                self.commands = OVOSCommands(self.client)
+                
+                # Register default handlers
+                self.handlers.register_default_handlers()
+                
+                # Register stored callbacks with thread safety
+                with self.callback_lock:
+                    for event, callbacks in self.callbacks.items():
+                        for callback in callbacks:
+                            if self.handlers:
+                                self.handlers.register_callback(event, callback)
+                
+                # Restart initialization
+                self._initialize()
             
         return success
     
@@ -459,9 +471,24 @@ class OVOSInterface:
         return await loop.run_in_executor(None, self.reset_connection)
     
     def shutdown(self):
-        """Clean shutdown of OVOS interface."""
+        """Clean shutdown of OVOS interface with proper resource management."""
         self.logger.info("Shutting down OVOS interface")
         
-        # Clean shutdown of client
-        if self.client:
-            self.client.shutdown()
+        with self.lock:
+            # Clear event
+            self.setup_complete.clear()
+            
+            # Set not ready
+            self.is_ready = False
+            
+            # Clean shutdown of client
+            if self.client:
+                self.client.shutdown()
+                
+            # Clear handlers and commands
+            self.handlers = None
+            self.commands = None
+            
+            # Clear callbacks for good measure
+            with self.callback_lock:
+                self.callbacks.clear()

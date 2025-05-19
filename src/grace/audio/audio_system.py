@@ -1,14 +1,17 @@
 """
 Grace AI System - Audio System Module
 
-This module integrates the audio components for the Grace AI system.
+This module integrates the audio components with improved error handling
+and resource management.
 """
 
 import logging
 import time
 import asyncio
+import gc
 import numpy as np
 from typing import Dict, Optional, Tuple, Union, List
+from contextlib import asynccontextmanager
 
 # Import audio components
 from .audio_input import AudioInput
@@ -19,7 +22,7 @@ from .audio_utils import trim_silence, normalize_audio
 
 class AudioSystem:
     """
-    Integrated audio system for Grace AI.
+    Integrated audio system for Grace AI with proper resource management.
     
     This class combines audio input, output, and speech recognition
     to provide a complete audio interface for the Grace AI system.
@@ -44,14 +47,25 @@ class AudioSystem:
             self.input = None
             self.output = None
             self.recognizer = None
+            self.whisper_model = None
             return
         
         try:
             # Initialize components
             self.logger.info("Initializing audio components")
-            self.input = AudioInput(config)
+            
+            # Prioritize component initialization to minimize startup time
+            # Initialize output first, as it doesn't depend on other components
             self.output = AudioOutput(config)
+            
+            # Initialize input next, as it's needed for recording
+            self.input = AudioInput(config)
+            
+            # Initialize recognizer last, as it's the most resource-intensive
             self.recognizer = SpeechRecognizer(config)
+            
+            # Store whisper model reference for status checks
+            self.whisper_model = self.recognizer.whisper_model if self.recognizer else None
             
             self.logger.info("Audio system initialized")
         except Exception as e:
@@ -61,6 +75,7 @@ class AudioSystem:
             self.input = None
             self.output = None
             self.recognizer = None
+            self.whisper_model = None
     
     def start_listening(self) -> bool:
         """
@@ -213,6 +228,16 @@ class AudioSystem:
         from .audio_utils import get_device_list
         return get_device_list()
     
+    @asynccontextmanager
+    async def _timed_operation(self, operation_name: str, timeout: float = 5.0):
+        """Context manager for timing operations with timeout."""
+        start_time = time.time()
+        try:
+            yield
+        finally:
+            elapsed = time.time() - start_time
+            self.logger.debug(f"{operation_name} completed in {elapsed:.2f} seconds")
+    
     def get_status(self) -> Dict:
         """
         Get detailed status of the audio system.
@@ -268,27 +293,52 @@ class AudioSystem:
             status["recognition_ready"]
         ])
         
+        # Add memory information if torch is available
+        try:
+            import torch
+            if torch.cuda.is_available():
+                status["gpu_memory_allocated_gb"] = round(torch.cuda.memory_allocated() / (1024 ** 3), 2)
+                status["gpu_memory_reserved_gb"] = round(torch.cuda.memory_reserved() / (1024 ** 3), 2)
+                status["gpu_memory_max_gb"] = round(torch.cuda.get_device_properties(0).total_memory / (1024 ** 3), 2)
+        except Exception:
+            pass
+        
         return status
     
     def stop(self):
         """Stop all audio components and clean up resources."""
         self.logger.info("Shutting down audio system")
         
-        # Stop all components if they exist
+        # Stop components in reverse order to ensure proper cleanup
+        
+        # Stop input first to stop audio capture
         if self.input:
             try:
                 self.input.stop()
             except Exception as e:
                 self.logger.error(f"Error stopping audio input: {e}")
-                
+        
+        # Stop output next
         if self.output:
             try:
                 self.output.stop()
             except Exception as e:
                 self.logger.error(f"Error stopping audio output: {e}")
-                
+        
+        # Stop recognizer last as it might be using GPU resources
         if self.recognizer:
             try:
                 self.recognizer.stop()
             except Exception as e:
                 self.logger.error(f"Error stopping speech recognizer: {e}")
+        
+        # Force garbage collection to free resources
+        gc.collect()
+        
+        # Clear CUDA cache if torch is available
+        try:
+            import torch
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+        except Exception:
+            pass

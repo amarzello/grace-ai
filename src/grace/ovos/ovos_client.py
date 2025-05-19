@@ -1,7 +1,8 @@
 """
 Grace AI System - OVOS Client Module
 
-This module implements core client functionality for OpenVoiceOS messagebus integration.
+This module implements core client functionality for OpenVoiceOS messagebus integration
+with improved thread safety and connection handling.
 """
 
 import logging
@@ -11,6 +12,7 @@ import socket
 import os
 import json
 import asyncio
+import queue
 from typing import Dict, Optional, List, Any, Callable, Tuple
 from pathlib import Path
 
@@ -63,10 +65,11 @@ except ImportError:
 
 class OVOSClient:
     """
-    OpenVoiceOS messagebus client with improved connection handling.
+    OpenVoiceOS messagebus client with improved connection handling and thread safety.
     
     This class manages the connection to the OVOS messagebus and provides
-    methods for message transmission and reception.
+    methods for message transmission and reception with proper resource
+    management and error handling.
     """
     
     def __init__(self, config: Dict):
@@ -96,7 +99,11 @@ class OVOSClient:
         # Message queue for when connection is lost temporarily
         self.message_queue = []
         self.message_queue_limit = self.ovos_config.get('message_queue_limit', 100)
-        self.message_queue_lock = threading.Lock()
+        self.message_queue_lock = threading.RLock()
+        
+        # Handler registry for auto-reregistration after reconnection
+        self.handler_registry = {}
+        self.handler_lock = threading.RLock()
         
         # Initialize connection if not explicitly disabled
         if not self.ovos_config.get('disable_ovos', False):
@@ -196,6 +203,9 @@ class OVOSClient:
                                 # Update config with working port
                                 self.ovos_config['port'] = port
                                 
+                                # Re-register handlers
+                                self._reregister_handlers()
+                                
                                 # Process any queued messages
                                 self._process_message_queue()
                                 
@@ -288,6 +298,11 @@ class OVOSClient:
                     host = self.ovos_config.get('host', 'localhost')
                     port = self.ovos_config.get('port', 8181)
                     
+                    # Check if port is available
+                    if not self._check_port_available(host, port):
+                        self.logger.debug(f"Port {port} not available during reconnection")
+                        continue
+                    
                     # Clean up any existing client
                     if self.client:
                         try:
@@ -307,17 +322,26 @@ class OVOSClient:
                     
                     # Verify connection
                     start_time = time.time()
+                    connection_verified = False
                     while time.time() - start_time < 3:  # Reduced timeout for reconnect
                         if hasattr(self.client, 'connected') and self.client.connected:
                             self.connected = True
                             self.connection_status = "connected"
                             self.logger.info(f"Reconnected to OVOS messagebus after {reconnect_count} attempts")
                             
+                            # Re-register any handlers
+                            self._reregister_handlers()
+                            
                             # Process any queued messages
                             self._process_message_queue()
                             
-                            return
+                            connection_verified = True
+                            break
                         time.sleep(0.1)
+                        
+                    if connection_verified:
+                        # Successfully reconnected
+                        continue
                         
                     # Connection timed out
                     self.last_connection_error = "Reconnection timeout"
@@ -353,6 +377,20 @@ class OVOSClient:
             # Wait before retrying
             time.sleep(reconnect_delay)
             
+    def _reregister_handlers(self):
+        """Re-register all handlers after reconnection."""
+        with self.handler_lock:
+            if not self.handler_registry:
+                return
+                
+            self.logger.info(f"Re-registering {len(self.handler_registry)} message handlers")
+            
+            for message_type, handler in self.handler_registry.items():
+                try:
+                    self.client.on(message_type, handler)
+                except Exception as e:
+                    self.logger.error(f"Error re-registering handler for {message_type}: {e}")
+                    
     def _process_message_queue(self):
         """Process any messages that were queued during disconnection."""
         with self.message_queue_lock:
@@ -378,7 +416,7 @@ class OVOSClient:
     
     def register_handler(self, message_type: str, handler: Callable):
         """
-        Register a handler for a specific message type.
+        Register a handler for a specific message type with thread safety.
         
         Args:
             message_type: Type of message to handle
@@ -388,10 +426,19 @@ class OVOSClient:
             Success status
         """
         if not self.is_connected():
+            # Store handler for when connection is established
+            with self.handler_lock:
+                self.handler_registry[message_type] = handler
             return False
             
         try:
+            # Register handler with client
             self.client.on(message_type, handler)
+            
+            # Store in registry for reconnection
+            with self.handler_lock:
+                self.handler_registry[message_type] = handler
+                
             return True
         except Exception as e:
             self.logger.error(f"Failed to register handler for {message_type}: {e}")
@@ -427,7 +474,8 @@ class OVOSClient:
             "last_error": self.last_connection_error,
             "ovos_available": OVOS_AVAILABLE,
             "disabled": self.ovos_config.get('disable_ovos', False),
-            "queue_size": len(self.message_queue)
+            "queue_size": len(self.message_queue),
+            "registered_handlers": len(self.handler_registry)
         }
         
         # Add basic OVOS info
@@ -439,7 +487,7 @@ class OVOSClient:
         
     def send_message(self, message_type: str, data: Dict = None) -> bool:
         """
-        Send message to OVOS messagebus.
+        Send message to OVOS messagebus with improved error handling.
         
         Args:
             message_type: Type of message to send
@@ -499,7 +547,7 @@ class OVOSClient:
     def wait_for_response(self, message_type: str, data: Dict = None, 
                         response_type: str = None, timeout: int = 10) -> Optional[Message]:
         """
-        Send a message and wait for a response.
+        Send a message and wait for a response with improved error handling.
         
         Args:
             message_type: Type of message to send
@@ -594,7 +642,7 @@ class OVOSClient:
             return self.is_connected()
         
     def shutdown(self):
-        """Clean shutdown of OVOS client."""
+        """Clean shutdown of OVOS client with proper resource management."""
         self.logger.info("Shutting down OVOS client")
         
         # Stop reconnection thread
@@ -607,17 +655,18 @@ class OVOSClient:
             except Exception as e:
                 self.logger.debug(f"Error waiting for reconnect thread: {e}")
         
-        # Close client
-        if self.client:
-            try:
-                # Properly disconnect
-                if hasattr(self.client, 'close'):
-                    self.client.close()
-            except Exception as e:
-                self.logger.debug(f"Error closing OVOS client: {e}")
-                
-        self.client = None
-        self.connected = False
+        # Close client with proper thread safety
+        with self.connection_lock:
+            if self.client:
+                try:
+                    # Properly disconnect
+                    if hasattr(self.client, 'close'):
+                        self.client.close()
+                except Exception as e:
+                    self.logger.debug(f"Error closing OVOS client: {e}")
+                    
+            self.client = None
+            self.connected = False
         
         # Clear message queue
         with self.message_queue_lock:
@@ -625,3 +674,7 @@ class OVOSClient:
             if queue_size > 0:
                 self.logger.info(f"Clearing {queue_size} queued messages")
                 self.message_queue.clear()
+                
+        # Clear handler registry
+        with self.handler_lock:
+            self.handler_registry.clear()

@@ -1,7 +1,8 @@
 """
 Grace AI System - Audio Output Module
 
-This module implements text-to-speech functionality for the Grace AI system.
+This module implements text-to-speech functionality with improved resource
+management and robust error handling.
 """
 
 import logging
@@ -12,11 +13,13 @@ import threading
 import subprocess
 import shutil
 import asyncio
+import atexit
 from pathlib import Path
 from typing import Dict, Optional, Tuple, Union, List
+from contextlib import contextmanager
 
 # Import from Grace modules
-from grace.utils.paths import MODELS_PATH
+from grace.utils.common import MODELS_PATH
 
 
 class AudioOutput:
@@ -24,9 +27,10 @@ class AudioOutput:
     Audio output system for text-to-speech functionality.
     
     Features:
-    - Text-to-speech using piper
-    - Multiple fallback mechanisms
-    - Support for various audio players
+    - Text-to-speech using piper with proper resource management
+    - Multiple fallback mechanisms for robust operation
+    - Comprehensive error handling and logging
+    - Proper cleanup of resources
     """
     
     def __init__(self, config: Dict):
@@ -40,8 +44,9 @@ class AudioOutput:
         self.piper_config = config.get('piper', {})
         self.audio_config = config.get('audio', {})
         
-        # Initialize components
+        # Initialize components with proper resource tracking
         self.piper_process = None
+        self.active_processes = set()
         
         # Track failures for better error reporting
         self.last_tts_error = None
@@ -49,6 +54,12 @@ class AudioOutput:
         
         # Lock for thread safety
         self.piper_lock = threading.RLock()
+        
+        # Track temp files for cleanup
+        self.temp_files = set()
+        
+        # Register cleanup handler
+        atexit.register(self._cleanup_all_resources)
         
         # Create models directory if it doesn't exist
         MODELS_PATH.mkdir(parents=True, exist_ok=True)
@@ -153,6 +164,10 @@ class AudioOutput:
                     bufsize=0,  # Unbuffered for binary mode
                     universal_newlines=False  # Binary mode
                 )
+                
+                # Add to tracked processes
+                self.active_processes.add(self.piper_process)
+                
                 self.logger.info(f"Piper TTS started with model {model_path}")
                 return True
             except FileNotFoundError:
@@ -179,6 +194,9 @@ class AudioOutput:
                 except Exception as e:
                     self.logger.debug(f"Error cleaning up piper process: {e}")
                 finally:
+                    # Remove from tracked processes if it's there
+                    if self.piper_process in self.active_processes:
+                        self.active_processes.remove(self.piper_process)
                     self.piper_process = None
                 
     def speak_fallback(self, text: str) -> bool:
@@ -201,50 +219,79 @@ class AudioOutput:
                 self.last_tts_error = "No TTS fallbacks available"
                 return False
             
+            # Create a temporary file for the text
+            with tempfile.NamedTemporaryFile('w', suffix='.txt', delete=False) as f:
+                tmp_path = f.name
+                f.write(text)
+                # Track the temp file for cleanup
+                self.temp_files.add(tmp_path)
+            
             # Try to use system TTS via espeak or festival
             fallback_options = []
             
             if espeak_exists:
-                fallback_options.append(["espeak"])
+                fallback_options.append(["espeak", "-f", tmp_path])
                 
             if festival_exists:
-                fallback_options.append(["bash", "-c", f"cat {{tmp_path}} | festival --tts"])
+                fallback_options.append(["bash", "-c", f"cat {tmp_path} | festival --tts"])
                 
             for tts_cmd in fallback_options:
                 try:
-                    with tempfile.NamedTemporaryFile('w', suffix='.txt', delete=False) as f:
-                        tmp_path = f.name
-                        f.write(text)
-                    
-                    # Handle special case for festival shell commands
-                    if "festival" in tts_cmd[0]:
-                        cmd = ["bash", "-c", f"cat {tmp_path} | festival --tts"]
-                    else:
-                        cmd = tts_cmd + [tmp_path]
-                    
-                    result = subprocess.run(
-                        cmd,
+                    # Run with timeout based on text length
+                    process = subprocess.Popen(
+                        tts_cmd,
                         stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL,
-                        timeout=len(text) * 0.1 + 5  # Dynamic timeout based on text length
+                        stderr=subprocess.DEVNULL
                     )
+                    
+                    # Add to tracked processes
+                    self.active_processes.add(process)
+                    
+                    # Calculate a reasonable timeout based on text length
+                    timeout = min(30, max(5, len(text) * 0.1))
+                    
+                    # Wait for process to complete with timeout
+                    try:
+                        process.wait(timeout=timeout)
+                    except subprocess.TimeoutExpired:
+                        # Kill if it takes too long
+                        process.kill()
+                        process.wait()
                     
                     # Clean up temp file
                     try:
                         os.unlink(tmp_path)
+                        self.temp_files.remove(tmp_path)
                     except Exception:
                         pass
                     
-                    if result.returncode == 0:
+                    # Remove from tracked processes
+                    if process in self.active_processes:
+                        self.active_processes.remove(process)
+                    
+                    if process.returncode == 0:
                         self.logger.info(f"Used fallback TTS: {tts_cmd[0]}")
                         return True
                     
                 except (subprocess.SubprocessError, FileNotFoundError):
+                    # Remove from tracked processes if it's there
+                    if process in self.active_processes:
+                        self.active_processes.remove(process)
                     continue
                     
             # If all fallbacks failed
             self.logger.warning("All TTS fallbacks failed")
             self.last_tts_error = "All TTS fallbacks failed"
+            
+            # Clean up temp file if it still exists
+            try:
+                if os.path.exists(tmp_path):
+                    os.unlink(tmp_path)
+                    if tmp_path in self.temp_files:
+                        self.temp_files.remove(tmp_path)
+            except Exception:
+                pass
+                
             return False
             
         except Exception as e:
@@ -275,6 +322,9 @@ class AudioOutput:
             self.logger.warning("Failed to start piper, trying fallback TTS")
             return self.speak_fallback(text)
             
+        # Create a temp file for the audio data
+        tmp_path = None
+        
         try:
             # Make sure we can access piper_process safely
             with self.piper_lock:
@@ -328,6 +378,8 @@ class AudioOutput:
                 with tempfile.NamedTemporaryFile(suffix='.raw', delete=False) as tmp:
                     tmp_path = tmp.name
                     tmp.write(audio_data)
+                    # Track the temp file for cleanup
+                    self.temp_files.add(tmp_path)
                 
                 # Check for alternative audio players
                 player_commands = []
@@ -367,19 +419,46 @@ class AudioOutput:
                 for play_cmd in player_commands:
                     try:
                         self.logger.debug(f"Trying audio player: {play_cmd[0]}")
-                        subprocess.run(play_cmd, check=True, 
-                                    stdout=subprocess.DEVNULL, 
-                                    stderr=subprocess.DEVNULL,
-                                    timeout=len(text) * 0.1 + 3)  # Dynamic timeout based on text length
-                        success = True
-                        break
+                        
+                        process = subprocess.Popen(
+                            play_cmd,
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL
+                        )
+                        
+                        # Add to tracked processes
+                        self.active_processes.add(process)
+                        
+                        # Calculate a reasonable timeout based on text length
+                        timeout = min(30, max(5, len(text) * 0.1))
+                        
+                        # Wait for process to complete with timeout
+                        try:
+                            process.wait(timeout=timeout)
+                        except subprocess.TimeoutExpired:
+                            # Kill if it takes too long
+                            process.kill()
+                            process.wait()
+                        
+                        # Remove from tracked processes
+                        if process in self.active_processes:
+                            self.active_processes.remove(process)
+                        
+                        if process.returncode == 0:
+                            success = True
+                            break
                     except Exception as e:
                         self.logger.debug(f"Error with player {play_cmd[0]}: {e}")
+                        # Remove from tracked processes if it's there
+                        if process in self.active_processes:
+                            self.active_processes.remove(process)
                         continue
                 
                 # Clean up temp file
                 try:
                     os.unlink(tmp_path)
+                    if tmp_path in self.temp_files:
+                        self.temp_files.remove(tmp_path)
                 except Exception:
                     pass
                     
@@ -398,6 +477,16 @@ class AudioOutput:
         except Exception as e:
             self.logger.error(f"TTS error: {e}")
             self.last_tts_error = str(e)
+            
+            # Clean up temp file if it exists
+            if tmp_path:
+                try:
+                    os.unlink(tmp_path)
+                    if tmp_path in self.temp_files:
+                        self.temp_files.remove(tmp_path)
+                except Exception:
+                    pass
+                    
             # Try fallback if piper fails
             return self.speak_fallback(text)
     
@@ -412,7 +501,7 @@ class AudioOutput:
             Success status
         """
         # Run TTS in the thread pool
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, self.speak, text)
         
     def get_status(self) -> Dict:
@@ -426,7 +515,9 @@ class AudioOutput:
             "piper_process_running": False,
             "last_tts_error": self.last_tts_error,
             "mute": self.audio_config.get('mute', False),
-            "model_found": self.model_found
+            "model_found": self.model_found,
+            "active_processes": len(self.active_processes),
+            "temp_files": len(self.temp_files)
         }
         
         # Check if piper process is running
@@ -466,10 +557,43 @@ class AudioOutput:
         status["available_fallbacks"] = fallbacks
             
         return status
+    
+    def _cleanup_temp_files(self):
+        """Clean up any temporary files created."""
+        for tmp_file in list(self.temp_files):
+            try:
+                if os.path.exists(tmp_file):
+                    os.unlink(tmp_file)
+            except Exception as e:
+                self.logger.debug(f"Error cleaning up temp file {tmp_file}: {e}")
+            finally:
+                self.temp_files.discard(tmp_file)
+    
+    def _cleanup_all_resources(self):
+        """Clean up all resources during shutdown."""
+        # Clean up piper
+        self._cleanup_piper()
+        
+        # Clean up any active processes
+        for process in list(self.active_processes):
+            try:
+                if process.poll() is None:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=1)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        process.wait()
+            except Exception as e:
+                self.logger.debug(f"Error cleaning up process: {e}")
+        
+        # Clear the process list
+        self.active_processes.clear()
+        
+        # Clean up temp files
+        self._cleanup_temp_files()
             
     def stop(self):
         """Stop audio services and clean up resources."""
         self.logger.info("Shutting down audio output system")
-        
-        # Clean up piper
-        self._cleanup_piper()
+        self._cleanup_all_resources()
