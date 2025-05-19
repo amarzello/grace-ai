@@ -9,6 +9,8 @@ import json
 import re
 import time
 import asyncio
+import gc
+import threading
 from typing import Dict, Any, Optional, List, Tuple, Union
 from pathlib import Path
 
@@ -18,11 +20,13 @@ from grace.utils.token_utils import estimate_tokens
 # Try to import llama-cpp-python
 try:
     from llama_cpp import Llama, LlamaGrammar
+    import torch
     LLAMA_CPP_AVAILABLE = True
 except ImportError:
     LLAMA_CPP_AVAILABLE = False
     Llama = None
     LlamaGrammar = None
+    torch = None
 
 # Add a sanitize function for markdown safety
 def _sanitize_markdown(text):
@@ -58,6 +62,11 @@ class LlamaWrapper:
         self.llama_config = config.get('llama', {})
         self.model = None
         self.json_grammar = None
+        
+        # Add thread lock for model operations
+        self.model_lock = threading.RLock()
+        
+        # Load model with proper error handling
         self._load_model()
         self._create_json_grammar()
         
@@ -73,34 +82,61 @@ class LlamaWrapper:
             return
             
         try:
-            model_path = self.llama_config.get('model_path')
-            self.logger.info(f"Loading model from {model_path}")
-            
-            # Check if model file exists
-            model_path_obj = Path(model_path)
-            if not model_path_obj.exists():
-                self.logger.error(f"Model file not found: {model_path}")
-                return
+            with self.model_lock:
+                model_path = self.llama_config.get('model_path')
+                self.logger.info(f"Loading model from {model_path}")
                 
-            # Load model with optimal settings for the specified hardware
-            self.model = Llama(
-                model_path=model_path,
-                n_ctx=self.llama_config.get('n_ctx', 32768),
-                n_gpu_layers=self.llama_config.get('n_gpu_layers', 31),
-                n_threads=self.llama_config.get('n_threads', 6),
-                n_batch=self.llama_config.get('n_batch', 512),
-                rope_freq_base=10000.0,
-                rope_freq_scale=1.0,
-                use_mlock=self.llama_config.get('use_mlock', True),
-                use_mmap=self.llama_config.get('use_mmap', False),
-                verbose=self.llama_config.get('verbose', False)
-            )
-            
-            # Check if this is a QWQ model and log special parameters
-            if 'QWQ' in model_path:
-                self.logger.info("QWQ model detected, using recommended parameters: temp=0.6, top_p=0.95, top_k=30, min_p=0.0, presence_penalty=1.0")
+                # Check if model file exists
+                model_path_obj = Path(model_path)
+                if not model_path_obj.exists():
+                    self.logger.error(f"Model file not found: {model_path}")
+                    return
+                    
+                # Load model with optimal settings for the specified hardware
+                self.model = Llama(
+                    model_path=model_path,
+                    n_ctx=self.llama_config.get('n_ctx', 32768),
+                    n_gpu_layers=self.llama_config.get('n_gpu_layers', 31),
+                    n_threads=self.llama_config.get('n_threads', 6),
+                    n_batch=self.llama_config.get('n_batch', 512),
+                    rope_freq_base=10000.0,
+                    rope_freq_scale=1.0,
+                    use_mlock=self.llama_config.get('use_mlock', True),
+                    use_mmap=self.llama_config.get('use_mmap', False),
+                    offload_kqv=True,  # Offload KQV matrices to GPU
+                    verbose=self.llama_config.get('verbose', False),
+                    chat_format="chatml"  # Use modern chat format
+                )
                 
-            self.logger.info("Model loaded successfully")
+                # Check if this is a QWQ model and log special parameters
+                if 'QWQ' in model_path:
+                    self.logger.info("QWQ model detected, using recommended parameters: temp=0.6, top_p=0.95, top_k=30, min_p=0.0, presence_penalty=1.0")
+                    
+                self.logger.info("Model loaded successfully")
+        except RuntimeError as e:
+            # Handle GPU errors with fallback to CPU
+            if "CUDA" in str(e):
+                self.logger.warning(f"CUDA error: {e}. Falling back to CPU.")
+                try:
+                    with self.model_lock:
+                        # Adjust parameters for CPU
+                        self.llama_config['n_gpu_layers'] = 0
+                        
+                        # Try loading with CPU only
+                        self.model = Llama(
+                            model_path=model_path,
+                            n_ctx=self.llama_config.get('n_ctx', 4096),  # Smaller context for CPU
+                            n_gpu_layers=0,
+                            n_threads=self.llama_config.get('n_threads', 6),
+                            n_batch=self.llama_config.get('n_batch', 512),
+                            use_mlock=self.llama_config.get('use_mlock', True),
+                            verbose=self.llama_config.get('verbose', False)
+                        )
+                        self.logger.info("Model loaded successfully on CPU")
+                except Exception as cpu_err:
+                    self.logger.error(f"Failed to load model on CPU: {cpu_err}")
+            else:
+                self.logger.error(f"Failed to load model: {e}")
         except Exception as e:
             self.logger.error(f"Failed to load model: {e}")
             
@@ -181,96 +217,98 @@ class LlamaWrapper:
             self.logger.error("Model not loaded")
             return "Error: Model not loaded properly. Please check the logs for details."
             
-        # Set default parameters
-        max_tokens = max_tokens or self.llama_config.get('max_tokens', 2048)
-        
-        # Get parameters with QWQ model optimizations if needed
-        is_qwq = 'QWQ' in self.llama_config.get('model_path', '')
-        
-        # Apply QWQ recommended parameters if this is a QWQ model
-        if is_qwq:
-            temperature = temperature or self.llama_config.get('temperature', 0.6)
-            top_p = top_p or self.llama_config.get('top_p', 0.95)
-            top_k = top_k or self.llama_config.get('top_k', 30)
-            min_p = min_p or self.llama_config.get('min_p', 0.0)
-            presence_penalty = presence_penalty or self.llama_config.get('presence_penalty', 1.0)
-        else:
-            temperature = temperature or self.llama_config.get('temperature', 0.7)
-            top_p = top_p or self.llama_config.get('top_p', 0.9)
-            top_k = top_k or self.llama_config.get('top_k', 40)
-            min_p = min_p or self.llama_config.get('min_p', 0.05)
-            presence_penalty = presence_penalty or self.llama_config.get('presence_penalty', 0.0)
+        # Acquire lock for thread safety
+        with self.model_lock:
+            # Set default parameters
+            max_tokens = max_tokens or self.llama_config.get('max_tokens', 2048)
             
-        try:
-            # Track generation start time
-            start_time = time.time()
+            # Get parameters with QWQ model optimizations if needed
+            is_qwq = 'QWQ' in self.llama_config.get('model_path', '')
             
-            # Adjust parameters dynamically based on prompt
-            adjusted_params = self._adjust_parameters(prompt, max_tokens, temperature)
-            max_tokens = adjusted_params['max_tokens']
-            temperature = adjusted_params['temperature']
-            
-            # Validate parameters are within acceptable ranges
-            temperature = max(0.01, min(2.0, temperature))
-            top_p = max(0.01, min(1.0, top_p))
-            top_k = max(1, min(100, top_k))
-            min_p = max(0.0, min(1.0, min_p))
-            presence_penalty = max(-2.0, min(2.0, presence_penalty))
-            
-            # Define stop sequences - do not include </think> as we want the model to generate it
-            # Fixed: Added "USER:" to stop sequences for QWQ-32B which often emits all-caps USER
-            self.stop_sequences = ["<|end_user|>"]
-            
-            # Log prompt for debugging
-            self.logger.debug(f"Last 100 chars of prompt: {prompt[-100:]}")
-            
-            # For QWQ models, avoid using grammar as it seems to confuse it
-            use_grammar_for_this_request = use_grammar and not self.llama_config.get('disable_grammar', False)
+            # Apply QWQ recommended parameters if this is a QWQ model
             if is_qwq:
-                use_grammar_for_this_request = False
+                temperature = temperature or self.llama_config.get('temperature', 0.6)
+                top_p = top_p or self.llama_config.get('top_p', 0.95)
+                top_k = top_k or self.llama_config.get('top_k', 30)
+                min_p = min_p or self.llama_config.get('min_p', 0.0)
+                presence_penalty = presence_penalty or self.llama_config.get('presence_penalty', 1.0)
+            else:
+                temperature = temperature or self.llama_config.get('temperature', 0.7)
+                top_p = top_p or self.llama_config.get('top_p', 0.9)
+                top_k = top_k or self.llama_config.get('top_k', 40)
+                min_p = min_p or self.llama_config.get('min_p', 0.05)
+                presence_penalty = presence_penalty or self.llama_config.get('presence_penalty', 0.0)
                 
-            grammar = self.json_grammar if use_grammar_for_this_request else None
-            
-            # Log generation parameters for debugging
-            self.logger.debug(f"Generation parameters: temp={temperature}, top_p={top_p}, top_k={top_k}, min_p={min_p}, presence_penalty={presence_penalty}")
-            
-            response = self.model(
-                prompt,
-                max_tokens=max_tokens,
-                temperature=temperature,
-                top_p=top_p,
-                top_k=top_k,
-                min_p=min_p,
-                presence_penalty=presence_penalty,
-                stop=self.stop_sequences,
-                grammar=grammar,
-                echo=False
-            )
-            
-            # Calculate generation time
-            generation_time = time.time() - start_time
-            self.last_generation_time = generation_time
-            
-            # Update tracking metrics
-            self.generation_count += 1
-            
-            # Log a sample of the response for debugging
-            if response and 'choices' in response and len(response['choices']) > 0:
-                sample = response['choices'][0].get('text', '')[:100]
-                tokens_generated = len(response.get('usage', {}).get('completion_tokens', 0))
-                self.total_tokens_generated += tokens_generated
-                self.logger.debug(f"Model response sample: {sample}")
-                self.logger.debug(f"Generated {tokens_generated} tokens in {generation_time:.2f} seconds")
+            try:
+                # Track generation start time
+                start_time = time.time()
                 
-            if response and 'choices' in response and len(response['choices']) > 0:
-                return response['choices'][0].get('text', '')
+                # Adjust parameters dynamically based on prompt
+                adjusted_params = self._adjust_parameters(prompt, max_tokens, temperature)
+                max_tokens = adjusted_params['max_tokens']
+                temperature = adjusted_params['temperature']
                 
-            return ""
-        except Exception as e:
-            self.logger.error(f"Generation error: {e}")
-            
-            # Provide graceful fallback
-            return f"I apologize, but I encountered a technical issue while processing your request. Please try again."
+                # Validate parameters are within acceptable ranges
+                temperature = max(0.01, min(2.0, temperature))
+                top_p = max(0.01, min(1.0, top_p))
+                top_k = max(1, min(100, top_k))
+                min_p = max(0.0, min(1.0, min_p))
+                presence_penalty = max(-2.0, min(2.0, presence_penalty))
+                
+                # Define stop sequences - do not include </think> as we want the model to generate it
+                # Fixed: Added "USER:" to stop sequences for QWQ-32B which often emits all-caps USER
+                self.stop_sequences = ["<|end_user|>", "USER:"]
+                
+                # Log prompt for debugging
+                self.logger.debug(f"Last 100 chars of prompt: {prompt[-100:]}")
+                
+                # For QWQ models, avoid using grammar as it seems to confuse it
+                use_grammar_for_this_request = use_grammar and not self.llama_config.get('disable_grammar', False)
+                if is_qwq:
+                    use_grammar_for_this_request = False
+                    
+                grammar = self.json_grammar if use_grammar_for_this_request else None
+                
+                # Log generation parameters for debugging
+                self.logger.debug(f"Generation parameters: temp={temperature}, top_p={top_p}, top_k={top_k}, min_p={min_p}, presence_penalty={presence_penalty}")
+                
+                response = self.model(
+                    prompt,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                    top_p=top_p,
+                    top_k=top_k,
+                    min_p=min_p,
+                    presence_penalty=presence_penalty,
+                    stop=self.stop_sequences,
+                    grammar=grammar,
+                    echo=False
+                )
+                
+                # Calculate generation time
+                generation_time = time.time() - start_time
+                self.last_generation_time = generation_time
+                
+                # Update tracking metrics
+                self.generation_count += 1
+                
+                # Log a sample of the response for debugging
+                if response and 'choices' in response and len(response['choices']) > 0:
+                    sample = response['choices'][0].get('text', '')[:100]
+                    tokens_generated = response.get('usage', {}).get('completion_tokens', 0)
+                    self.total_tokens_generated += tokens_generated
+                    self.logger.debug(f"Model response sample: {sample}")
+                    self.logger.debug(f"Generated {tokens_generated} tokens in {generation_time:.2f} seconds")
+                    
+                if response and 'choices' in response and len(response['choices']) > 0:
+                    return response['choices'][0].get('text', '')
+                    
+                return ""
+            except Exception as e:
+                self.logger.error(f"Generation error: {e}")
+                
+                # Provide graceful fallback
+                return f"I apologize, but I encountered a technical issue while processing your request. Please try again."
             
     def _adjust_parameters(self, prompt: str, max_tokens: int, temperature: float) -> Dict:
         """
@@ -328,7 +366,7 @@ class LlamaWrapper:
         
     def parse_response(self, response: str) -> Tuple[str, Dict]:
         """
-        Parse model response to extract thinking process and JSON.
+        Parse model response to extract thinking process and JSON with robust error handling.
         
         Args:
             response: Raw model response
@@ -657,6 +695,48 @@ class LlamaWrapper:
         # If all else fails, return a default response
         return "I processed your request but couldn't formulate a proper response."
     
+    def safe_json_parse(self, json_string: str, default_value: Any = None) -> Any:
+        """
+        Safely parse a JSON string with multiple fallback strategies.
+        Returns default_value if all parsing attempts fail.
+        
+        Args:
+            json_string: JSON string to parse
+            default_value: Default value to return if parsing fails
+            
+        Returns:
+            Parsed JSON object or default_value
+        """
+        if not json_string:
+            return default_value
+        
+        # First attempt: direct parsing
+        try:
+            return json.loads(json_string)
+        except json.JSONDecodeError:
+            pass
+        
+        # Second attempt: find JSON-like content between curly braces
+        try:
+            json_match = re.search(r'(\{.*\})', json_string, re.DOTALL)
+            if json_match:
+                return json.loads(json_match.group(1))
+        except (json.JSONDecodeError, AttributeError):
+            pass
+        
+        # Third attempt: repair common JSON issues
+        try:
+            # Replace single quotes with double quotes
+            fixed = json_string.replace("'", '"')
+            # Ensure proper quotes around keys
+            fixed = re.sub(r'(\w+):', r'"\1":', fixed)
+            return json.loads(fixed)
+        except json.JSONDecodeError:
+            pass
+        
+        # All parsing attempts failed
+        return default_value
+    
     def get_model_info(self) -> Dict:
         """
         Get information about the loaded model.
@@ -675,14 +755,91 @@ class LlamaWrapper:
         }
         
         return model_info
+    
+    def create_structured_prompt(self, system_instruction: str, user_query: str, context: str = None) -> str:
+        """
+        Create a structured prompt with clear sections for better LLM performance.
+        
+        Args:
+            system_instruction: System instruction text
+            user_query: User query text
+            context: Optional context information
+            
+        Returns:
+            Formatted prompt string
+        """
+        # Start with system instruction
+        components = [f"<|system|>\n{system_instruction}</|system|>"]
+        
+        # Add context if provided
+        if context:
+            components.append(f"<|context|>\n{context}</|context|>")
+        
+        # Add user query
+        components.append(f"<|user|>\n{user_query}</|user|>")
+        
+        # Add assistant start token
+        components.append("<|assistant|>")
+        
+        # Combine with newlines for clarity
+        return "\n".join(components)
+        
+    def create_json_extraction_prompt(self, text: str, schema: Dict) -> str:
+        """
+        Create a prompt optimized for JSON extraction.
+        
+        Args:
+            text: Text to process
+            schema: JSON schema
+            
+        Returns:
+            Optimized prompt
+        """
+        # Format schema as readable JSON
+        schema_desc = json.dumps(schema, indent=2)
+        
+        prompt = f"""
+        <|system|>
+        You are a precise data extraction assistant that ONLY outputs valid JSON.
+        Your entire response must be parseable by the Python json.loads() function.
+        </|system|>
+        
+        <|user|>
+        Extract information from this text according to the specified JSON schema:
+        
+        TEXT TO PROCESS:
+        {text}
+        
+        TARGET JSON SCHEMA:
+        {schema_desc}
+        
+        Return ONLY valid JSON that follows the schema.
+        </|user|>
+        
+        <|assistant|>
+        """
+        
+        return prompt
         
     def shutdown(self):
-        """Clean shutdown of the language model."""
+        """Clean shutdown of the language model with proper resource management."""
         self.logger.info("Shutting down language model")
         
-        # Free memory
-        try:
-            del self.model
-            self.model = None
-        except Exception as e:
-            self.logger.debug(f"Error closing language model: {e}")
+        # Free memory with thread safety
+        with self.model_lock:
+            # Free model resources
+            try:
+                if self.model:
+                    del self.model
+                    self.model = None
+                    
+                # Force garbage collection
+                gc.collect()
+                
+                # Clear CUDA cache if available
+                if torch and torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+                    
+                self.logger.info("Language model resources freed successfully")
+            except Exception as e:
+                self.logger.error(f"Error closing language model: {e}")
