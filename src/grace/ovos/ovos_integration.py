@@ -10,7 +10,7 @@ import threading
 import time
 import json
 import asyncio
-from typing import Dict, Optional, List, Any, Callable, Tuple
+from typing import Dict, Optional, List, Any, Callable, Tuple, Union
 
 # Import OVOS components
 from .ovos_client import OVOSClient, OVOS_AVAILABLE

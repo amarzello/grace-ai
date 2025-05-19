@@ -299,6 +299,9 @@ class SQLiteStorage:
             cursor.execute("COMMIT")
             conn.close()
             
+            # Check the schema version for conversations database
+            self._check_conversation_db_version(conn)
+            
             self.logger.info("Conversation database initialized")
         except Exception as e:
             self.logger.critical(f"Failed to initialize conversation database: {e}")
@@ -341,6 +344,41 @@ class SQLiteStorage:
             # Update version
             cursor.execute("UPDATE db_version SET version = ? WHERE id = 1", (self.SCHEMA_VERSION,))
             conn.commit()
+
+    def _check_conversation_db_version(self, conn):
+        """Check conversations database version and perform migrations if needed."""
+        conn = sqlite3.connect(self.conversation_db)
+        cursor = conn.cursor()
+        
+        # Create version table if it doesn't exist
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS db_version (
+                id INTEGER PRIMARY KEY CHECK (id = 1),
+                version INTEGER NOT NULL
+            )
+        """)
+        
+        # Check current version
+        cursor.execute("SELECT version FROM db_version WHERE id = 1")
+        row = cursor.fetchone()
+        current_version = 0
+        
+        if row:
+            current_version = row[0]
+        else:
+            # First time setup - insert version
+            cursor.execute("INSERT INTO db_version (id, version) VALUES (1, 0)")
+            conn.commit()
+        
+        # Perform migrations if needed
+        if current_version < self.SCHEMA_VERSION:
+            self._migrate_conversation_database(conn, current_version)
+            
+            # Update version
+            cursor.execute("UPDATE db_version SET version = ? WHERE id = 1", (self.SCHEMA_VERSION,))
+            conn.commit()
+        
+        conn.close()
 
     def _migrate_database(self, conn, current_version):
         """
@@ -400,6 +438,52 @@ class SQLiteStorage:
             self.logger.info(f"Database migrated from version {current_version} to {self.SCHEMA_VERSION}")
         except Exception as e:
             self.logger.error(f"Database migration error: {e}")
+            
+            # Rollback on error
+            try:
+                cursor.execute("ROLLBACK")
+            except Exception:
+                pass
+            
+            raise
+
+    def _migrate_conversation_database(self, conn, current_version):
+        """
+        Perform conversation database schema migrations.
+        
+        Args:
+            conn: SQLite connection
+            current_version: Current schema version
+        """
+        cursor = conn.cursor()
+        
+        try:
+            # Start transaction
+            cursor.execute("BEGIN TRANSACTION")
+            
+            # Migration paths
+            if current_version < 3:
+                # Check if table exists
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='conversations'")
+                if cursor.fetchone():
+                    # Add archived column to support archiving instead of deletion
+                    self._ensure_column_exists(cursor, "conversations", "archived", "INTEGER DEFAULT 0")
+                    
+                    # Add importance_score column for better memory prioritization
+                    self._ensure_column_exists(cursor, "conversations", "importance_score", "REAL DEFAULT 0.5")
+                    
+                    # Add knowledge_graph_id column for better integration with knowledge graph
+                    self._ensure_column_exists(cursor, "conversations", "knowledge_graph_id", "TEXT")
+                    
+                    # Create index for archived column
+                    cursor.execute("CREATE INDEX IF NOT EXISTS idx_conv_archived ON conversations(archived)")
+            
+            # Commit transaction
+            cursor.execute("COMMIT")
+            
+            self.logger.info(f"Conversation database migrated from version {current_version} to {self.SCHEMA_VERSION}")
+        except Exception as e:
+            self.logger.error(f"Conversation database migration error: {e}")
             
             # Rollback on error
             try:
