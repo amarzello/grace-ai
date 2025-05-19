@@ -65,7 +65,6 @@ class VectorStorage:
             'host': self.mem0_config.get('vector_store', {}).get('config', {}).get('host', 'localhost'),
             'port': self.mem0_config.get('vector_store', {}).get('config', {}).get('port', 6333),
             'path': str(qdrant_path),
-            'prefer_grpc': self.mem0_config.get('vector_store', {}).get('config', {}).get('prefer_grpc', False),
             'timeout': 10.0
         }
         
@@ -107,7 +106,7 @@ class VectorStorage:
                 host=self.qdrant_config.get('host'),
                 port=self.qdrant_config.get('port'),
                 path=self.qdrant_config.get('path'),
-                prefer_grpc=self.qdrant_config.get('prefer_grpc'),
+                prefer_grpc=False,  # Hard-coded to False instead of from config
                 timeout=self.qdrant_config.get('timeout')
             )
             
@@ -115,7 +114,7 @@ class VectorStorage:
                 host=self.qdrant_config.get('host'),
                 port=self.qdrant_config.get('port'),
                 path=self.qdrant_config.get('path'),
-                prefer_grpc=self.qdrant_config.get('prefer_grpc'),
+                prefer_grpc=False,  # Hard-coded to False instead of from config
                 timeout=self.qdrant_config.get('timeout')
             )
             
@@ -177,7 +176,7 @@ class VectorStorage:
                         host=self.qdrant_config.get('host'),
                         port=self.qdrant_config.get('port'),
                         path=self.qdrant_config.get('path'),
-                        prefer_grpc=self.qdrant_config.get('prefer_grpc'),
+                        prefer_grpc=False,  # Hard-coded to False instead of from config
                         timeout=self.qdrant_config.get('timeout')
                     )
                 else:
@@ -197,7 +196,7 @@ class VectorStorage:
                         host=self.qdrant_config.get('host'),
                         port=self.qdrant_config.get('port'),
                         path=self.qdrant_config.get('path'),
-                        prefer_grpc=self.qdrant_config.get('prefer_grpc'),
+                        prefer_grpc=False,  # Hard-coded to False instead of from config
                         timeout=self.qdrant_config.get('timeout')
                     )
             except Exception:

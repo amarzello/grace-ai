@@ -13,7 +13,7 @@ DEFAULT_CONFIG = {
             "host": "localhost",
             "port": 6333,
             "path": str(QDRANT_PATH),
-            "prefer_grpc": False,
+            # Removed the prefer_grpc parameter that was causing errors
             "embedding_model_dims": 768,
         },
     },
@@ -26,7 +26,7 @@ DEFAULT_CONFIG = {
         },
     },
     "embedder": {
-        "provider": "local",
+        "provider": "sentence_transformers",  # Changed from "local" to a supported provider
         "config": {
             "model": "all-MiniLM-L6-v2"  # Or specify path to local model
         }
