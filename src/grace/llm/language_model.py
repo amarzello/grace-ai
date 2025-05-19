@@ -92,7 +92,7 @@ class LlamaWrapper:
                     self.logger.error(f"Model file not found: {model_path}")
                     return
                     
-                # Load model with optimal settings for the specified hardware
+                # Updated initialization parameters for llama-cpp-python
                 self.model = Llama(
                     model_path=model_path,
                     n_ctx=self.llama_config.get('n_ctx', 32768),
@@ -103,9 +103,7 @@ class LlamaWrapper:
                     rope_freq_scale=1.0,
                     use_mlock=self.llama_config.get('use_mlock', True),
                     use_mmap=self.llama_config.get('use_mmap', False),
-                    offload_kqv=True,  # Offload KQV matrices to GPU
-                    verbose=self.llama_config.get('verbose', False),
-                    chat_format="chatml"  # Use modern chat format
+                    verbose=self.llama_config.get('verbose', False)
                 )
                 
                 # Check if this is a QWQ model and log special parameters
@@ -272,8 +270,27 @@ class LlamaWrapper:
                 # Log generation parameters for debugging
                 self.logger.debug(f"Generation parameters: temp={temperature}, top_p={top_p}, top_k={top_k}, min_p={min_p}, presence_penalty={presence_penalty}")
                 
-                response = self.model(
-                    prompt,
+                # Updated to use create_chat_completion for modern usage
+                system_msg = "You are Grace, a helpful assistant."
+                
+                # Parse prompt to extract system and user content
+                user_content = prompt
+                if "<|system|>" in prompt and "</|system|>" in prompt:
+                    parts = prompt.split("</|system|>", 1)
+                    system_msg = parts[0].replace("<|system|>", "").strip()
+                    user_content = parts[1].strip()
+                
+                # Remove any remaining tags for cleaner input
+                user_content = re.sub(r'<\|user\|>|<\|assistant\|>', '', user_content)
+                
+                # Prepare messages for chat completion format
+                messages = [
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": user_content}
+                ]
+                
+                response = self.model.create_chat_completion(
+                    messages=messages,
                     max_tokens=max_tokens,
                     temperature=temperature,
                     top_p=top_p,
@@ -281,8 +298,7 @@ class LlamaWrapper:
                     min_p=min_p,
                     presence_penalty=presence_penalty,
                     stop=self.stop_sequences,
-                    grammar=grammar,
-                    echo=False
+                    grammar=grammar
                 )
                 
                 # Calculate generation time
@@ -294,14 +310,14 @@ class LlamaWrapper:
                 
                 # Log a sample of the response for debugging
                 if response and 'choices' in response and len(response['choices']) > 0:
-                    sample = response['choices'][0].get('text', '')[:100]
+                    sample = response['choices'][0].get('message', {}).get('content', '')[:100]
                     tokens_generated = response.get('usage', {}).get('completion_tokens', 0)
                     self.total_tokens_generated += tokens_generated
                     self.logger.debug(f"Model response sample: {sample}")
                     self.logger.debug(f"Generated {tokens_generated} tokens in {generation_time:.2f} seconds")
                     
                 if response and 'choices' in response and len(response['choices']) > 0:
-                    return response['choices'][0].get('text', '')
+                    return response['choices'][0].get('message', {}).get('content', '')
                     
                 return ""
             except Exception as e:

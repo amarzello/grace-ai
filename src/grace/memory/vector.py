@@ -323,13 +323,15 @@ class VectorStorage:
             Dictionary with search results
         """
         try:
-            # Try mem0 search first
+            # Try mem0 search first with updated API (v1.1)
             async with self._get_async_mem() as mem:
                 try:
+                    # Use the newer API version
                     results = await mem.search(
                         query=query,
                         user_id=user_id,
-                        limit=limit
+                        limit=limit,
+                        api_version='v1.1'  # Updated to use v1.1 API
                     )
                     
                     # Format results for compatibility
@@ -359,8 +361,7 @@ class VectorStorage:
             
         try:
             async with self._get_async_qdrant() as client:
-                # Similar to add, create a simple embedding for the query
-                # This is just a fallback and won't provide good semantic search
+                # Create a deterministic "embedding" based on hash for fallback search
                 from grace.utils.token_utils import estimate_tokens
                 import numpy as np
                 import hashlib
@@ -378,21 +379,20 @@ class VectorStorage:
                 query_vector = np.array(repeated[:dim]) / 255.0  # Normalize to [0,1]
                 query_vector = query_vector.tolist()
                 
-                # Search Qdrant directly
-                search_results = await client.search(
+                # Search Qdrant directly using query_points instead of search
+                search_results = await client.query_points(
                     collection_name=self.qdrant_config.get('collection_name'),
-                    query_vector=query_vector,
+                    query=query_vector,
                     limit=limit,
                     with_payload=True,
-                    with_vectors=False,
-                    filter=None  # Can add filter by user_id if needed
+                    with_vectors=False
                 )
                 
                 # Format results to match expected structure
                 formatted_results = []
                 for result in search_results:
                     # Extract content and metadata from payload
-                    content = result.payload.get("content", "")
+                    content = result.payload.get("text", "")
                     memory_type = result.payload.get("memory_type", "unknown")
                     
                     formatted_results.append({
@@ -400,7 +400,7 @@ class VectorStorage:
                         "content": content,
                         "memory": content,  # For compatibility with mem0 format
                         "score": result.score,
-                        "metadata": {k: v for k, v in result.payload.items() if k not in ["content"]}
+                        "metadata": {k: v for k, v in result.payload.items() if k not in ["text"]}
                     })
                 
                 return {"results": formatted_results}
