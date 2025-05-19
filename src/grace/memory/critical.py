@@ -1,4 +1,4 @@
-"""
+""
 Grace AI System - Critical Memory Manager
 
 This module handles critical memory management for the Grace AI system.
@@ -13,6 +13,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 from concurrent.futures import ThreadPoolExecutor
+import threading
 
 from grace.utils.common import MEMORY_DB_PATH, calculate_relevance
 import hashlib
@@ -35,10 +36,10 @@ class CriticalMemoryManager:
         # Critical memory is stored in a JSON file for security (replaces pickle)
         self.critical_memory_file = MEMORY_DB_PATH / 'critical_memory.json'
         
-        # Lock for thread-safe access
-        self.critical_memory_lock = asyncio.Lock()
+        # Lock for thread-safe access with RLock to prevent deadlocks
+        self.critical_memory_lock = threading.RLock()
         
-        # Thread pool for async operations
+        # Thread pool for async operations with limited workers
         self.executor = ThreadPoolExecutor(max_workers=2)
         
         # Load critical memory
@@ -150,7 +151,8 @@ class CriticalMemoryManager:
         if self.amnesia_mode:
             return
             
-        async with self.critical_memory_lock:
+        # Use lock for thread safety
+        with self.critical_memory_lock:
             try:
                 # Create a temporary file first to avoid corruption
                 with tempfile.NamedTemporaryFile('w', suffix='.json.tmp', delete=False, encoding='utf-8') as f:
@@ -252,8 +254,8 @@ class CriticalMemoryManager:
             'access_count': 0
         }
         
-        # Update critical memory dictionary
-        async with self.critical_memory_lock:
+        # Update critical memory dictionary with thread safety
+        with self.critical_memory_lock:
             self.critical_memory[key] = memory_data
             
         # Save to disk (non-blocking)
@@ -283,33 +285,34 @@ class CriticalMemoryManager:
         def _search_memories():
             search_results = []
             
-            # Search through critical memories
-            for key, memory in self.critical_memory.items():
-                try:
-                    content = memory.get('content', '')
-                    if content:
-                        # Calculate relevance score
-                        relevance = calculate_relevance(query, content)
-                        
-                        # Only include if relevance is above threshold
-                        if relevance > 0.2:
-                            # Create a result entry
-                            result = {
-                                'id': key,
-                                'content': content,
-                                'metadata': memory.get('metadata', {}),
-                                'verification_score': memory.get('verification_score', 1.0),
-                                'relevance': relevance,
-                                'sql_id': memory.get('sql_id')
-                            }
+            # Search through critical memories with thread safety
+            with self.critical_memory_lock:
+                for key, memory in self.critical_memory.items():
+                    try:
+                        content = memory.get('content', '')
+                        if content:
+                            # Calculate relevance score
+                            relevance = calculate_relevance(query, content)
                             
-                            search_results.append(result)
-                            
-                            # Update access statistics
-                            memory['access_count'] = memory.get('access_count', 0) + 1
-                            memory['accessed_at'] = datetime.now().isoformat()
-                except Exception as e:
-                    self.logger.debug(f"Error processing memory {key}: {e}")
+                            # Only include if relevance is above threshold
+                            if relevance > 0.2:
+                                # Create a result entry
+                                result = {
+                                    'id': key,
+                                    'content': content,
+                                    'metadata': memory.get('metadata', {}),
+                                    'verification_score': memory.get('verification_score', 1.0),
+                                    'relevance': relevance,
+                                    'sql_id': memory.get('sql_id')
+                                }
+                                
+                                search_results.append(result)
+                                
+                                # Update access statistics
+                                memory['access_count'] = memory.get('access_count', 0) + 1
+                                memory['accessed_at'] = datetime.now().isoformat()
+                    except Exception as e:
+                        self.logger.debug(f"Error processing memory {key}: {e}")
             
             # Sort by relevance and limit results
             search_results.sort(key=lambda x: x.get('relevance', 0), reverse=True)
@@ -339,7 +342,7 @@ class CriticalMemoryManager:
         if self.amnesia_mode:
             return False
             
-        async with self.critical_memory_lock:
+        with self.critical_memory_lock:
             if memory_id in self.critical_memory:
                 # Delete the memory
                 del self.critical_memory[memory_id]
@@ -357,7 +360,7 @@ class CriticalMemoryManager:
         Returns:
             Dictionary with statistics
         """
-        async with self.critical_memory_lock:
+        with self.critical_memory_lock:
             stats = {
                 "total_memories": len(self.critical_memory),
                 "file_exists": self.critical_memory_file.exists()
@@ -399,8 +402,9 @@ class CriticalMemoryManager:
             
             # Fallback: Save synchronously
             try:
-                with open(self.critical_memory_file, 'w', encoding='utf-8') as f:
-                    json.dump(self.critical_memory, f, indent=2)
+                with self.critical_memory_lock:
+                    with open(self.critical_memory_file, 'w', encoding='utf-8') as f:
+                        json.dump(self.critical_memory, f, indent=2)
             except Exception as e2:
                 self.logger.error(f"Fallback save failed: {e2}")
             
