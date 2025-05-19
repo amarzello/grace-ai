@@ -149,9 +149,6 @@ class SQLiteStorage:
             except Exception as e:
                 self.logger.warning(f"Could not check database integrity: {e}")
             
-            # Check schema version and migrate if needed
-            self._check_db_version(conn)
-            
             # Create table if it doesn't exist
             cursor.execute("BEGIN TRANSACTION")
             cursor.execute("""
@@ -181,12 +178,6 @@ class SQLiteStorage:
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_verification ON long_term_memory(verification_score)
             """)
-            cursor.execute("""
-                CREATE INDEX IF NOT EXISTS idx_archived ON long_term_memory(archived)
-            """)
-            cursor.execute("""
-                CREATE INDEX IF NOT EXISTS idx_importance ON long_term_memory(importance_score)
-            """)
             
             # Create a separate search table with FTS5 for efficient text search
             try:
@@ -215,6 +206,10 @@ class SQLiteStorage:
             """)
             
             cursor.execute("COMMIT")
+            
+            # Check schema version and migrate if needed
+            self._check_db_version(conn)
+            
             conn.close()
             
             self.logger.info("Long-term storage initialized")
@@ -244,7 +239,7 @@ class SQLiteStorage:
                 cursor.execute("PRAGMA synchronous = NORMAL")
                 cursor.execute("PRAGMA cache_size = -8000")  # Use ~8MB of memory for cache
             
-            # Create table with transaction support
+            # Create basic table with transaction support
             cursor.execute("BEGIN TRANSACTION")
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS conversations (
@@ -261,22 +256,16 @@ class SQLiteStorage:
                     tts_output TEXT,
                     error TEXT,
                     metadata TEXT,
-                    verification_result TEXT,
-                    knowledge_graph_id TEXT,
-                    archived INTEGER DEFAULT 0,
-                    importance_score REAL DEFAULT 0.5
+                    verification_result TEXT
                 )
             """)
             
-            # Create indices for efficient queries
+            # Create basic indices for efficient queries
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_conv_timestamp ON conversations(timestamp)
             """)
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_conv_user_input ON conversations(user_input)
-            """)
-            cursor.execute("""
-                CREATE INDEX IF NOT EXISTS idx_conv_archived ON conversations(archived)
             """)
             
             # Create FTS index for full-text search (try FTS5 first, with fallback to FTS4)
@@ -297,10 +286,12 @@ class SQLiteStorage:
                     self.logger.warning(f"Neither FTS5 nor FTS4 is available. Conversation search will be limited: {e2}")
                     
             cursor.execute("COMMIT")
-            conn.close()
             
-            # Check the schema version for conversations database
+            # Check schema version and migrate if needed
+            # Note: this function will add the required columns
             self._check_conversation_db_version(conn)
+            
+            conn.close()
             
             self.logger.info("Conversation database initialized")
         except Exception as e:
@@ -347,7 +338,6 @@ class SQLiteStorage:
 
     def _check_conversation_db_version(self, conn):
         """Check conversations database version and perform migrations if needed."""
-        conn = sqlite3.connect(self.conversation_db)
         cursor = conn.cursor()
         
         # Create version table if it doesn't exist
@@ -377,8 +367,6 @@ class SQLiteStorage:
             # Update version
             cursor.execute("UPDATE db_version SET version = ? WHERE id = 1", (self.SCHEMA_VERSION,))
             conn.commit()
-        
-        conn.close()
 
     def _migrate_database(self, conn, current_version):
         """
@@ -475,8 +463,11 @@ class SQLiteStorage:
                     # Add knowledge_graph_id column for better integration with knowledge graph
                     self._ensure_column_exists(cursor, "conversations", "knowledge_graph_id", "TEXT")
                     
-                    # Create index for archived column
-                    cursor.execute("CREATE INDEX IF NOT EXISTS idx_conv_archived ON conversations(archived)")
+                    # Create index for archived column if column exists
+                    try:
+                        cursor.execute("CREATE INDEX IF NOT EXISTS idx_conv_archived ON conversations(archived)")
+                    except sqlite3.OperationalError as e:
+                        self.logger.warning(f"Error creating archived index: {e}")
             
             # Commit transaction
             cursor.execute("COMMIT")
@@ -1022,31 +1013,60 @@ class SQLiteStorage:
                     metadata_json = json.dumps(entry.metadata) if entry.metadata else None
                     verification_result_json = json.dumps(entry.verification_result) if entry.verification_result else None
                     
-                    # Insert in conversations table with all fields
-                    cursor.execute("""
-                        INSERT INTO conversations (
-                            timestamp, user_input, stt_transcript, memory_context,
-                            prompt, model_response, thinking_process, json_response,
-                            command_result, tts_output, error, metadata, verification_result,
-                            archived, importance_score
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        entry.timestamp,
-                        entry.user_input,
-                        entry.stt_transcript,
-                        memory_context_json,
-                        entry.prompt,
-                        entry.model_response,
-                        entry.thinking_process,
-                        json_response_json,
-                        entry.command_result,
-                        entry.tts_output,
-                        entry.error,
-                        metadata_json,
-                        verification_result_json,
-                        0,  # Not archived
-                        0.5  # Default importance score
-                    ))
+                    # Check which columns exist
+                    cursor.execute("PRAGMA table_info(conversations)")
+                    columns = [info[1] for info in cursor.fetchall()]
+                    
+                    # Check if column archived exists
+                    if "archived" in columns and "importance_score" in columns:
+                        # Insert with all columns
+                        cursor.execute("""
+                            INSERT INTO conversations (
+                                timestamp, user_input, stt_transcript, memory_context,
+                                prompt, model_response, thinking_process, json_response,
+                                command_result, tts_output, error, metadata, verification_result,
+                                archived, importance_score
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                            entry.timestamp,
+                            entry.user_input,
+                            entry.stt_transcript,
+                            memory_context_json,
+                            entry.prompt,
+                            entry.model_response,
+                            entry.thinking_process,
+                            json_response_json,
+                            entry.command_result,
+                            entry.tts_output,
+                            entry.error,
+                            metadata_json,
+                            verification_result_json,
+                            0,  # Not archived
+                            0.5  # Default importance score
+                        ))
+                    else:
+                        # Insert without new columns
+                        cursor.execute("""
+                            INSERT INTO conversations (
+                                timestamp, user_input, stt_transcript, memory_context,
+                                prompt, model_response, thinking_process, json_response,
+                                command_result, tts_output, error, metadata, verification_result
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                            entry.timestamp,
+                            entry.user_input,
+                            entry.stt_transcript,
+                            memory_context_json,
+                            entry.prompt,
+                            entry.model_response,
+                            entry.thinking_process,
+                            json_response_json,
+                            entry.command_result,
+                            entry.tts_output,
+                            entry.error,
+                            metadata_json,
+                            verification_result_json
+                        ))
                     
                     # Get the inserted ID
                     cursor.execute("SELECT last_insert_rowid()")
@@ -1092,31 +1112,60 @@ class SQLiteStorage:
                         metadata_json = json.dumps(entry.metadata) if entry.metadata else None
                         verification_result_json = json.dumps(entry.verification_result) if entry.verification_result else None
                         
-                        # Insert in conversations table with all fields
-                        cursor.execute("""
-                            INSERT INTO conversations (
-                                timestamp, user_input, stt_transcript, memory_context,
-                                prompt, model_response, thinking_process, json_response,
-                                command_result, tts_output, error, metadata, verification_result,
-                                archived, importance_score
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """, (
-                            entry.timestamp,
-                            entry.user_input,
-                            entry.stt_transcript,
-                            memory_context_json,
-                            entry.prompt,
-                            entry.model_response,
-                            entry.thinking_process,
-                            json_response_json,
-                            entry.command_result,
-                            entry.tts_output,
-                            entry.error,
-                            metadata_json,
-                            verification_result_json,
-                            0,  # Not archived
-                            0.5  # Default importance score
-                        ))
+                        # Check which columns exist
+                        cursor.execute("PRAGMA table_info(conversations)")
+                        columns = [info[1] for info in cursor.fetchall()]
+                        
+                        # Check if column archived exists
+                        if "archived" in columns and "importance_score" in columns:
+                            # Insert with all columns
+                            cursor.execute("""
+                                INSERT INTO conversations (
+                                    timestamp, user_input, stt_transcript, memory_context,
+                                    prompt, model_response, thinking_process, json_response,
+                                    command_result, tts_output, error, metadata, verification_result,
+                                    archived, importance_score
+                                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            """, (
+                                entry.timestamp,
+                                entry.user_input,
+                                entry.stt_transcript,
+                                memory_context_json,
+                                entry.prompt,
+                                entry.model_response,
+                                entry.thinking_process,
+                                json_response_json,
+                                entry.command_result,
+                                entry.tts_output,
+                                entry.error,
+                                metadata_json,
+                                verification_result_json,
+                                0,  # Not archived
+                                0.5  # Default importance score
+                            ))
+                        else:
+                            # Insert without new columns
+                            cursor.execute("""
+                                INSERT INTO conversations (
+                                    timestamp, user_input, stt_transcript, memory_context,
+                                    prompt, model_response, thinking_process, json_response,
+                                    command_result, tts_output, error, metadata, verification_result
+                                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            """, (
+                                entry.timestamp,
+                                entry.user_input,
+                                entry.stt_transcript,
+                                memory_context_json,
+                                entry.prompt,
+                                entry.model_response,
+                                entry.thinking_process,
+                                json_response_json,
+                                entry.command_result,
+                                entry.tts_output,
+                                entry.error,
+                                metadata_json,
+                                verification_result_json
+                            ))
                         
                         # Get the inserted ID
                         conversation_id = cursor.lastrowid
@@ -1176,14 +1225,19 @@ class SQLiteStorage:
                     async with self.conversation_pool.acquire() as conv_conn:
                         conv_cursor = conv_conn.cursor()
                         
-                        conv_cursor.execute("""
-                            UPDATE conversations
-                            SET archived = 1
-                            WHERE timestamp < ?
-                            AND archived = 0
-                        """, (cutoff_date,))
+                        # Check if archived column exists
+                        conv_cursor.execute("PRAGMA table_info(conversations)")
+                        columns = [info[1] for info in conv_cursor.fetchall()]
                         
-                        archived_count += conv_cursor.rowcount
+                        if "archived" in columns:
+                            conv_cursor.execute("""
+                                UPDATE conversations
+                                SET archived = 1
+                                WHERE timestamp < ?
+                                AND archived = 0
+                            """, (cutoff_date,))
+                            
+                            archived_count += conv_cursor.rowcount
                     
                     return archived_count
             except Exception as e:
@@ -1219,14 +1273,19 @@ class SQLiteStorage:
                         with sqlite3.connect(self.conversation_db) as conv_conn:
                             conv_cursor = conv_conn.cursor()
                             
-                            conv_cursor.execute("""
-                                UPDATE conversations
-                                SET archived = 1
-                                WHERE timestamp < ?
-                                AND archived = 0
-                            """, (cutoff_date,))
+                            # Check if archived column exists
+                            conv_cursor.execute("PRAGMA table_info(conversations)")
+                            columns = [info[1] for info in conv_cursor.fetchall()]
                             
-                            archived_count += conv_cursor.rowcount
+                            if "archived" in columns:
+                                conv_cursor.execute("""
+                                    UPDATE conversations
+                                    SET archived = 1
+                                    WHERE timestamp < ?
+                                    AND archived = 0
+                                """, (cutoff_date,))
+                                
+                                archived_count += conv_cursor.rowcount
                         
                         return archived_count
                 except Exception as e:
@@ -1350,13 +1409,18 @@ class SQLiteStorage:
                     cursor.execute("SELECT COUNT(*) FROM conversations")
                     stats["conversation_count"] = cursor.fetchone()[0]
                     
-                    # Get counts of conversations by archived status
-                    cursor.execute("SELECT archived, COUNT(*) FROM conversations GROUP BY archived")
-                    for archived, count in cursor.fetchall():
-                        if archived:
-                            stats["archived_conversations"] = count
-                        else:
-                            stats["active_conversations"] = count
+                    # Check if archived column exists
+                    cursor.execute("PRAGMA table_info(conversations)")
+                    columns = [info[1] for info in cursor.fetchall()]
+                    
+                    if "archived" in columns:
+                        # Get counts of conversations by archived status
+                        cursor.execute("SELECT archived, COUNT(*) FROM conversations GROUP BY archived")
+                        for archived, count in cursor.fetchall():
+                            if archived:
+                                stats["archived_conversations"] = count
+                            else:
+                                stats["active_conversations"] = count
                 
                 # Get database file sizes
                 if self.long_term_db.exists():
@@ -1566,12 +1630,23 @@ class SQLiteStorage:
                     conn.row_factory = sqlite3.Row  # Return rows as dictionaries
                     cursor = conn.cursor()
                     
-                    cursor.execute("""
-                        SELECT * FROM conversations
-                        WHERE archived = 0
-                        ORDER BY timestamp DESC
-                        LIMIT ?
-                    """, (limit,))
+                    # Check if archived column exists
+                    cursor.execute("PRAGMA table_info(conversations)")
+                    columns = [info[1] for info in cursor.fetchall()]
+                    
+                    if "archived" in columns:
+                        cursor.execute("""
+                            SELECT * FROM conversations
+                            WHERE archived = 0
+                            ORDER BY timestamp DESC
+                            LIMIT ?
+                        """, (limit,))
+                    else:
+                        cursor.execute("""
+                            SELECT * FROM conversations
+                            ORDER BY timestamp DESC
+                            LIMIT ?
+                        """, (limit,))
                     
                     rows = cursor.fetchall()
                     
@@ -1643,12 +1718,23 @@ class SQLiteStorage:
                         conn.row_factory = sqlite3.Row  # Return rows as dictionaries
                         cursor = conn.cursor()
                         
-                        cursor.execute("""
-                            SELECT * FROM conversations
-                            WHERE archived = 0
-                            ORDER BY timestamp DESC
-                            LIMIT ?
-                        """, (limit,))
+                        # Check if archived column exists
+                        cursor.execute("PRAGMA table_info(conversations)")
+                        columns = [info[1] for info in cursor.fetchall()]
+                        
+                        if "archived" in columns:
+                            cursor.execute("""
+                                SELECT * FROM conversations
+                                WHERE archived = 0
+                                ORDER BY timestamp DESC
+                                LIMIT ?
+                            """, (limit,))
+                        else:
+                            cursor.execute("""
+                                SELECT * FROM conversations
+                                ORDER BY timestamp DESC
+                                LIMIT ?
+                            """, (limit,))
                         
                         rows = cursor.fetchall()
                         
